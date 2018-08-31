@@ -16,7 +16,7 @@ TagManager:
   - PostProcessing
   - Wall
   - Lemming
-  - 
+  - Blocks
   - 
   - 
   - 
@@ -40,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Blocks
+    uniqueID: 3447916093
     locked: 0
