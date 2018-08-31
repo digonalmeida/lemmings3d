@@ -2,6 +2,7 @@
 
 Shader "Custom/Outlined/ShillouetteOutline" {
     Properties {
+		_MainColor("Base Color", Color) = (1,1,1,1)
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _RimCol ("Rim Colour" , Color) = (1,0,0,1)
         _RimPow ("Rim Power", Float) = 1.0
@@ -41,7 +42,7 @@ Shader "Custom/Outlined/ShillouetteOutline" {
                     o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
                     o.normal = normalize(v.normal);
                     o.viewDir = normalize(ObjSpaceViewDir(v.vertex));       //this could also be WorldSpaceViewDir, which would
-                    return o;                                               //return the World space view direction.
+					return o;                                               //return the World space view direction.
                 }
                
                 half4 frag (v2f i) : COLOR
@@ -75,6 +76,7 @@ Shader "Custom/Outlined/ShillouetteOutline" {
                
                 sampler2D _MainTex;
                 float4 _MainTex_ST;
+				fixed4 _MainColor;
                
                 v2f vert (appdata_base v)
                 {
@@ -86,7 +88,7 @@ Shader "Custom/Outlined/ShillouetteOutline" {
                
                 half4 frag (v2f i) : COLOR
                 {
-                    half4 texcol = tex2D(_MainTex,i.uv);
+                    half4 texcol = tex2D(_MainTex,i.uv) * _MainColor;
                     return texcol;
                 }
                 ENDCG
