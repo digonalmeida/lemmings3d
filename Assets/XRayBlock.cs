@@ -34,9 +34,10 @@ public class XRayBlock : MonoBehaviour {
     private void MakeNotTranslucent()
     {
         renderer.material = materialNotTranslucent;
+        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
     }
 
-    internal void MakeTranslucent()
+    public void MakeTranslucent()
     {
         if (!canBeTranslucent)
             return;
@@ -44,5 +45,14 @@ public class XRayBlock : MonoBehaviour {
         renderer.material = materialTranslucent;
         isTranslucent = true;
 
+    }
+
+    public void MakeShadowOnly()
+    {
+        if (!canBeTranslucent)
+            return;
+
+        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        isTranslucent = true;
     }
 }

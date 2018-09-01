@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Unlit/Transparent" {
+﻿Shader "Custom/Xray/Transparent" {
  Properties {
      _MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
 	 _Color ("Color RGBA", Color) = (1,1,1,1)
@@ -12,9 +10,16 @@ Shader "Unlit/Transparent" {
      
 	 Cull Back
      ZWrite Off
-     Blend SrcAlpha OneMinusSrcAlpha 
+	 Blend SrcAlpha OneMinusSrcAlpha
      
      Pass {  
+
+		Stencil{
+			Ref 2
+			Comp NotEqual
+			Pass Replace
+		}
+
          CGPROGRAM
              #pragma vertex vert
              #pragma fragment frag

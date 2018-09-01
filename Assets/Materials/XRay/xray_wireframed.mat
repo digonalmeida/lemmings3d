@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: xray_wireframed
-  m_Shader: {fileID: 4800000, guid: 146a0072811123b4bb35f95b34c5a05f, type: 3}
+  m_Shader: {fileID: 4800000, guid: 9330b0c20a48fb24dbea1203a59f8df2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -70,7 +70,7 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 0.078
     - _OutlineFactor: 0
-    - _OutlineWidth: 0.19
+    - _OutlineWidth: 0.09
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -86,5 +86,5 @@ Material:
     - _BaseColor: {r: 0.97794116, g: 0.72626513, b: 0.72626513, a: 0.266}
     - _Color: {r: 0.63235295, g: 0, b: 0, a: 0.372}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 1, g: 0.43448272, b: 0, a: 1}
+    - _OutlineColor: {r: 0.23529413, g: 0.21176472, b: 0.20784315, a: 1}
     - _WireColor: {r: 0.27205884, g: 0.23078093, b: 0, a: 1}
