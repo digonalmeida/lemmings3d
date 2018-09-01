@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Body
-  m_Shader: {fileID: 4800000, guid: 21bd3b8e7792cc44090c044e9ed9b5e0, type: 3}
+  m_Name: xray
+  m_Shader: {fileID: 4800000, guid: c46d3db8c780df2408fef0b6ed35e661, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -55,6 +55,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _BodyAlpha: 0.194
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -66,14 +67,12 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimPow: 1.4
+    - _ShadowStrength: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.20784315, g: 0.26666668, b: 0.49803925, a: 1}
+    - _Color: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 0.241}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 0, g: 0.0027383147, b: 0.39705884, a: 1}
-    - _RimCol: {r: 1, g: 0, b: 0, a: 1}
