@@ -21,6 +21,7 @@
 		}
 		LOD 200
 
+
 		Pass {
 			Name "VerticsOutline_Outline_Stencil"
 

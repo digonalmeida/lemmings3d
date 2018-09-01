@@ -8,12 +8,12 @@ public class XRayBlock : MonoBehaviour {
     public bool canBeTranslucent = true;
     public Material materialNotTranslucent;
     public Material materialTranslucent;
-    private Renderer renderer;
+    private Renderer objRenderer;
     private bool isTranslucent = false;
 
     private void Awake()
     {
-        renderer = GetComponent<Renderer>();
+        objRenderer = GetComponent<Renderer>();
     }
 
     private void Update()
@@ -33,8 +33,8 @@ public class XRayBlock : MonoBehaviour {
 
     private void MakeNotTranslucent()
     {
-        renderer.material = materialNotTranslucent;
-        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        objRenderer.material = materialNotTranslucent;
+        objRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
     }
 
     public void MakeTranslucent()
@@ -42,7 +42,7 @@ public class XRayBlock : MonoBehaviour {
         if (!canBeTranslucent)
             return;
 
-        renderer.material = materialTranslucent;
+        objRenderer.material = materialTranslucent;
         isTranslucent = true;
 
     }
@@ -52,7 +52,7 @@ public class XRayBlock : MonoBehaviour {
         if (!canBeTranslucent)
             return;
 
-        renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        objRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
         isTranslucent = true;
     }
 }
