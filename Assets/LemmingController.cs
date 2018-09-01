@@ -5,13 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class LemmingController : MonoBehaviour
 {
-
-
     [SerializeField]
     private float movementSpeed = 3;
-
-    [SerializeField]
-    private float jumpForce = 3;
 
     [SerializeField]
     public RaycastSensor forwardSensor = new RaycastSensor();
@@ -44,18 +39,6 @@ public class LemmingController : MonoBehaviour
         set
         {
             movementSpeed = value;
-        }
-    }
-
-    public float JumpForce
-    {
-        get
-        {
-            return jumpForce;
-        }
-        set
-        {
-            jumpForce = value;
         }
     }
 
