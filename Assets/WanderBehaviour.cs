@@ -12,6 +12,11 @@ public class WanderBehaviour : LemmingBehaviour
             lemming.transform.forward = -lemming.transform.forward;
         }
 
+        if (lemming.CharacterController.isGrounded && !lemming.floorForwardSensor.Check(lemming.transform))
+        {
+            lemming.Jump();
+        }
+
         lemming.MovementVelocity = lemming.transform.forward * lemming.MovementSpeed;
     }
 }
