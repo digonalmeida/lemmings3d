@@ -5,8 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class LemmingController : MonoBehaviour
 {
-
-
     [SerializeField]
     private float movementSpeed = 3;
 
