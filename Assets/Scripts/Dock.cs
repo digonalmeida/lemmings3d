@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -42,4 +43,16 @@ public class Dock : MonoBehaviour {
         parachuteSkill.Invoke();
     }
 
+
+    private void Update()
+    {
+
+        UpdateDockInfo();
+
+    }
+
+    private void UpdateDockInfo()
+    {
+        return;
+    }
 }

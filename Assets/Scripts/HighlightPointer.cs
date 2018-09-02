@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class HighlightPointer : MonoBehaviour {
 
@@ -19,6 +20,13 @@ public class HighlightPointer : MonoBehaviour {
 
     void RaycastForHighlightable()
     {
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            HighlightOff();
+            return;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit[] hitInfo = Physics.CapsuleCastAll(ray.origin, ray.origin + ray.direction * distance, radius, ray.direction, 0, highlaytableLayers);
