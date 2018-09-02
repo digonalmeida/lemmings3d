@@ -8,7 +8,8 @@ Shader "Custom/Outlined/ShillouetteOutline" {
         _RimPow ("Rim Power", Float) = 1.0
     }
     SubShader {
-        Pass {
+        
+		Pass {
                 Name "Behind"
                 Tags { "RenderType"="transparent" "Queue" = "Transparent" }
                 Blend SrcAlpha OneMinusSrcAlpha
@@ -17,6 +18,14 @@ Shader "Custom/Outlined/ShillouetteOutline" {
                 ZWrite Off
                 LOD 200                    
                
+
+			   	Stencil{
+					Ref 2
+					Comp NotEqual
+					Pass Replace
+				}
+
+
                 CGPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
@@ -56,43 +65,46 @@ Shader "Custom/Outlined/ShillouetteOutline" {
                 ENDCG
             }
            
-            Pass {
-                Name "Regular"
-                Tags { "RenderType"="Opaque" }
-                ZTest LEqual                // this checks for depth of the pixel being less than or equal to the shader
-                ZWrite On                   // and if the depth is ok, it renders the main texture.
-                Cull Back
-                LOD 200
+        Pass 
+		{
+            Name "Regular"
+                
+			Tags { "RenderType"="Opaque" }
+            ZTest LEqual                // this checks for depth of the pixel being less than or equal to the shader
+            ZWrite On                   // and if the depth is ok, it renders the main texture.
+            Cull Back
+            LOD 200
                
-                CGPROGRAM
-                #pragma vertex vert
-                #pragma fragment frag
-                #include "UnityCG.cginc"
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include "UnityCG.cginc"
                
-                struct v2f {
-                    float4 pos : SV_POSITION;
-                    float2 uv : TEXCOORD0;
-                };
+            struct v2f {
+                float4 pos : SV_POSITION;
+                float2 uv : TEXCOORD0;
+            };
                
-                sampler2D _MainTex;
-                float4 _MainTex_ST;
-				fixed4 _MainColor;
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+			fixed4 _MainColor;
                
-                v2f vert (appdata_base v)
-                {
-                    v2f o;
-                    o.pos = UnityObjectToClipPos(v.vertex);
-                    o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
-                    return o;
-                }
+            v2f vert (appdata_base v)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(v.vertex);
+                o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+                return o;
+            }
                
-                half4 frag (v2f i) : COLOR
-                {
-                    half4 texcol = tex2D(_MainTex,i.uv) * _MainColor;
-                    return texcol;
-                }
-                ENDCG
-            }          
-        }
-    FallBack "VertexLit"
+            half4 frag (v2f i) : COLOR
+            {
+                half4 texcol = tex2D(_MainTex,i.uv) * _MainColor;
+                return texcol;
+            }
+            ENDCG
+        }          
+    }
+    
+	FallBack "VertexLit"
 }

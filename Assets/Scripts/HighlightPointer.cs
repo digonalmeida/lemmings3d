@@ -7,10 +7,10 @@ public class HighlightPointer : MonoBehaviour {
     public bool checkForHighlightable;
     public LayerMask highlaytableLayers;
     public float distance;
-    public float radious;
+    public float radius;
     public bool isHighlighting { get; private set; }
     public HighlightableObject highlightedObject { get; private set; }
-
+    
 
     void Update()
     {
@@ -20,28 +20,47 @@ public class HighlightPointer : MonoBehaviour {
     void RaycastForHighlightable()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hitInfo;
-        if (Physics.CapsuleCast(ray.origin, ray.origin + ray.direction * distance, radious, ray.direction * distance,out hitInfo, distance, highlaytableLayers))
+
+        RaycastHit[] hitInfo = Physics.CapsuleCastAll(ray.origin, ray.origin + ray.direction * distance, radius, ray.direction, 0, highlaytableLayers);
+
+        foreach (RaycastHit hit in hitInfo)
         {
-            highlightedObject = hitInfo.collider.gameObject.GetComponentInParent<HighlightableObject>();
+            highlightedObject = hit.collider.gameObject.GetComponentInParent<HighlightableObject>();
             if (highlightedObject != null)
             {
-                isHighlighting = true;
+
+                if (!isHighlighting)
+                {
+                    HighlightOn();
+                }
+                
                 return;
             }
-
         }
 
-        isHighlighting = false;
-        highlightedObject = null;
+
+        HighlightOff();
     }
 
     private void OnDrawGizmos()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Gizmos.DrawSphere(ray.origin, radious);
+        Gizmos.DrawSphere(ray.origin, radius);
+        Gizmos.DrawSphere(ray.origin + ray.direction * distance, radius);
         Gizmos.DrawLine(ray.origin, ray.origin + ray.direction * distance);
-        
+
     }
+
+    private void HighlightOn()
+    {
+        isHighlighting = true;
+    }
+
+    private void HighlightOff()
+    {
+        isHighlighting = false;
+        highlightedObject = null;
+    }
+
 
 }

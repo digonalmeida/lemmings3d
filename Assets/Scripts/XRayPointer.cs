@@ -32,7 +32,6 @@ public class XRayPointer : MonoBehaviour {
         {
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * raydistance);
             RaycastHit[] hits = Physics.CapsuleCastAll(ray.origin, ray.origin + ray.direction * raydistance, xRayRadius, ray.direction * raydistance, raydistance, wallLayer);
 
             foreach (RaycastHit hit in hits)
