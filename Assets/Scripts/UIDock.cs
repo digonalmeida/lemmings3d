@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Dock : MonoBehaviour {
+public class UIDock : MonoBehaviour {
+
+    public List<UIDockInfo> dockInfos = new List<UIDockInfo>();
 
     public UnityEvent pause;
     public UnityEvent explodeAll;
@@ -43,6 +45,10 @@ public class Dock : MonoBehaviour {
         parachuteSkill.Invoke();
     }
 
+    public void DebugText(string text)
+    {
+        Debug.Log(text);
+    }
 
     private void Update()
     {
@@ -53,6 +59,9 @@ public class Dock : MonoBehaviour {
 
     private void UpdateDockInfo()
     {
-        return;
+        foreach (var info in dockInfos)
+        {
+            info.UpdateInfo();
+        }
     }
 }
