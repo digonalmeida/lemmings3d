@@ -8,33 +8,37 @@ public class LemmingMovementController : MonoBehaviour
     //Internal Variables
     private float movementSpeed = 3;
     private LayerMask wallsLayerMask;
+    private LayerMask lemmingsActionLayerMask;
     private RaycastHit[] raycastHits;
+    private Collider[] overlapSphereHits;
+    private bool climbing;
 
     //Reference Variables
     private LemmingStateController lemmingStateController;
-    [SerializeField]
     private Vector3 nextWaypoint;
     private Vector3 movementDirection;
-
-    //Awake Method
-    private void Awake()
-    {
-        lemmingStateController = this.GetComponent<LemmingStateController>();
-    }
 
     //Start Method
     void Start ()
     {
+        //Initialize Variables
         nextWaypoint = this.transform.position;
-        movementDirection = Vector3.right;
+        lemmingStateController = this.GetComponent<LemmingStateController>();
+        movementDirection = Directions.East;
         wallsLayerMask = LayerMask.GetMask("Wall");
+        lemmingsActionLayerMask = LayerMask.GetMask("LemmingAction");
         raycastHits = new RaycastHit[1];
+        overlapSphereHits = new Collider[1];
     }
 
     //Set Direction
-    public void setDirection(Vector3 newDirection)
+    public void setNewDirection(Vector3 newDirection)
     {
-        movementDirection = newDirection;
+        if(newDirection != movementDirection)
+        {
+            updateWaypoint(newDirection);
+            movementDirection = newDirection;
+        }
     }
 
     //Fixed Update Method
@@ -44,105 +48,154 @@ public class LemmingMovementController : MonoBehaviour
         {
             //Check Floor
             int hits = Physics.RaycastNonAlloc(this.transform.position, Vector3.down, raycastHits, 1f, wallsLayerMask);
-            if (hits == 0)
+            if (hits == 0 && !climbing)
             {
-                nextWaypoint.Set(this.transform.position.x, this.transform.position.y - 1f, this.transform.position.z);
+                nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y - 1f, nextWaypoint.z);
                 //TODO (Remove Skills, etc)
             }
             else
             {
-                //Check Walls
-                hits = Physics.RaycastNonAlloc(this.transform.position, movementDirection, raycastHits, 0.45f, wallsLayerMask);
-                if (hits == 1)
+                //Check Movement Impairing Skills
+                if (!lemmingStateController.checkMovementBlockingSkills())
                 {
-                    if (movementDirection == Vector3.right)
+                    //Check Other Lemmings Actions
+                    hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
+                    for (int i = 0; i < hits; i++)
                     {
-                        setDirection(Vector3.left);
-                        nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.6f);
+                        LemmingStateController otherLemmingStateController = overlapSphereHits[i].GetComponentInParent<LemmingStateController>();
+                        if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnNorth) && movementDirection != Directions.North)
+                        {
+                            setNewDirection(Directions.North);
+                            return;
+                        }
+                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnEast) && movementDirection != Directions.East)
+                        {
+                            setNewDirection(Directions.East);
+                            return;
+                        }
+                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnSouth) && movementDirection != Directions.South)
+                        {
+                            setNewDirection(Directions.South);
+                            return;
+                        }
+                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnWest) && movementDirection != Directions.West)
+                        {
+                            setNewDirection(Directions.West);
+                            return;
+                        }
                     }
-                    else if (movementDirection == Vector3.left)
+
+                    //Check Walls
+                    hits = Physics.RaycastNonAlloc(this.transform.position, movementDirection, raycastHits, 0.45f, wallsLayerMask);
+                    if (hits == 1)
                     {
-                        setDirection(Vector3.right);
-                        nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z + 0.6f);
+                        if (lemmingStateController.checkSkill(Skill.Climber))
+                        {
+                            climbing = true;
+                            nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y + 1f, nextWaypoint.z);
+                        }
+                        else
+                        {
+                            //Turn Around
+                            if (movementDirection == Directions.North) setNewDirection(Directions.South);
+                            else if (movementDirection == Directions.East) setNewDirection(Directions.West);
+                            else if (movementDirection == Directions.South) setNewDirection(Directions.North);
+                            else if (movementDirection == Directions.West) setNewDirection(Directions.East);
+                        }
                     }
-                    else if (movementDirection == Vector3.forward)
+                    else
                     {
-                        setDirection(Vector3.back);
-                        nextWaypoint.Set(this.transform.position.x - 0.6f, this.transform.position.y, this.transform.position.z);
-                    }
-                    else if (movementDirection == Vector3.back)
-                    {
-                        setDirection(Vector3.forward);
-                        nextWaypoint.Set(this.transform.position.x + 0.6f, this.transform.position.y, this.transform.position.z);
+                        climbing = false;
+                        updateWaypoint(movementDirection);
                     }
                 }
-                else updateWaypoint();
             }
         }
         //Move Lemming
         else this.transform.position = Vector3.MoveTowards(this.transform.position, nextWaypoint, movementSpeed * Time.deltaTime);
     }
 
-    //On Trigger Enter
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Box Collider Enter");
-        //TODO: Lemming Actions
-    }
-
     //Main Movement Logic
-    private void updateWaypoint()
+    private void updateWaypoint(Vector3 newDirection)
     {
-        if (movementDirection == Vector3.right)
+        //Change Direction
+        if (newDirection != movementDirection)
         {
-            if (this.transform.position.x < 0f)
+            if (movementDirection == Directions.North)
             {
-                if(System.Math.Round(Mathf.Abs(this.transform.position.x % 1), 2) == 0.3) nextWaypoint.Set(this.transform.position.x + 0.6f, this.transform.position.y, this.transform.position.z);
-                else nextWaypoint.Set(this.transform.position.x + 0.4f, this.transform.position.y, this.transform.position.z);
+                if (newDirection == Directions.South) nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
+                else if (newDirection == Directions.West) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
             }
-            else
+            else if (movementDirection == Directions.East)
             {
-                if (System.Math.Round(Mathf.Abs(this.transform.position.x % 1), 2) == 0.7) nextWaypoint.Set(this.transform.position.x + 0.6f, this.transform.position.y, this.transform.position.z);
-                else nextWaypoint.Set(this.transform.position.x + 0.4f, this.transform.position.y, this.transform.position.z);
+                if (newDirection == Directions.West) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
+                else if (newDirection == Directions.North) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
+            }
+            else if (movementDirection == Directions.South)
+            {
+                if (newDirection == Directions.North) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
+                else if (newDirection == Directions.East) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
+            }
+            else if (movementDirection == Directions.West)
+            {
+                if (newDirection == Directions.East) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
+                else if (newDirection == Directions.South) nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
             }
         }
-        else if (movementDirection == Vector3.left)
+        //Continue Movement
+        else
         {
-            if (this.transform.position.x < 0f)
+            if (movementDirection == Directions.North)
             {
-                if (System.Math.Round(Mathf.Abs(this.transform.position.x % 1), 2) == 0.3) nextWaypoint.Set(this.transform.position.x - 0.4f, this.transform.position.y, this.transform.position.z);
-                else nextWaypoint.Set(this.transform.position.x - 0.6f, this.transform.position.y, this.transform.position.z);
+                if (nextWaypoint.z < 0f)
+                {
+                    if (System.Math.Round(Mathf.Abs(nextWaypoint.z % 1), 2) == 0.3) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.4f);
+                    else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
+                }
+                else
+                {
+                    if (System.Math.Round(Mathf.Abs(nextWaypoint.z % 1), 2) == 0.7) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.4f);
+                    else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
+                }
             }
-            else
+            else if (movementDirection == Directions.East)
             {
-                if (System.Math.Round(Mathf.Abs(this.transform.position.x % 1), 2) == 0.7) nextWaypoint.Set(this.transform.position.x - 0.4f, this.transform.position.y, this.transform.position.z);
-                else nextWaypoint.Set(this.transform.position.x - 0.6f, this.transform.position.y, this.transform.position.z);
+                if (nextWaypoint.x < 0f)
+                {
+                    if (System.Math.Round(Mathf.Abs(nextWaypoint.x % 1), 2) == 0.3) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
+                    else nextWaypoint.Set(nextWaypoint.x + 0.4f, nextWaypoint.y, nextWaypoint.z);
+                }
+                else
+                {
+                    if (System.Math.Round(Mathf.Abs(nextWaypoint.x % 1), 2) == 0.7) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
+                    else nextWaypoint.Set(nextWaypoint.x + 0.4f, nextWaypoint.y, nextWaypoint.z);
+                }
             }
-        }
-        else if (movementDirection == Vector3.forward)
-        {
-            if (this.transform.position.z < 0f)
+            else if (movementDirection == Directions.South)
             {
-                if (System.Math.Round(Mathf.Abs(this.transform.position.z % 1), 2) == 0.3) nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z + 0.4f);
-                else nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z + 0.6f);
+                if (nextWaypoint.z < 0f)
+                {
+                    if (System.Math.Round(Mathf.Abs(nextWaypoint.z % 1), 2) == 0.3) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
+                    else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.4f);
+                }
+                else
+                {
+                    if (System.Math.Round(Mathf.Abs(nextWaypoint.z % 1), 2) == 0.7) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
+                    else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.4f);
+                }
             }
-            else
+            else if (movementDirection == Directions.West)
             {
-                if (System.Math.Round(Mathf.Abs(this.transform.position.z % 1), 2) == 0.7) nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z + 0.4f);
-                else nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z + 0.6f);
-            }
-        }
-        else if (movementDirection == Vector3.back)
-        {
-            if (this.transform.position.z < 0f)
-            {
-                if (System.Math.Round(Mathf.Abs(this.transform.position.z % 1), 2) == 0.3) nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.6f);
-                else nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.4f);
-            }
-            else
-            {
-                if (System.Math.Round(Mathf.Abs(this.transform.position.z % 1), 2) == 0.7) nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.6f);
-                else nextWaypoint.Set(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.4f);
+                if (nextWaypoint.x < 0f)
+                {
+                    if (System.Math.Round(Mathf.Abs(nextWaypoint.x % 1), 2) == 0.3) nextWaypoint.Set(nextWaypoint.x - 0.4f, nextWaypoint.y, nextWaypoint.z);
+                    else nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
+                }
+                else
+                {
+                    if (System.Math.Round(Mathf.Abs(nextWaypoint.x % 1), 2) == 0.7) nextWaypoint.Set(nextWaypoint.x - 0.4f, nextWaypoint.y, nextWaypoint.z);
+                    else nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
+                }
             }
         }
     }

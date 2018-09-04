@@ -22,6 +22,7 @@ public class LemmingStateController : MonoBehaviour
 {
     //Variables
     private bool[] skillsArray;
+    private GameObject actionObject;
 
     //Start Method
     private void Start()
@@ -32,6 +33,9 @@ public class LemmingStateController : MonoBehaviour
         {
             skillsArray[i] = false;
         }
+
+        //Initialize Other Variables
+        actionObject = this.transform.GetChild(0).gameObject;
     }
 
     //Check Lemming for a certain skill
@@ -99,5 +103,11 @@ public class LemmingStateController : MonoBehaviour
                 skillsArray[9] = value;
                 break;
         }
+    }
+
+    //Check Movement Blockers
+    public bool checkMovementBlockingSkills()
+    {
+        return skillsArray[1] || skillsArray[2] || skillsArray[3] || skillsArray[4] || skillsArray[8];
     }
 }
