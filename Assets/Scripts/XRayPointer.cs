@@ -10,8 +10,8 @@ public class XRayPointer : MonoBehaviour {
     [Header("X-Ray Check")]
     public LayerMask wallLayer;
     public float raydistance = 100;
-    public float xRayRadius = 1;
-
+    public float xRayRadius = 0.75f;
+    public float thresholdAngle = 45;
 
     private void Awake()
     {
@@ -30,14 +30,13 @@ public class XRayPointer : MonoBehaviour {
 
         if (highlightPointerSCript.isHighlighting)
         {
+            
+            Collider[] hits = Physics.OverlapCapsule(highlightPointerSCript.highlightedObject.transform.position, Camera.main.transform.position, xRayRadius, wallLayer);
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hits = Physics.CapsuleCastAll(ray.origin, ray.origin + ray.direction * raydistance, xRayRadius, ray.direction * raydistance, raydistance, wallLayer);
-
-            foreach (RaycastHit hit in hits)
+            foreach (Collider hit in hits)
             {
-                XRayBlock tb = hit.collider.gameObject.GetComponent<XRayBlock>();
-                if (tb != null && tb.transform.position.y > highlightPointerSCript.highlightedObject.transform.position.y)
+                XRayBlock tb = hit.gameObject.GetComponent<XRayBlock>();
+                if (tb != null && Vector3.Angle(Camera.main.transform.position - highlightPointerSCript.highlightedObject.transform.position, tb.transform.position - highlightPointerSCript.highlightedObject.transform.position) < thresholdAngle)
                 {
                     tb.MakeTranslucent();
                 }

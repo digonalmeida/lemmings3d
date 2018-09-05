@@ -57,8 +57,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   distance: 50
-  radius: 0
-  capsuleMaterial: {fileID: 2100000, guid: 9d2506d42fdeda0408b6b09cbac10e3b, type: 2}
+  radius: 1
 --- !u!114 &114908694996111802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,4 +73,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   raydistance: 50
-  xRayRadius: 0.75
+  xRayRadius: 1
+  thresholdAngle: 45
