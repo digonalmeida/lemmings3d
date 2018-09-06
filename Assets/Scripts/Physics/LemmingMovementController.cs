@@ -41,72 +41,100 @@ public class LemmingMovementController : MonoBehaviour
         }
     }
 
+    //Check Floor Method
+    public bool checkFloor()
+    {
+        int hits = Physics.RaycastNonAlloc(this.transform.position, Vector3.down, raycastHits, 1f, wallsLayerMask);
+        if (hits == 0 && !climbing)
+        {
+            nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y - 1f, nextWaypoint.z);
+            //TODO (Remove Skills, etc)
+            return false;
+        }
+        else return true;
+    }
+
+    //Check Other Lemming Actions Method
+    public bool checkOtherLemmings()
+    {
+        //Check Other Lemmings Actions
+        int hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
+        for (int i = 0; i < hits; i++)
+        {
+            LemmingStateController otherLemmingStateController = overlapSphereHits[i].GetComponentInParent<LemmingStateController>();
+            if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnNorth) && movementDirection != Directions.North)
+            {
+                setNewDirection(Directions.North);
+                return false;
+            }
+            else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnEast) && movementDirection != Directions.East)
+            {
+                setNewDirection(Directions.East);
+                return false;
+            }
+            else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnSouth) && movementDirection != Directions.South)
+            {
+                setNewDirection(Directions.South);
+                return false;
+            }
+            else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnWest) && movementDirection != Directions.West)
+            {
+                setNewDirection(Directions.West);
+                return false;
+            }
+            else return true;
+        }
+        return true;
+    }
+
+    //Check Walls Method
+    public bool checkWalls()
+    {
+        //Check Walls
+        int hits = Physics.RaycastNonAlloc(this.transform.position, movementDirection, raycastHits, 0.45f, wallsLayerMask);
+        if (hits == 1)
+        {
+            if (lemmingStateController.checkSkill(Skill.Climber))
+            {
+                climbing = true;
+                nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y + 1f, nextWaypoint.z);
+            }
+            else
+            {
+                //Turn Around
+                if (movementDirection == Directions.North) setNewDirection(Directions.South);
+                else if (movementDirection == Directions.East) setNewDirection(Directions.West);
+                else if (movementDirection == Directions.South) setNewDirection(Directions.North);
+                else if (movementDirection == Directions.West) setNewDirection(Directions.East);
+            }
+            return false;
+        }
+        else return true;
+    }
+
     //Fixed Update Method
     private void FixedUpdate()
     {
+        //Check Waypoint Distance
         if ((nextWaypoint - this.transform.position) == Vector3.zero)
         {
             //Check Floor
-            int hits = Physics.RaycastNonAlloc(this.transform.position, Vector3.down, raycastHits, 1f, wallsLayerMask);
-            if (hits == 0 && !climbing)
-            {
-                nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y - 1f, nextWaypoint.z);
-                //TODO (Remove Skills, etc)
-            }
-            else
+            if(checkFloor())
             {
                 //Check Movement Impairing Skills
                 if (!lemmingStateController.checkMovementBlockingSkills())
                 {
-                    //Check Other Lemmings Actions
-                    hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
-                    for (int i = 0; i < hits; i++)
-                    {
-                        LemmingStateController otherLemmingStateController = overlapSphereHits[i].GetComponentInParent<LemmingStateController>();
-                        if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnNorth) && movementDirection != Directions.North)
-                        {
-                            setNewDirection(Directions.North);
-                            return;
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnEast) && movementDirection != Directions.East)
-                        {
-                            setNewDirection(Directions.East);
-                            return;
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnSouth) && movementDirection != Directions.South)
-                        {
-                            setNewDirection(Directions.South);
-                            return;
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnWest) && movementDirection != Directions.West)
-                        {
-                            setNewDirection(Directions.West);
-                            return;
-                        }
-                    }
-
-                    //Check Walls
-                    hits = Physics.RaycastNonAlloc(this.transform.position, movementDirection, raycastHits, 0.45f, wallsLayerMask);
-                    if (hits == 1)
-                    {
-                        if (lemmingStateController.checkSkill(Skill.Climber))
-                        {
-                            climbing = true;
-                            nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y + 1f, nextWaypoint.z);
-                        }
-                        else
-                        {
-                            //Turn Around
-                            if (movementDirection == Directions.North) setNewDirection(Directions.South);
-                            else if (movementDirection == Directions.East) setNewDirection(Directions.West);
-                            else if (movementDirection == Directions.South) setNewDirection(Directions.North);
-                            else if (movementDirection == Directions.West) setNewDirection(Directions.East);
-                        }
-                    }
+                    //Check Other Lemming Actions
+                    if (checkOtherLemmings()) return;
                     else
                     {
-                        climbing = false;
-                        updateWaypoint(movementDirection);
+                        //Check Walls
+                        if(checkWalls())
+                        {
+                            //Move Normally
+                            climbing = false;
+                            updateWaypoint(movementDirection);
+                        }
                     }
                 }
             }

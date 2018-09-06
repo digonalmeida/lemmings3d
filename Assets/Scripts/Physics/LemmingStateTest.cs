@@ -8,7 +8,7 @@ public class LemmingStateTest : MonoBehaviour
     public Skill[] skillsToSet;
 
 	// Use this for initialization
-	void Start ()
+	void OnEnable()
     {
         for(int i = 0; i < skillsToSet.Length; i++)
         {
