@@ -3,32 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Skills
-{
-    DrecreaseRate,
-    IncreaseRate,
-    Turn,
-    Parachute
-}
-
 public class UIDockInfo_Skill : UIDockInfo
 {
-
-    public Skills skill;
-    public bool skillEnabled;
-    public int skillCount;
+    //References
+    private SkillsController skillsControllerRef;
+    public Skill skill;
     public Text skillCountText;
     public Button skillButton;
 
-    public override void UpdateInfo()
+    //Control Variables
+    public bool skillEnabled;
+
+    private void Start()
     {
-
-        skillCountText.text = skillCount.ToString();
-
-        skillButton.interactable = !(!skillEnabled || skillCount <= 0);
-            
-        
-
+        skillsControllerRef = SkillsController.Instance;
     }
 
+    public override void UpdateInfo()
+    {
+        int skillCount = skillsControllerRef.getRemainingUses(skill);
+        skillCountText.text = skillCount.ToString();
+        skillButton.interactable = !(!skillEnabled || skillCount <= 0);
+    }
 }

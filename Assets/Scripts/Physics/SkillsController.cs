@@ -20,6 +20,7 @@ public enum Skill
 
 public class SkillsController : MonoBehaviour
 {
+    //Control Variables
     public int remainingBashers;
     public int remainingBlockers;
     public int remainingBuilders;
@@ -27,6 +28,66 @@ public class SkillsController : MonoBehaviour
     public int remainingDiggers;
     public int remainingExploders;
     public int remainingFloaters;
+
+    //Singleton Instance Variable
+    private static SkillsController instance;
+    public static SkillsController Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    //On Object Awake
+    private void Awake()
+    {
+        //Check Singleton
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
+    //On Object Destroy (Safeguard)
+    public void OnDestroy()
+    {
+        instance = null;
+    }
+
+    //Get Remaining Uses
+    public int getRemainingUses(Skill skill)
+    {
+        switch (skill)
+        {
+            case Skill.Basher:
+                return remainingBashers;
+            case Skill.Blocker_TurnEast:
+                return remainingBlockers;
+            case Skill.Blocker_TurnNorth:
+                return remainingBlockers;
+            case Skill.Blocker_TurnSouth:
+                return remainingBlockers;
+            case Skill.Blocker_TurnWest:
+                return remainingBlockers;
+            case Skill.Builder:
+                return remainingBuilders;
+            case Skill.Climber:
+                return remainingClimbers;
+            case Skill.Digger:
+                return remainingDiggers;
+            case Skill.Exploder:
+                return remainingExploders;
+            case Skill.Floater:
+                return remainingFloaters;
+            default:
+                return 0;
+        }
+    }
 
     //Assign Skills
     public void assignSkill(LemmingStateController lemming, Skill skill)
