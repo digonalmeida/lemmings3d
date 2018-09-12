@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class HighlightPointer : MonoBehaviour {
-
+public class HighlightPointer : MonoBehaviour
+{
     public bool checkForHighlightable;
     public LayerMask highlaytableLayers;
     public float distance;
@@ -12,7 +12,6 @@ public class HighlightPointer : MonoBehaviour {
     public bool isHighlighting { get; private set; }
     public HighlightableObject highlightedObject { get; private set; }
     
-
     void Update()
     {
         RaycastForHighlightable();

@@ -9,20 +9,22 @@ public class UIDockInfo_Skill : UIDockInfo
     private SkillsController skillsControllerRef;
     public Skill skill;
     public Text skillCountText;
-    public Button skillButton;
-
-    //Control Variables
-    public bool skillEnabled;
+    public Toggle toggleButton;
 
     private void Start()
     {
         skillsControllerRef = SkillsController.Instance;
     }
 
+    public void Activate()
+    {
+        skillsControllerRef.selectedSkill = skill;
+    }
+
     public override void UpdateInfo()
     {
         int skillCount = skillsControllerRef.getRemainingUses(skill);
         skillCountText.text = skillCount.ToString();
-        skillButton.interactable = !(!skillEnabled || skillCount <= 0);
+        toggleButton.interactable = skillCount > 0;
     }
 }

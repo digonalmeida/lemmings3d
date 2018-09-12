@@ -28,6 +28,7 @@ public class SkillsController : MonoBehaviour
     public int remainingDiggers;
     public int remainingExploders;
     public int remainingFloaters;
+    public Skill selectedSkill;
 
     //Singleton Instance Variable
     private static SkillsController instance;
@@ -57,6 +58,12 @@ public class SkillsController : MonoBehaviour
     public void OnDestroy()
     {
         instance = null;
+    }
+
+    //Start
+    public void Start()
+    {
+        selectedSkill = Skill.None;
     }
 
     //Get Remaining Uses
@@ -90,9 +97,9 @@ public class SkillsController : MonoBehaviour
     }
 
     //Assign Skills
-    public void assignSkill(LemmingStateController lemming, Skill skill)
+    public void assignSkill(LemmingStateController lemming)
     {
-        switch(skill)
+        switch(selectedSkill)
         {
             case Skill.Basher:
             {
@@ -185,5 +192,8 @@ public class SkillsController : MonoBehaviour
                 break;
             }
         }
+
+        //Finally...
+        selectedSkill = Skill.None;
     }
 }
