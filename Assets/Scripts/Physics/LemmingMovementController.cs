@@ -12,9 +12,11 @@ public class LemmingMovementController : MonoBehaviour
     private RaycastHit[] raycastHits;
     private Collider[] overlapSphereHits;
     private bool climbing;
+    private bool stopped = false;
 
     //Reference Variables
     private LemmingStateController lemmingStateController;
+    private LemmingActions lemmingActions;
     private Vector3 nextWaypoint;
     private Vector3 movementDirection;
 
@@ -24,6 +26,7 @@ public class LemmingMovementController : MonoBehaviour
         //Initialize Variables
         nextWaypoint = this.transform.position;
         lemmingStateController = this.GetComponent<LemmingStateController>();
+        lemmingActions = GetComponent<LemmingActions>();
         movementDirection = Directions.East;
         wallsLayerMask = LayerMask.GetMask("Wall");
         lemmingsActionLayerMask = LayerMask.GetMask("LemmingAction");
@@ -46,6 +49,9 @@ public class LemmingMovementController : MonoBehaviour
     {
         if ((nextWaypoint - this.transform.position) == Vector3.zero)
         {
+            if (stopped)
+                return;
+
             //Check Floor
             int hits = Physics.RaycastNonAlloc(this.transform.position, Vector3.down, raycastHits, 1f, wallsLayerMask);
             if (hits == 0 && !climbing)
@@ -59,31 +65,45 @@ public class LemmingMovementController : MonoBehaviour
                 if (!lemmingStateController.checkMovementBlockingSkills())
                 {
                     //Check Other Lemmings Actions
-                    hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
+                    hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask,QueryTriggerInteraction.Collide);
                     for (int i = 0; i < hits; i++)
                     {
+                        ExitPoint exitPoint = overlapSphereHits[i].GetComponentInParent<ExitPoint>();
+                        if (exitPoint != null)
+                        {
+                            nextWaypoint = exitPoint.exitLemmingFinalTransform.position;
+                            stopped = true;
+                            lemmingActions.EnterExitPoint();
+                            return;
+                        }
+
                         LemmingStateController otherLemmingStateController = overlapSphereHits[i].GetComponentInParent<LemmingStateController>();
-                        if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnNorth) && movementDirection != Directions.North)
+
+                        if (otherLemmingStateController != null)
                         {
-                            setNewDirection(Directions.North);
-                            return;
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnEast) && movementDirection != Directions.East)
-                        {
-                            setNewDirection(Directions.East);
-                            return;
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnSouth) && movementDirection != Directions.South)
-                        {
-                            setNewDirection(Directions.South);
-                            return;
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnWest) && movementDirection != Directions.West)
-                        {
-                            setNewDirection(Directions.West);
-                            return;
+                            if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnNorth) && movementDirection != Directions.North)
+                            {
+                                setNewDirection(Directions.North);
+                                return;
+                            }
+                            else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnEast) && movementDirection != Directions.East)
+                            {
+                                setNewDirection(Directions.East);
+                                return;
+                            }
+                            else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnSouth) && movementDirection != Directions.South)
+                            {
+                                setNewDirection(Directions.South);
+                                return;
+                            }
+                            else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnWest) && movementDirection != Directions.West)
+                            {
+                                setNewDirection(Directions.West);
+                                return;
+                            }
                         }
                     }
+
 
                     //Check Walls
                     hits = Physics.RaycastNonAlloc(this.transform.position, movementDirection, raycastHits, 0.45f, wallsLayerMask);
