@@ -20,5 +20,13 @@ public class LevelControllerEditor : Editor
         {
             levelController.Refresh();
         }
+        if (GUILayout.Button("Save"))
+        {
+            levelController.SaveLevel();
+        }
+        if (GUILayout.Button("Load"))
+        {
+            levelController.LoadLevel();
+        }
     }
 }

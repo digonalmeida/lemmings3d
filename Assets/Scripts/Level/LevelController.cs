@@ -7,8 +7,6 @@ public class LevelController : MonoBehaviour {
     [SerializeField]
     private Level level;
 
-    private Level lastLevel = null;
-
     [SerializeField]
     private GameObject cursor;
 
@@ -16,13 +14,7 @@ public class LevelController : MonoBehaviour {
     private GameObject addCursor;
 
     [SerializeField]
-    private LevelBlockController emptyPrefab;
-
-    [SerializeField]
-    private LevelBlockController simplePrefab;
-
-    [SerializeField]
-    private LevelBlockController stairsPrefab;
+    private List<LevelBlockController> blockPrefabs = new List<LevelBlockController>();
 
     [SerializeField]
     private Vector3Int inputPosition = new Vector3Int(0,0,0);
@@ -37,6 +29,31 @@ public class LevelController : MonoBehaviour {
 
     [SerializeField]
     private LevelBlock.BlockType inputBlock = LevelBlock.BlockType.Simple;
+
+    [SerializeField]
+    private List<LevelData> levels;
+
+    [SerializeField]
+    private int selectedLevelSlot = 0;
+
+    private Level lastLevel = null;
+
+    public void LoadLevel()
+    {
+        level = levels[selectedLevelSlot].Level;
+        UpdateLevel();
+        Refresh();
+    }
+
+    public void StartLevel()
+    {
+
+    }
+
+    public void SaveLevel()
+    {
+        levels[selectedLevelSlot].Level = level;
+    }
 
     public void Refresh()
     {
@@ -94,26 +111,12 @@ public class LevelController : MonoBehaviour {
         }
 
         LevelBlockController prefab = null;
+        block = null;
+
         if(levelBlock != null)
         {
-            switch (levelBlock.Type)
-            {
-                case LevelBlock.BlockType.Empty:
-                    prefab = emptyPrefab;
-                    break;
-                case LevelBlock.BlockType.Simple:
-                    prefab = simplePrefab;
-                    break;
-                case LevelBlock.BlockType.Stairs:
-                    prefab = stairsPrefab;
-                    break;
-                default:
-                    break;
-            }
-
+            prefab = FindblockPrefabWithType(levelBlock.Type);
         }
-
-        block = null;
 
         if(prefab != null)
         {
@@ -132,7 +135,16 @@ public class LevelController : MonoBehaviour {
         var block = GetLevelBlock(position);
         if (block != null)
         {
-            block.DestroyBlock();
+
+            if (!Application.isPlaying)
+            {
+                DestroyImmediate(block.gameObject);
+            }
+            else
+            {
+                block.DestroyBlock();
+            }
+            
         }
     }
 
@@ -156,8 +168,36 @@ public class LevelController : MonoBehaviour {
         }
     }
 
+    private void UpdateBrushIndex(int index)
+    {
+        if(index == 0 || index >= blockPrefabs.Count)
+        {
+            return;
+        }
+
+        brushBlock = blockPrefabs[index].Block.Type;
+    }
+
+    private LevelBlockController FindblockPrefabWithType(LevelBlock.BlockType type)
+    {
+        foreach(var block in blockPrefabs)
+        {
+            if(block == null)
+            {
+                continue;
+            }
+
+            if(block.Block.Type == type)
+            {
+                return block;
+            }
+        }
+        return null;
+    }
+
     public void Update()
     {
+       
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             brushBlock = LevelBlock.BlockType.Simple;
@@ -249,6 +289,7 @@ public class LevelController : MonoBehaviour {
         position = new Vector3Int();
         return false;
     }
+
     public bool GetSelectMousePosition(out Vector3Int position)
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);

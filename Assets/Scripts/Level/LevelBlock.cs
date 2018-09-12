@@ -5,6 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class LevelBlock
 {
+    /*The position is used on level serialization*/
+    [HideInInspector]
+    [SerializeField]
+    private Vector3Int position;
+
     [SerializeField]
     private BlockType type = BlockType.Simple;
 
@@ -48,5 +53,18 @@ public class LevelBlock
         {
             direction = value;
         }
+    }
+
+    public Vector3Int Position
+    {
+        get
+        {
+            return position;
+        }
+        set
+        {
+            position = value;
+        }
+
     }
 }

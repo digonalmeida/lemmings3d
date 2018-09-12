@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "level", menuName = "lemmings/level", order = 1)]
 [System.Serializable]
-public class Level: ScriptableObject
+public class Level: ISerializationCallbackReceiver
 {
+    //Used to save level on serialization
+    [HideInInspector]
     [SerializeField]
+    private List<LevelBlock> serializedLevelBlocks = new List<LevelBlock>();
+
     private Dictionary<Vector3Int, LevelBlock> blocks = new Dictionary<Vector3Int, LevelBlock>();
-    
+
     public Dictionary<Vector3Int, LevelBlock> Blocks
     {
         get
@@ -22,6 +24,8 @@ public class Level: ScriptableObject
     {
         blocks.Clear();
     }
+
+    
 
     public void Set(Vector3Int position, LevelBlock levelBlock)
     {
@@ -36,5 +40,31 @@ public class Level: ScriptableObject
         }
 
         return blocks[position];
+    }
+
+    void ISerializationCallbackReceiver.OnBeforeSerialize()
+    {
+        serializedLevelBlocks.Clear();
+
+        foreach(var pair in blocks)
+        {
+            var pos = pair.Key;
+            var block = pair.Value;
+            if (block == null)
+            {
+                continue;
+            }
+            block.Position = pos;
+            serializedLevelBlocks.Add(block);
+        }
+    }
+
+    void ISerializationCallbackReceiver.OnAfterDeserialize()
+    {
+        blocks.Clear();
+        foreach(var block in serializedLevelBlocks)
+        {
+            blocks.Add(block.Position, block);
+        }
     }
 }

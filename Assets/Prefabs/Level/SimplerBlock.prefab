@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114538339768680630}
   - component: {fileID: 114494957267869400}
   m_Layer: 9
-  m_Name: SimpleBlock 1
+  m_Name: SimplerBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,6 +229,7 @@ MonoBehaviour:
   destroyEffectPrefab: {fileID: 1819064822894524, guid: cdbdcc3536e960544b29ce3705b988ff,
     type: 2}
   levelBlock:
+    position: {x: 0, y: 0, z: 0}
     type: 1
     direction: 0
 --- !u!114 &114538339768680630

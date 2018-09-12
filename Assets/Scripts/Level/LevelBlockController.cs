@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[CreateAssetMenu(fileName = "level", menuName = "lemmings/level", order = 1)]
+[System.Serializable]
 
 public class LevelBlockController : MonoBehaviour
 {
@@ -32,7 +34,6 @@ public class LevelBlockController : MonoBehaviour
     public void DestroyBlock()
     {
         Instantiate(destroyEffectPrefab, transform.position, Quaternion.identity);
-
         Destroy(gameObject);
     }
 
