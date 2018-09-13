@@ -97,7 +97,7 @@ public class SkillsController : MonoBehaviour
     }
 
     //Assign Skills
-    public void assignSkill(LemmingStateController lemming)
+    public bool assignSkill(LemmingStateController lemming)
     {
         switch(selectedSkill)
         {
@@ -105,92 +105,143 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingBashers > 0)
                 {
-                    lemming.setSkill(Skill.Basher, true);
-                    remainingBashers--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Basher, true);
+                        remainingBashers--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
-            }    
+                else return false;
+            }
             case Skill.Blocker_TurnNorth:
             {
                 if (remainingBlockers > 0)
                 {
-                    lemming.setSkill(Skill.Blocker_TurnNorth, true);
-                    remainingBlockers--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Blocker_TurnNorth, true);
+                        remainingBlockers--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
             case Skill.Blocker_TurnEast:
             {
                 if (remainingBlockers > 0)
                 {
-                    lemming.setSkill(Skill.Blocker_TurnEast, true);
-                    remainingBlockers--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Blocker_TurnEast, true);
+                        remainingBlockers--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
             case Skill.Blocker_TurnSouth:
             {
                 if (remainingBlockers > 0)
                 {
-                    lemming.setSkill(Skill.Blocker_TurnSouth, true);
-                    remainingBlockers--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Blocker_TurnSouth, true);
+                        remainingBlockers--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
             case Skill.Blocker_TurnWest:
             {
                 if (remainingBlockers > 0)
                 {
-                    lemming.setSkill(Skill.Blocker_TurnWest, true);
-                    remainingBlockers--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Blocker_TurnWest, true);
+                        remainingBlockers--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
             case Skill.Builder:
             {
                 if (remainingBuilders > 0)
                 {
-                    lemming.setSkill(Skill.Builder, true);
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Builder, true);
                         remainingBuilders--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
             case Skill.Climber:
             {
                 if (remainingClimbers > 0)
                 {
-                    lemming.setSkill(Skill.Climber, true);
-                    remainingClimbers--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Climber, true);
+                        remainingClimbers--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
             case Skill.Digger:
             {
                 if (remainingDiggers > 0)
                 {
-                    lemming.setSkill(Skill.Digger, true);
-                    remainingDiggers--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Digger, true);
+                        remainingDiggers--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
             case Skill.Exploder:
             {
                 if (remainingExploders > 0)
                 {
-                    lemming.setSkill(Skill.Exploder, true);
-                    remainingExploders--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Exploder, true);
+                        remainingExploders--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
             case Skill.Floater:
             {
                 if (remainingFloaters > 0)
                 {
-                    lemming.setSkill(Skill.Floater, true);
-                    remainingFloaters--;
+                    if (!lemming.checkSkill(selectedSkill))
+                    {
+                        lemming.setSkill(Skill.Floater, true);
+                        remainingFloaters--;
+                        return true;
+                    }
+                    else return false;
                 }
-                break;
+                else return false;
             }
+            default: return false;
         }
 
         //Finally...

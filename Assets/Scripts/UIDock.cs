@@ -33,20 +33,6 @@ public class UIDock : MonoBehaviour
         increaseRate.Invoke();
     }
 
-
-    public void BlockerButton(bool active)
-    {
-        if (active) SkillsController.Instance.selectedSkill = Skill.Blocker_TurnEast;
-        else SkillsController.Instance.selectedSkill = Skill.None;
-    }
-
-    public void ClimberButton(bool active)
-    {
-        if (active) SkillsController.Instance.selectedSkill = Skill.Climber;
-        else SkillsController.Instance.selectedSkill = Skill.None;
-    }
-
-
     public void DebugText(string text)
     {
         Debug.Log(text);
