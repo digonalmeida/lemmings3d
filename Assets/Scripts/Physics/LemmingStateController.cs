@@ -2,22 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Skill
-{
-    None,
-    Basher,             //Horizontal Dig
-    Blocker_TurnNorth,  //Change Direction (North)
-    Blocker_TurnEast,   //Change Direction (East)
-    Blocker_TurnSouth,   //Change Direction (South)
-    Blocker_TurnWest,   //Change Direction (West)
-    Builder,            //Stairs
-    Climber,            //Climb Walls
-    Digger,             //Vertical Dig
-    Exploder,           //Self-Destruct
-    Floater             //Umbrella
-    //Miner             //Diagonal Dig
-}
-
 public class LemmingStateController : MonoBehaviour
 {
     //Variables

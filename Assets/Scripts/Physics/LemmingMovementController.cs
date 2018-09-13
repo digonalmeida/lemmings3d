@@ -44,6 +44,7 @@ public class LemmingMovementController : MonoBehaviour
     //Fixed Update Method
     private void FixedUpdate()
     {
+        //Check Waypoint Distance
         if ((nextWaypoint - this.transform.position) == Vector3.zero)
         {
             //Check Floor
@@ -58,7 +59,7 @@ public class LemmingMovementController : MonoBehaviour
                 //Check Movement Impairing Skills
                 if (!lemmingStateController.checkMovementBlockingSkills())
                 {
-                    //Check Other Lemmings Actions
+                    //Check Other Lemming Actions
                     hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
                     for (int i = 0; i < hits; i++)
                     {
@@ -66,22 +67,18 @@ public class LemmingMovementController : MonoBehaviour
                         if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnNorth) && movementDirection != Directions.North)
                         {
                             setNewDirection(Directions.North);
-                            return;
                         }
                         else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnEast) && movementDirection != Directions.East)
                         {
                             setNewDirection(Directions.East);
-                            return;
                         }
                         else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnSouth) && movementDirection != Directions.South)
                         {
                             setNewDirection(Directions.South);
-                            return;
                         }
                         else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnWest) && movementDirection != Directions.West)
                         {
                             setNewDirection(Directions.West);
-                            return;
                         }
                     }
 
@@ -105,6 +102,7 @@ public class LemmingMovementController : MonoBehaviour
                     }
                     else
                     {
+                        //Move Normally
                         climbing = false;
                         updateWaypoint(movementDirection);
                     }
