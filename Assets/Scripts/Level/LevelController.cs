@@ -8,12 +8,6 @@ public class LevelController : MonoBehaviour {
     private Level level;
 
     [SerializeField]
-    private GameObject cursor;
-
-    [SerializeField]
-    private GameObject addCursor;
-
-    [SerializeField]
     private List<LevelBlockController> blockPrefabs = new List<LevelBlockController>();
 
     [SerializeField]
@@ -25,7 +19,7 @@ public class LevelController : MonoBehaviour {
     private Dictionary<Vector3Int, LevelBlockController> levelBlocks = new Dictionary<Vector3Int, LevelBlockController>();
 
     [SerializeField]
-    private LevelBlock.BlockType brushBlock = LevelBlock.BlockType.Simple;
+    private LevelBlock brushBlock = new LevelBlock();
 
     [SerializeField]
     private LevelBlock.BlockType inputBlock = LevelBlock.BlockType.Simple;
@@ -43,11 +37,6 @@ public class LevelController : MonoBehaviour {
         level = levels[selectedLevelSlot].Level;
         UpdateLevel();
         Refresh();
-    }
-
-    public void StartLevel()
-    {
-
     }
 
     public void SaveLevel()
@@ -80,7 +69,9 @@ public class LevelController : MonoBehaviour {
     public void SetInputBlock()
     {
         var block = new LevelBlock();
-        block.Type = inputBlock;
+        block.Type = brushBlock.Type;
+        block.Direction = brushBlock.Direction;
+        block.Position = brushBlock.Position;
         level.Set(inputPosition, block);
         UpdateLevel();
     }
@@ -168,16 +159,6 @@ public class LevelController : MonoBehaviour {
         }
     }
 
-    private void UpdateBrushIndex(int index)
-    {
-        if(index == 0 || index >= blockPrefabs.Count)
-        {
-            return;
-        }
-
-        brushBlock = blockPrefabs[index].Block.Type;
-    }
-
     private LevelBlockController FindblockPrefabWithType(LevelBlock.BlockType type)
     {
         foreach(var block in blockPrefabs)
@@ -197,112 +178,5 @@ public class LevelController : MonoBehaviour {
 
     public void Update()
     {
-       
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            brushBlock = LevelBlock.BlockType.Simple;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            brushBlock = LevelBlock.BlockType.Stairs;
-        }
-
-        if (GetSelectMousePosition(out inputPosition))
-        {
-            cursor.transform.position = inputPosition;
-        }
-        else
-        {
-            return;
-        }
-
-        if (GetAddMousePosition(out inputPosition))
-        {
-            addCursor.transform.position = inputPosition;
-        }
-      
-        timeout -= Time.deltaTime;
-        if(timeout<=0)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    inputPosition = Vector3Int.RoundToInt(cursor.transform.position);
-                    inputBlock = LevelBlock.BlockType.Empty;
-                    level.Set(inputPosition, null);
-                    UpdateLevel();
-                    timeout = 0.1f;
-                }
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                inputPosition = Vector3Int.RoundToInt(addCursor.transform.position);
-                inputBlock = brushBlock;
-                SetInputBlock();
-                timeout = 0.1f;
-            }
-        }
-    }
-
-    public bool GetAddMousePosition(out Vector3Int position)
-    {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, 1000, LayerMask.GetMask("Wall")))
-        {
-            var distanceVector = hitInfo.point - hitInfo.collider.transform.position;
-            if(Mathf.Abs(distanceVector.x) > Mathf.Abs(distanceVector.y))
-            {
-                if(Mathf.Abs(distanceVector.x) > Mathf.Abs(distanceVector.z))
-                {
-                    distanceVector.y = 0;
-                    distanceVector.z = 0;
-                }
-                else
-                {
-                    distanceVector.x = 0;
-                    distanceVector.y = 0;
-                }
-                
-            }
-            else
-            {
-                if (Mathf.Abs(distanceVector.y) > Mathf.Abs(distanceVector.z))
-                {
-                    distanceVector.x = 0;
-                    distanceVector.z = 0;
-                }
-                else
-                {
-                    distanceVector.y = 0;
-                    distanceVector.z = 0;
-                }
-            }
-            distanceVector.Normalize();
-            position = Vector3Int.RoundToInt(hitInfo.point + (distanceVector/2));
-
-            return true;
-        }
-        position = new Vector3Int();
-        return false;
-    }
-
-    public bool GetSelectMousePosition(out Vector3Int position)
-    {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, 1000, LayerMask.GetMask("Wall")))
-        {
-
-            position = Vector3Int.RoundToInt(hitInfo.collider.transform.position);
-
-            return true;
-        }
-        position = new Vector3Int();
-        return false;
     }
 }
