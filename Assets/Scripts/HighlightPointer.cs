@@ -33,7 +33,7 @@ public class HighlightPointer : MonoBehaviour
         foreach (RaycastHit hit in hitInfo)
         {
             highlightedObject = hit.collider.gameObject.GetComponentInParent<HighlightableObject>();
-            if (highlightedObject != null)
+            if (highlightedObject != null && highlightedObject.canBeHighlighted)
             {
 
                 if (!isHighlighting)

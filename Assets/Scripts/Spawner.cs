@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
+
+    public LevelController levelController;
+
     [SerializeField]
     private GameObject spawnable = null;
     [SerializeField]
@@ -27,5 +30,6 @@ public class Spawner : MonoBehaviour {
     private void Spawn()
     {
         Instantiate(spawnable, transform.position, transform.rotation);
+        LevelController.TriggerLemmingSpawned();
     }
 }

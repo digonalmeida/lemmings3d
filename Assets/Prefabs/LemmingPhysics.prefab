@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114074379581637128}
   - component: {fileID: 114610503967714868}
   - component: {fileID: 114414441361848402}
+  - component: {fileID: 114320360772001390}
   m_Layer: 10
   m_Name: LemmingPhysics
   m_TagString: Untagged
@@ -89,7 +90,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 939d6d7ffaff4ad4e920c13cc8ff569f, type: 2}
   m_StaticBatchInfo:
@@ -156,6 +156,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a65f94d161296cf4f88da10406e08417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114320360772001390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1309299061133194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09b5f9d960ce804a8e9c8618e34ef64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDetroyAfterEnterExitPoint: 2
 --- !u!114 &114414441361848402
 MonoBehaviour:
   m_ObjectHideFlags: 1
