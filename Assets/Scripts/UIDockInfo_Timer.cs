@@ -13,5 +13,4 @@ public class UIDockInfo_Timer : UIDockInfo {
         time = Time.time;
         timeText.text = ((int)time / 60).ToString("0") + ":" + (time % 60).ToString("00");
     }
-
 }

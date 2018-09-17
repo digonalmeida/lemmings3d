@@ -47,6 +47,7 @@ public class LemmingMovementController : MonoBehaviour
     //Fixed Update Method
     private void FixedUpdate()
     {
+        //Check Waypoint Distance
         if ((nextWaypoint - this.transform.position) == Vector3.zero)
         {
             if (stopped)
@@ -125,6 +126,7 @@ public class LemmingMovementController : MonoBehaviour
                     }
                     else
                     {
+                        //Move Normally
                         climbing = false;
                         updateWaypoint(movementDirection);
                     }

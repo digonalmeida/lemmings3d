@@ -55,5 +55,7 @@ public class Spawner_Physics : MonoBehaviour
             obj.SetActive(true);
         }
         else Instantiate(spawnable, this.transform.position, this.transform.rotation);
+
+        LevelController.TriggerLemmingSpawned();
     }
 }

@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class UIDock : MonoBehaviour {
-
+public class UIDock : MonoBehaviour
+{
     public List<UIDockInfo> dockInfos = new List<UIDockInfo>();
 
     public UnityEvent pause;
     public UnityEvent explodeAll;
     public UnityEvent decreaseRate;
     public UnityEvent increaseRate;
-	public UnityEvent turnSkill;
-    public UnityEvent parachuteSkill;
 
     public void PauseButton()
     {
@@ -35,16 +33,6 @@ public class UIDock : MonoBehaviour {
         increaseRate.Invoke();
     }
 
-    public void TurnSkillButton()
-    {
-        turnSkill.Invoke();
-    }
-
-    public void ParachuteSkillButton()
-    {
-        parachuteSkill.Invoke();
-    }
-
     public void DebugText(string text)
     {
         Debug.Log(text);
@@ -52,9 +40,7 @@ public class UIDock : MonoBehaviour {
 
     private void Update()
     {
-
         UpdateDockInfo();
-
     }
 
     private void UpdateDockInfo()

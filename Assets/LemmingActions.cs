@@ -32,6 +32,13 @@ public class LemmingActions : MonoBehaviour {
 
     private void EliminateLemming()
     {
+        CountExit();
+
         Destroy(gameObject);
+    }
+
+    private void CountExit()
+    {
+        LevelController.TriggerLemmingReachedExit();
     }
 }
