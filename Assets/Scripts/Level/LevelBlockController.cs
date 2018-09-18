@@ -36,7 +36,10 @@ public class LevelBlockController : MonoBehaviour
         Instantiate(destroyEffectPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
-
+    void Update()
+    {
+        UpdateBlockState();
+    }
     public void UpdateBlockState()
     {
         if(levelBlock == null)
@@ -65,5 +68,6 @@ public class LevelBlockController : MonoBehaviour
 
         var euler = transform.eulerAngles;
         euler.y = rot;
+        transform.eulerAngles = euler;
     }
 }

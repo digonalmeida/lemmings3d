@@ -16,11 +16,18 @@ public class LevelBlock
     [SerializeField]
     private Directions direction = Directions.North;
 
+    public void Rotate()
+    {
+        direction = (Directions)(((int)direction + 1) % 4);
+    }
+
     public enum BlockType
     {
         Empty,
         Simple,
-        Stairs
+        Stairs,
+        Start,
+        End
     }
     
     public enum Directions

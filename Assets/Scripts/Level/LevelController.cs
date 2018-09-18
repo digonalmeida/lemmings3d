@@ -66,6 +66,28 @@ public class LevelController : MonoBehaviour {
         levelBlocks.Clear();
     }
 
+    public void AddBlock(Vector3Int position)
+    {
+        var block = new LevelBlock();
+        block.Type = brushBlock.Type;
+        block.Direction = brushBlock.Direction;
+        block.Position = brushBlock.Position;
+        level.Set(position, block);
+        UpdateLevel();
+    }
+
+    public void SetBlockEmpty(Vector3Int position)
+    {
+        level.Set(position, null);
+        UpdateLevel();
+    }
+
+    public void Rotate(Vector3Int position)
+    {
+        level.Rotate(position);
+        UpdateLevel();
+    }
+
     public void SetInputBlock()
     {
         var block = new LevelBlock();
@@ -85,6 +107,10 @@ public class LevelController : MonoBehaviour {
         }
     }
 
+    public void ChangeType()
+    {
+        brushBlock.Type = (LevelBlock.BlockType)(Mathf.Max(1, (((int)brushBlock.Type + 1) % 5)));
+    }
     public void SpawnLevelBlock(Vector3Int position, LevelBlock levelBlock)
     {
         var block = GetLevelBlock(position);
@@ -99,6 +125,10 @@ public class LevelController : MonoBehaviour {
             {
                 return;
             }
+        }
+        else
+        {
+            RemoveLevelBlock(position);
         }
 
         LevelBlockController prefab = null;
@@ -121,12 +151,11 @@ public class LevelController : MonoBehaviour {
         levelBlocks[position] = block;
     }
 
-    public void RemoveLevelBlock(Vector3Int position)
+    private void RemoveLevelBlock(Vector3Int position)
     {
         var block = GetLevelBlock(position);
         if (block != null)
         {
-
             if (!Application.isPlaying)
             {
                 DestroyImmediate(block.gameObject);

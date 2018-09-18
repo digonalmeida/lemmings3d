@@ -24,12 +24,21 @@ public class Level: ISerializationCallbackReceiver
     {
         blocks.Clear();
     }
-
     
 
     public void Set(Vector3Int position, LevelBlock levelBlock)
     {
         blocks[position] = levelBlock;
+    }
+
+    public void Rotate(Vector3Int position)
+    {
+        var block = blocks[position];
+        if(block == null)
+        {
+            return;
+        }
+        block.Rotate();
     }
 
     public LevelBlock Get(Vector3Int position)
