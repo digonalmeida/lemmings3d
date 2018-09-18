@@ -27,7 +27,7 @@ public class LemmingMovementController : MonoBehaviour
         nextWaypoint = this.transform.position;
         lemmingStateController = this.GetComponent<LemmingStateController>();
         lemmingActions = GetComponent<LemmingActions>();
-        movementDirection = Directions.East;
+        movementDirection = Directions.West;
         wallsLayerMask = LayerMask.GetMask("Wall");
         lemmingsActionLayerMask = LayerMask.GetMask("LemmingAction");
         raycastHits = new RaycastHit[1];
