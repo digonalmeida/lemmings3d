@@ -66,7 +66,7 @@ public class LemmingMovementController : MonoBehaviour
                 if (!lemmingStateController.checkMovementBlockingSkills())
                 {
                     //Check Other Lemmings Actions
-                    hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask,QueryTriggerInteraction.Collide);
+                    hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
                     for (int i = 0; i < hits; i++)
                     {
                         ExitPoint exitPoint = overlapSphereHits[i].GetComponentInParent<ExitPoint>();

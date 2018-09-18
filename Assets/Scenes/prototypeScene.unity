@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4375388, g: 0.48537296, b: 0.56564957, a: 1}
+  m_IndirectSpecularColor: {r: 0.4375387, g: 0.48537272, b: 0.5656493, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1135,7 +1135,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 42.517998, y: 0}
+  m_AnchoredPosition: {x: 42.522263, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &150271745
@@ -3383,15 +3383,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4441725890636916, guid: 1109687b213101146a0c55397744244d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.3
+      value: 10.3
       objectReference: {fileID: 0}
     - target: {fileID: 4441725890636916, guid: 1109687b213101146a0c55397744244d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4441725890636916, guid: 1109687b213101146a0c55397744244d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.7
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4441725890636916, guid: 1109687b213101146a0c55397744244d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -3412,6 +3412,16 @@ Prefab:
     - target: {fileID: 4441725890636916, guid: 1109687b213101146a0c55397744244d, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592003619477178, guid: 1109687b213101146a0c55397744244d,
+        type: 2}
+      propertyPath: interval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114592003619477178, guid: 1109687b213101146a0c55397744244d,
+        type: 2}
+      propertyPath: count
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1109687b213101146a0c55397744244d, type: 2}
@@ -3895,7 +3905,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 142.55399, y: 0}
+  m_AnchoredPosition: {x: 142.56679, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &538084303
@@ -7376,7 +7386,12 @@ Prefab:
     - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
         type: 2}
       propertyPath: remainingClimbers
-      value: 3
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
+        type: 2}
+      propertyPath: remainingBlockers
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3c159774ae476c047a3f6cd5a0d7cc2f, type: 2}
@@ -12094,7 +12109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleButton: {fileID: 57209928}
-  skill: 3
+  skill: 2
   skillCountText: {fileID: 1872756901}
 --- !u!224 &1498832750
 RectTransform:

@@ -5,6 +5,7 @@ using UnityEngine;
 public class LemmingStateController : MonoBehaviour
 {
     //Variables
+    [SerializeField]
     private bool[] skillsArray;
     private GameObject actionObject;
 
@@ -61,15 +62,19 @@ public class LemmingStateController : MonoBehaviour
                 break;
             case Skill.Blocker_TurnNorth:
                 skillsArray[1] = value;
+                this.transform.GetChild(0).gameObject.SetActive(true);
                 break;
             case Skill.Blocker_TurnEast:
                 skillsArray[2] = value;
+                this.transform.GetChild(0).gameObject.SetActive(true);
                 break;
             case Skill.Blocker_TurnSouth:
                 skillsArray[3] = value;
+                this.transform.GetChild(0).gameObject.SetActive(true);
                 break;
             case Skill.Blocker_TurnWest:
                 skillsArray[4] = value;
+                this.transform.GetChild(0).gameObject.SetActive(true);
                 break;
             case Skill.Builder:
                 skillsArray[5] = value;
