@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class PivotCameraMovement : MonoBehaviour
 {
-
     public GameObject pivotObject = null;
-
-    [SerializeField]
-    private bool followSelectedLemming = false;
 
     [SerializeField]
     private float speed = 50;
@@ -27,25 +23,9 @@ public class PivotCameraMovement : MonoBehaviour
 
     [SerializeField]
     private Vector3 eulerRotation = new Vector3();
-
-
-	void Update ()
+    
+	private void Update ()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            var layerMask = LayerMask.GetMask("Lemming");
-            var hitInfo = new RaycastHit();
-            if (Physics.Raycast(ray, out hitInfo, 1000, layerMask))
-            {
-                var lemming = hitInfo.collider.GetComponent<LemmingController>();
-                if (lemming != null)
-                {
-                    pivotObject = lemming.gameObject;
-                    pivotPosition = Vector3.zero;
-                }
-            }
-        }
         if (Input.GetMouseButton(1))
         {
             var rotation = transform.rotation;
