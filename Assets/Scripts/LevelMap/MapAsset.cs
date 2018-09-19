@@ -23,6 +23,7 @@
             set
             {
                 level = value;
+                UnityEditor.EditorUtility.SetDirty(this);
             }
         }
     }

@@ -26,7 +26,7 @@
         {
             LoadFromScene();
             mapAsset.LevelMap = map;
-            RefreshScene();
+            RefreshScene();            
         }
 
         public void RefreshScene()

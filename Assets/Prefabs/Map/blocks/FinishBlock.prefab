@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65009906735550216}
   - component: {fileID: 114106212571560100}
   - component: {fileID: 114920141891270828}
+  - component: {fileID: 114776431130694804}
   m_Layer: 9
   m_Name: FinishBlock
   m_TagString: Untagged
@@ -92,7 +93,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1855052048049418}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -112,6 +113,18 @@ MonoBehaviour:
   materialNotTranslucent: {fileID: 2100000, guid: 7b59217b85e19e34cb59b554c009e6f0,
     type: 2}
   materialTranslucent: {fileID: 2100000, guid: 4f5a9c8bf22857b44986e06985902456, type: 2}
+--- !u!114 &114776431130694804
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1855052048049418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad4424b865448d479b52bb88547956a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitLemmingFinalTransform: {fileID: 4691957993556314}
 --- !u!114 &114920141891270828
 MonoBehaviour:
   m_ObjectHideFlags: 1

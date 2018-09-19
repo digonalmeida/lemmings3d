@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65939056193357710}
   - component: {fileID: 114647811104170942}
   - component: {fileID: 114079756600462144}
+  - component: {fileID: 114134808402223124}
   m_Layer: 9
   m_Name: EnterBlock
   m_TagString: Untagged
@@ -114,6 +115,20 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
     type: 3
     direction: 0
+--- !u!114 &114134808402223124
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313217878366878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45fa204f95b3a8d488fb6ad33d640697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnable: {fileID: 1309299061133194, guid: 938c6697f6acff548809a5fafdd7d984, type: 2}
+  count: 10
+  interval: 1
 --- !u!114 &114647811104170942
 MonoBehaviour:
   m_ObjectHideFlags: 1
