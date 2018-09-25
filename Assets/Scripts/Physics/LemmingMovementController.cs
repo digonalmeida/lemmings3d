@@ -24,14 +24,20 @@ public class LemmingMovementController : MonoBehaviour
     void Start ()
     {
         //Initialize Variables
-        nextWaypoint = this.transform.position;
         lemmingStateController = this.GetComponent<LemmingStateController>();
         lemmingActions = GetComponent<LemmingActions>();
-        movementDirection = Directions.West;
         wallsLayerMask = LayerMask.GetMask("Wall");
         lemmingsActionLayerMask = LayerMask.GetMask("LemmingAction");
         raycastHits = new RaycastHit[1];
         overlapSphereHits = new Collider[1];
+    }
+
+    //Set Initial Movement
+    public void setInitialMovementVariables(Vector3 initialPosition, Vector3 movementDirection)
+    {
+        this.transform.position = initialPosition;
+        nextWaypoint = this.transform.position;
+        this.movementDirection = movementDirection;
     }
 
     //Set Direction

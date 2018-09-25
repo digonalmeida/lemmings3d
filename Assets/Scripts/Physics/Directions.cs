@@ -10,7 +10,6 @@ public enum Direction
     West
 }
 
-
 public static class Directions
 {
     public static Vector3 North = Vector3.forward;
@@ -34,5 +33,4 @@ public static class Directions
                 return Vector3.zero;
         }
     }
-
 }
