@@ -715,7 +715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 42.517998, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &150271745
@@ -2072,7 +2072,7 @@ Prefab:
     - target: {fileID: 114592003619477178, guid: 1109687b213101146a0c55397744244d,
         type: 2}
       propertyPath: startingMovementDirection
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1109687b213101146a0c55397744244d, type: 2}
@@ -2388,7 +2388,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 142.55399, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &538084303
@@ -4357,6 +4357,36 @@ Prefab:
     - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
         type: 2}
       propertyPath: remainingClimbers
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
+        type: 2}
+      propertyPath: remainingFloaters
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
+        type: 2}
+      propertyPath: remainingExploders
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
+        type: 2}
+      propertyPath: remainingDiggers
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
+        type: 2}
+      propertyPath: remainingBuilders
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
+        type: 2}
+      propertyPath: remainingBlockers
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114677778124022250, guid: 3c159774ae476c047a3f6cd5a0d7cc2f,
+        type: 2}
+      propertyPath: remainingBashers
       value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
