@@ -6,19 +6,27 @@ using UnityEngine;
 public class LemmingSimpleMovementController : MonoBehaviour
 {
     //Internal Variables
+    [SerializeField]
     private float movementSpeed = 3;
+
+    [SerializeField]
+    private bool climb;
+
     private LayerMask wallsLayerMask;
     private LayerMask lemmingsActionLayerMask;
     private RaycastHit[] raycastHits;
     private Collider[] overlapSphereHits;
+
     private bool climbing;
     private bool stopped = false;
-
+    
     //Reference Variables
     private LemmingStateController lemmingStateController;
     private LemmingActions lemmingActions;
     private Vector3 nextWaypoint;
-    private Vector3 movementDirection;
+
+    [SerializeField]
+    private Direction movementDirection;
 
     private void Start ()
     {
@@ -26,14 +34,14 @@ public class LemmingSimpleMovementController : MonoBehaviour
         nextWaypoint = this.transform.position;
         lemmingStateController = this.GetComponent<LemmingStateController>();
         lemmingActions = GetComponent<LemmingActions>();
-        movementDirection = Directions.West;
+        movementDirection = Direction.West;
         wallsLayerMask = LayerMask.GetMask("Wall");
         lemmingsActionLayerMask = LayerMask.GetMask("LemmingAction");
         raycastHits = new RaycastHit[1];
         overlapSphereHits = new Collider[1];
     }
 
-    private void setNewDirection(Vector3 newDirection)
+    private void setNewDirection(Direction newDirection)
     {
         if(newDirection != movementDirection)
         {
@@ -93,7 +101,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
 
     private bool CheckWallForward()
     {
-        var hits = Physics.RaycastNonAlloc(this.transform.position, movementDirection, raycastHits, 0.45f, wallsLayerMask);
+        var hits = Physics.RaycastNonAlloc(this.transform.position, Directions.GetWorldDirection(movementDirection), raycastHits, 0.45f, wallsLayerMask);
         return hits > 0;
     }
 
@@ -122,7 +130,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
         
         if (CheckWallForward())
         {
-            if (lemmingStateController.checkSkill(Skill.Climber))
+            if (climb)
             {
                 SetNextWaypointClimbing();
             }
@@ -145,10 +153,10 @@ public class LemmingSimpleMovementController : MonoBehaviour
     private void SetNextWaypointTurnAround()
     {
         //Turn Around
-        if (movementDirection == Directions.North) setNewDirection(Directions.South);
-        else if (movementDirection == Directions.East) setNewDirection(Directions.West);
-        else if (movementDirection == Directions.South) setNewDirection(Directions.North);
-        else if (movementDirection == Directions.West) setNewDirection(Directions.East);
+        if (movementDirection == Direction.North) setNewDirection(Direction.South);
+        else if (movementDirection == Direction.East) setNewDirection(Direction.West);
+        else if (movementDirection == Direction.South) setNewDirection(Direction.North);
+        else if (movementDirection == Direction.West) setNewDirection(Direction.East);
     }
 
     private void SetNextWaypointClimbing()
@@ -183,39 +191,39 @@ public class LemmingSimpleMovementController : MonoBehaviour
         else
         {
             this.transform.position = Vector3.MoveTowards(this.transform.position, nextWaypoint, movementSpeed * Time.deltaTime);
+            transform.forward = Vector3.Lerp(transform.forward, Directions.GetWorldDirection(movementDirection), 7 * Time.deltaTime);
         }
     }
 
-    private void updateWaypoint(Vector3 newDirection)
+    private void updateWaypoint(Direction newDirection)
     {
-
         if (newDirection != movementDirection)
         {
-            if (movementDirection == Directions.North)
+            if (movementDirection == Direction.North)
             {
-                if (newDirection == Directions.South) nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
-                else if (newDirection == Directions.West) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
+                if (newDirection == Direction.South) nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
+                else if (newDirection == Direction.West) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
             }
-            else if (movementDirection == Directions.East)
+            else if (movementDirection == Direction.East)
             {
-                if (newDirection == Directions.West) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
-                else if (newDirection == Directions.North) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
+                if (newDirection == Direction.West) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
+                else if (newDirection == Direction.North) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
             }
-            else if (movementDirection == Directions.South)
+            else if (movementDirection == Direction.South)
             {
-                if (newDirection == Directions.North) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
-                else if (newDirection == Directions.East) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
+                if (newDirection == Direction.North) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
+                else if (newDirection == Direction.East) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
             }
-            else if (movementDirection == Directions.West)
+            else if (movementDirection == Direction.West)
             {
-                if (newDirection == Directions.East) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
-                else if (newDirection == Directions.South) nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
+                if (newDirection == Direction.East) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
+                else if (newDirection == Direction.South) nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
             }
         }
         //Continue Movement
         else
         {
-            if (movementDirection == Directions.North)
+            if (movementDirection == Direction.North)
             {
                 if (nextWaypoint.z < 0f)
                 {
@@ -228,7 +236,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
                     else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
                 }
             }
-            else if (movementDirection == Directions.East)
+            else if (movementDirection == Direction.East)
             {
                 if (nextWaypoint.x < 0f)
                 {
@@ -241,7 +249,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
                     else nextWaypoint.Set(nextWaypoint.x + 0.4f, nextWaypoint.y, nextWaypoint.z);
                 }
             }
-            else if (movementDirection == Directions.South)
+            else if (movementDirection == Direction.South)
             {
                 if (nextWaypoint.z < 0f)
                 {
@@ -254,7 +262,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
                     else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.4f);
                 }
             }
-            else if (movementDirection == Directions.West)
+            else if (movementDirection == Direction.West)
             {
                 if (nextWaypoint.x < 0f)
                 {

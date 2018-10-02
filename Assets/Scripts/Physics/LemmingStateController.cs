@@ -108,29 +108,29 @@ public class LemmingStateController : MonoBehaviour
             skillsArray[(int)Skill.Blocker_TurnWest];
     }
 
-    public Vector3 BlockingDirection
+    public Direction BlockingDirection
     {
         get
         {
             if(skillsArray[(int)Skill.Blocker_TurnNorth])
             {
-                return Directions.North;
+                return Direction.North;
             }
             else if (skillsArray[(int)Skill.Blocker_TurnEast])
             {
-                return Directions.East;
+                return Direction.East;
             }
             else if (skillsArray[(int)Skill.Blocker_TurnSouth])
             {
-                return Directions.South;
+                return Direction.South;
             }
             else if (skillsArray[(int)Skill.Blocker_TurnWest])
             {
-                return Directions.West;
+                return Direction.West;
             }
             else
             {
-                return Vector3.zero;
+                return Direction.North;
             }
         }
     }
