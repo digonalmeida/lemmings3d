@@ -5,16 +5,17 @@ using FiniteStateMachines;
 
 public class LemmingState : State<LemmingAI>
 {
-    private string animationName = "";
-    public string AnimationName { get; set; }
+    protected string AnimationName { get; set; }
 
     public override void Enter()
     {
         base.Enter();
-        if(animationName != "")
+        if(AnimationName != "")
         {
-            Agent.Animator.Play(animationName);
+            Agent.Animator.Play(AnimationName);
         }
+
+        Agent.MovementController.OnArrived += OnArrivedAtWaypoint;
     }
 
     public override void Update()
@@ -22,8 +23,14 @@ public class LemmingState : State<LemmingAI>
         base.Update();
     }
 
+    public virtual void OnArrivedAtWaypoint()
+    {
+
+    }
+
     public override void Exit()
     {
         base.Exit();
+        Agent.MovementController.OnArrived -= OnArrivedAtWaypoint;
     }
 }

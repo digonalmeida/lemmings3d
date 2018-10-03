@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ public class LemmingSimpleMovementController : MonoBehaviour
     //Internal Variables
     [SerializeField]
     private float movementSpeed = 3;
+
+    [SerializeField]
+    private float turningRate = 7;
 
     [SerializeField]
     private bool climb;
@@ -28,6 +32,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
     [SerializeField]
     private Direction movementDirection;
 
+    public Action OnArrived;
     private void Start ()
     {
         //Initialize Variables
@@ -50,13 +55,13 @@ public class LemmingSimpleMovementController : MonoBehaviour
         }
     }
 
-    private bool CheckFloor()
+    public bool CheckFloor()
     {
         int hits = Physics.RaycastNonAlloc(this.transform.position, Vector3.down, raycastHits, 1f, wallsLayerMask);
         return hits > 0;
     }
 
-    private bool TrySetWaypointExit()
+    public bool TrySetWaypointExit()
     {
         int hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
         for (int i = 0; i < hits; i++)
@@ -73,7 +78,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
         return false;
     }
 
-    private bool TrySetWaypointLemmingAction()
+    public bool TrySetWaypointLemmingAction()
     {
         int hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
         for (int i = 0; i < hits; i++)
@@ -99,7 +104,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
         return false;
     }
 
-    private bool CheckWallForward()
+    public bool CheckWallForward()
     {
         var hits = Physics.RaycastNonAlloc(this.transform.position, Directions.GetWorldDirection(movementDirection), raycastHits, 0.45f, wallsLayerMask);
         return hits > 0;
@@ -109,7 +114,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
     {
         if (!CheckFloor() && !climbing)
         {
-            SetNextWaypointFalling();
+            SetWaypointFalling();
             return;
         }
 
@@ -132,11 +137,11 @@ public class LemmingSimpleMovementController : MonoBehaviour
         {
             if (climb)
             {
-                SetNextWaypointClimbing();
+                SetWaypointClimbing();
             }
             else
             {
-                SetNextWaypointTurnAround();
+                SetWaypointTurnAround();
             }
             return;
         }
@@ -144,13 +149,13 @@ public class LemmingSimpleMovementController : MonoBehaviour
         SetWaypointForward();
     }
 
-    private void SetWaypointForward()
+    public void SetWaypointForward()
     {
         climbing = false;
         updateWaypoint(movementDirection);
     }
 
-    private void SetNextWaypointTurnAround()
+    public void SetWaypointTurnAround()
     {
         //Turn Around
         if (movementDirection == Direction.North) setNewDirection(Direction.South);
@@ -159,20 +164,20 @@ public class LemmingSimpleMovementController : MonoBehaviour
         else if (movementDirection == Direction.West) setNewDirection(Direction.East);
     }
 
-    private void SetNextWaypointClimbing()
+    public void SetWaypointClimbing()
     {
         climbing = true;
         nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y + 1f, nextWaypoint.z);
     }
 
-    private void SetWaypontExit(ExitPoint exitPoint)
+    public void SetWaypontExit(ExitPoint exitPoint)
     {
         nextWaypoint = exitPoint.exitLemmingFinalTransform.position;
         stopped = true;
         lemmingActions.EnterExitPoint();
     }
 
-    private void SetNextWaypointFalling()
+    public void SetWaypointFalling()
     {
         nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y - 1f, nextWaypoint.z);
     }
@@ -186,12 +191,19 @@ public class LemmingSimpleMovementController : MonoBehaviour
 
         if ((nextWaypoint - this.transform.position) == Vector3.zero)
         {
-            CalculateNextWaypoint();
+            if (OnArrived != null)
+            {
+                OnArrived();
+            }
+
+            //CalculateNextWaypoint();
         }
         else
         {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, nextWaypoint, movementSpeed * Time.deltaTime);
-            transform.forward = Vector3.Lerp(transform.forward, Directions.GetWorldDirection(movementDirection), 7 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, nextWaypoint, movementSpeed * Time.fixedDeltaTime);
+            var t = Vector3.RotateTowards(transform.forward, Directions.GetWorldDirection(movementDirection), turningRate * Time.fixedDeltaTime, 100);
+            
+            transform.forward = t;
         }
     }
 
