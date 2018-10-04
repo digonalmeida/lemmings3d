@@ -11,6 +11,12 @@ public class LemmingSimpleMovementController : MonoBehaviour
     private float movementSpeed = 3;
 
     [SerializeField]
+    private float gravitySpeed = 0;
+
+    [SerializeField]
+    private float gravityAcceleration = 10;
+
+    [SerializeField]
     private float turningRate = 7;
 
     [SerializeField]
@@ -23,19 +29,41 @@ public class LemmingSimpleMovementController : MonoBehaviour
 
     private bool climbing;
     private bool stopped = false;
-    
+    private bool arrived = false;
+
     //Reference Variables
     private LemmingStateController lemmingStateController;
     private LemmingActions lemmingActions;
     private Vector3 nextWaypoint;
 
     [SerializeField]
+    private Vector3Int targetPositionAddress;
+
+    [SerializeField]
+    private Corner currentCorner;
+    
+    [SerializeField]
     private Direction movementDirection;
 
+    [SerializeField]
+    private Direction facingDirection;
+
+    public enum Corner
+    {
+        Center,
+        NorthEast,
+        NorthWest,
+        SouthEast,
+        SouthWest
+    }
+
     public Action OnArrived;
+    public Action OnGetNextWaypoint;
+
     private void Start ()
     {
         //Initialize Variables
+        targetPositionAddress = Vector3Int.RoundToInt(transform.position);
         nextWaypoint = this.transform.position;
         lemmingStateController = this.GetComponent<LemmingStateController>();
         lemmingActions = GetComponent<LemmingActions>();
@@ -46,13 +74,35 @@ public class LemmingSimpleMovementController : MonoBehaviour
         overlapSphereHits = new Collider[1];
     }
 
-    private void setNewDirection(Direction newDirection)
+    public Vector3 GetTargetPosition(Vector3Int centerPos, Corner corner)
     {
-        if(newDirection != movementDirection)
+        Vector3 directionVec = new Vector3();
+        switch (corner)
         {
-            updateWaypoint(newDirection);
-            movementDirection = newDirection;
+            case Corner.Center:
+                directionVec = Vector3.zero;
+                break;
+            case Corner.NorthEast:
+                directionVec = Directions.North + Directions.East;
+                break;
+            case Corner.NorthWest:
+                directionVec = Directions.North + Directions.West;
+                break;
+            case Corner.SouthEast:
+                directionVec = Directions.South + Directions.East;
+                break;
+            case Corner.SouthWest:
+                directionVec = Directions.South + Directions.West;
+                break;
+            default:
+                break;
         }
+
+        float distance = 0.5f;
+        var distanceVec = directionVec.normalized * distance;
+        Vector3 pos = centerPos + distanceVec;
+        
+        return pos;
     }
 
     public bool CheckFloor()
@@ -94,7 +144,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
                     var direction = otherLemmingStateController.BlockingDirection;
                     if (movementDirection != direction)
                     {
-                        setNewDirection(direction);
+                        movementDirection = direction;
                         return true;
                     }
                 }
@@ -104,70 +154,55 @@ public class LemmingSimpleMovementController : MonoBehaviour
         return false;
     }
 
+    public void SetFacingDirection(Direction direction)
+    {
+        facingDirection = direction;
+    }
+
+    public Direction CheckChangeDirectionOrders()
+    {
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, 0.5f, overlapSphereHits, lemmingsActionLayerMask);
+        for (int i = 0; i < hits; i++)
+        {
+            var hit = overlapSphereHits[i];
+
+            LemmingStateController otherLemmingStateController = hit.GetComponentInParent<LemmingStateController>();
+
+            if (otherLemmingStateController != null)
+            {
+                if (otherLemmingStateController.checkIsBlocker())
+                {
+                    var direction = otherLemmingStateController.BlockingDirection;
+                    return direction;
+                }
+            }
+        }
+
+        return Direction.None;
+    }
+
     public bool CheckWallForward()
     {
-        var hits = Physics.RaycastNonAlloc(this.transform.position, Directions.GetWorldDirection(movementDirection), raycastHits, 0.45f, wallsLayerMask);
+        Debug.DrawRay(transform.position, Directions.GetWorldDirection(facingDirection));
+        var hits = Physics.RaycastNonAlloc(this.transform.position, Directions.GetWorldDirection(facingDirection), raycastHits, 0.45f, wallsLayerMask);
         return hits > 0;
     }
-
-    private void CalculateNextWaypoint()
-    {
-        if (!CheckFloor() && !climbing)
-        {
-            SetWaypointFalling();
-            return;
-        }
-
-        if (lemmingStateController.checkMovementBlockingSkills())
-        {
-            return;
-        }
-
-        if (TrySetWaypointExit())
-        {
-            return;
-        }
-
-        if (TrySetWaypointLemmingAction())
-        {
-            return;
-        }
-        
-        if (CheckWallForward())
-        {
-            if (climb)
-            {
-                SetWaypointClimbing();
-            }
-            else
-            {
-                SetWaypointTurnAround();
-            }
-            return;
-        }
-
-        SetWaypointForward();
-    }
-
+    
     public void SetWaypointForward()
     {
         climbing = false;
-        updateWaypoint(movementDirection);
+        movementDirection = facingDirection;
     }
 
     public void SetWaypointTurnAround()
     {
-        //Turn Around
-        if (movementDirection == Direction.North) setNewDirection(Direction.South);
-        else if (movementDirection == Direction.East) setNewDirection(Direction.West);
-        else if (movementDirection == Direction.South) setNewDirection(Direction.North);
-        else if (movementDirection == Direction.West) setNewDirection(Direction.East);
+        movementDirection = Directions.getOppositeDirection(movementDirection);
     }
 
     public void SetWaypointClimbing()
     {
         climbing = true;
-        nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y + 1f, nextWaypoint.z);
+        movementDirection = Direction.Up;
     }
 
     public void SetWaypontExit(ExitPoint exitPoint)
@@ -179,7 +214,20 @@ public class LemmingSimpleMovementController : MonoBehaviour
 
     public void SetWaypointFalling()
     {
-        nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y - 1f, nextWaypoint.z);
+        movementDirection = Direction.Down;
+    }
+
+    private void ApplyGravity()
+    {
+        if(movementDirection != Direction.Down)
+        {
+            gravitySpeed = 0;
+        }
+        else
+        {
+            gravitySpeed += gravityAcceleration * Time.fixedDeltaTime;
+        }
+        
     }
 
     private void FixedUpdate()
@@ -189,104 +237,181 @@ public class LemmingSimpleMovementController : MonoBehaviour
             return;
         }
 
-        if ((nextWaypoint - this.transform.position) == Vector3.zero)
+        if (!enabled)
         {
+            return;
+        }
+        
+        if(arrived)
+        {
+            if (OnGetNextWaypoint != null)
+            {
+                OnGetNextWaypoint();
+            }
+
+            UpdateWaypoint(movementDirection);
+            arrived = false;
+        }
+        var pos = GetTargetPosition(targetPositionAddress, currentCorner);
+        ApplyGravity();
+        transform.position = Vector3.MoveTowards(this.transform.position, pos, (movementSpeed + gravitySpeed) * Time.fixedDeltaTime);
+
+        var t = Vector3.RotateTowards(transform.forward, Directions.GetWorldDirection(facingDirection), turningRate * Time.fixedDeltaTime, 100);
+
+        transform.forward = t;
+        
+        if ((pos - this.transform.position) == Vector3.zero)
+        {
+            arrived = true;
             if (OnArrived != null)
             {
                 OnArrived();
             }
-
-            //CalculateNextWaypoint();
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(this.transform.position, nextWaypoint, movementSpeed * Time.fixedDeltaTime);
-            var t = Vector3.RotateTowards(transform.forward, Directions.GetWorldDirection(movementDirection), turningRate * Time.fixedDeltaTime, 100);
-            
-            transform.forward = t;
+           // Debug.Break();
         }
     }
 
-    private void updateWaypoint(Direction newDirection)
+    public bool TryMoveInCorners(Direction direction)
     {
-        if (newDirection != movementDirection)
+        Corner[] directionCorners;
+
+        switch (direction)
         {
-            if (movementDirection == Direction.North)
+            case Direction.North:
+                directionCorners = new Corner[] { Corner.SouthEast, Corner.NorthEast };
+                break;
+            case Direction.East:
+                directionCorners = new Corner[] { Corner.SouthWest, Corner.SouthEast };
+                break;
+            case Direction.South:
+                directionCorners = new Corner[] { Corner.NorthWest, Corner.SouthWest };
+                break;
+            case Direction.West:
+                directionCorners = new Corner[] { Corner.NorthEast, Corner.NorthWest };
+                break;
+            case Direction.Up:
+                return false;
+            case Direction.Down:
+                return false;
+            case Direction.None:
+                return false;
+            default:
+                return false;
+        }
+
+        if(directionCorners.Length < 1)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < directionCorners.Length; i++)
+        {
+            if(directionCorners[i] == currentCorner)
             {
-                if (newDirection == Direction.South) nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
-                else if (newDirection == Direction.West) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
-            }
-            else if (movementDirection == Direction.East)
-            {
-                if (newDirection == Direction.West) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
-                else if (newDirection == Direction.North) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
-            }
-            else if (movementDirection == Direction.South)
-            {
-                if (newDirection == Direction.North) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
-                else if (newDirection == Direction.East) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
-            }
-            else if (movementDirection == Direction.West)
-            {
-                if (newDirection == Direction.East) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
-                else if (newDirection == Direction.South) nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
+                int nextI = i + 1;
+                if (nextI >= directionCorners.Length)
+                {
+                    //set first corner in next waypoint
+                    currentCorner = directionCorners[0];
+                    return false;
+                }
+                else
+                {
+                    currentCorner = directionCorners[nextI];
+                    return true;
+                }
             }
         }
-        //Continue Movement
-        else
+
+        //not in a valid corner for this direction. rotate to it.
+
+        currentCorner = RotateCorner(currentCorner, directionCorners[0]);
+        return true;
+    }
+
+    private bool UpdateCorner(Direction newDirection)
+    {
+        Corner targetCorner = currentCorner;
+
+        switch (newDirection)
         {
-            if (movementDirection == Direction.North)
-            {
-                if (nextWaypoint.z < 0f)
-                {
-                    if (System.Math.Round(Mathf.Abs(nextWaypoint.z % 1), 2) == 0.3) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.4f);
-                    else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
-                }
-                else
-                {
-                    if (System.Math.Round(Mathf.Abs(nextWaypoint.z % 1), 2) == 0.7) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.4f);
-                    else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z + 0.6f);
-                }
-            }
-            else if (movementDirection == Direction.East)
-            {
-                if (nextWaypoint.x < 0f)
-                {
-                    if (System.Math.Round(Mathf.Abs(nextWaypoint.x % 1), 2) == 0.3) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
-                    else nextWaypoint.Set(nextWaypoint.x + 0.4f, nextWaypoint.y, nextWaypoint.z);
-                }
-                else
-                {
-                    if (System.Math.Round(Mathf.Abs(nextWaypoint.x % 1), 2) == 0.7) nextWaypoint.Set(nextWaypoint.x + 0.6f, nextWaypoint.y, nextWaypoint.z);
-                    else nextWaypoint.Set(nextWaypoint.x + 0.4f, nextWaypoint.y, nextWaypoint.z);
-                }
-            }
-            else if (movementDirection == Direction.South)
-            {
-                if (nextWaypoint.z < 0f)
-                {
-                    if (System.Math.Round(Mathf.Abs(nextWaypoint.z % 1), 2) == 0.3) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
-                    else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.4f);
-                }
-                else
-                {
-                    if (System.Math.Round(Mathf.Abs(nextWaypoint.z % 1), 2) == 0.7) nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.6f);
-                    else nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y, nextWaypoint.z - 0.4f);
-                }
-            }
-            else if (movementDirection == Direction.West)
-            {
-                if (nextWaypoint.x < 0f)
-                {
-                    if (System.Math.Round(Mathf.Abs(nextWaypoint.x % 1), 2) == 0.3) nextWaypoint.Set(nextWaypoint.x - 0.4f, nextWaypoint.y, nextWaypoint.z);
-                    else nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
-                }
-                else
-                {
-                    if (System.Math.Round(Mathf.Abs(nextWaypoint.x % 1), 2) == 0.7) nextWaypoint.Set(nextWaypoint.x - 0.4f, nextWaypoint.y, nextWaypoint.z);
-                    else nextWaypoint.Set(nextWaypoint.x - 0.6f, nextWaypoint.y, nextWaypoint.z);
-                }
-            }
+            case Direction.North:
+                targetCorner = Corner.NorthWest;
+                break;
+            case Direction.East:
+                targetCorner = Corner.SouthEast;
+                break;
+            case Direction.South:
+                targetCorner = Corner.SouthWest;
+                break;
+            case Direction.West:
+                targetCorner = Corner.NorthWest;
+                break;
+            case Direction.Up:
+                targetCorner = currentCorner;
+                break;
+            case Direction.Down:
+                targetCorner = currentCorner;
+                break;
+            case Direction.None:
+                targetCorner = Corner.Center;
+                break;
+            default:
+                break;
+        }
+
+        if(targetCorner == currentCorner)
+        {
+            return true;
+        }
+
+        currentCorner = RotateCorner(currentCorner, targetCorner);
+        
+        return false;
+    }
+
+    private Corner RotateCorner(Corner from, Corner to)
+    {
+        if (from == to)
+        {
+            return from;
+        }
+
+        if (to == Corner.Center)
+        {
+            return Corner.Center;
+        }
+
+        switch (from)
+        {
+            case Corner.Center:
+                return to;
+            case Corner.NorthEast:
+                return Corner.NorthWest;
+            case Corner.NorthWest:
+                return Corner.SouthWest;
+            case Corner.SouthEast:
+                return Corner.NorthEast;
+            case Corner.SouthWest:
+                return Corner.SouthEast;
+            default:
+                return Corner.Center;
         }
     }
+    
+    private void UpdateWaypoint(Direction newDirection)
+    {
+        if (newDirection != Direction.Up && newDirection != Direction.Down)
+        {
+            facingDirection = newDirection;
+        }
+
+        if (!TryMoveInCorners(newDirection))
+        {
+            targetPositionAddress += Vector3Int.RoundToInt(Directions.GetWorldDirection(newDirection));
+        }
+        
+        return;
+    }
+
 }

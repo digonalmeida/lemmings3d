@@ -16,18 +16,20 @@ public class LemmingFallingState : LemmingState
         Agent.MovementController.SetWaypointFalling();
     }
 
-    public override void OnArrivedAtWaypoint()
+    public override void OnGetNextWaypoint()
     {
-        base.OnArrivedAtWaypoint();
-
+        base.OnGetNextWaypoint();
+        
         if(Agent.MovementController.CheckFloor())
         {
             StateMachine.SetState(Agent.WalkingState);
+            Agent.Animator.Play("walking");
         }
         else
         {
             Agent.MovementController.SetWaypointFalling();
+            Agent.Animator.Play("falling");
+            Debug.Log("here");
         }
-        
     }
 }

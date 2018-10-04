@@ -13,32 +13,33 @@ public class LemmingWalkingState : LemmingState
     public override void Enter()
     {
         base.Enter();
+        Agent.MovementController.SetWaypointForward();
     }
 
-    public override void OnArrivedAtWaypoint()
+    public override void OnGetNextWaypoint()
     {
-        base.OnArrivedAtWaypoint();
+        base.OnGetNextWaypoint();
 
+        /*
         if (!Agent.MovementController.CheckFloor())
         {
             StateMachine.SetState(Agent.FallingState);
             return;
         }
+        */
+
+        var changeDirectionOrder = Agent.MovementController.CheckChangeDirectionOrders();
+        if(changeDirectionOrder != Direction.None)
+        {
+            Agent.MovementController.SetFacingDirection(changeDirectionOrder);
+        }
 
         if (Agent.MovementController.CheckWallForward())
         {
-            if(Agent.StateController.checkSkill(Skill.Climber))
-            {
-                StateMachine.SetState(Agent.ClimbingState);
-            }
-            else
-            {
-                Agent.MovementController.SetWaypointTurnAround();
-            }
-            
+            Agent.MovementController.SetWaypointTurnAround();            
             return;
         }
-        
+
         Agent.MovementController.SetWaypointForward();
     }
 }

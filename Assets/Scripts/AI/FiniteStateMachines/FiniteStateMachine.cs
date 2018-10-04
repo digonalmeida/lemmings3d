@@ -50,11 +50,10 @@ namespace FiniteStateMachines
 
         public void TriggerEvent(int triggerEvent)
         {
-
             if (_CurrentState != null)
             {
-               triggeredEvents.Add(triggerEvent);
-               _CurrentState.TriggerEvent(triggerEvent);
+                triggeredEvents.Add(triggerEvent);
+                _CurrentState.TriggerEvent(triggerEvent);
             }
         }
     }

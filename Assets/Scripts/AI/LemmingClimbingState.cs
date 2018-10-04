@@ -13,19 +13,19 @@ public class LemmingClimbingState : LemmingState
     public override void Enter()
     {
         base.Enter();
-        Agent.MovementController.SetWaypointClimbing();
     }
 
-    public override void OnArrivedAtWaypoint()
+    public override void OnGetNextWaypoint()
     {
-        base.OnArrivedAtWaypoint();
-
-        if (!Agent.MovementController.CheckWallForward())
+        base.OnGetNextWaypoint();
+        if(Agent.MovementController.CheckWallForward())
         {
-            StateMachine.SetState(Agent.WalkingState);
-            return;
+            Agent.MovementController.SetWaypointClimbing();
         }
-
-        Agent.MovementController.SetWaypointClimbing();
+        else
+        {
+            Agent.MovementController.SetWaypointForward();
+        }
+        
     }
 }

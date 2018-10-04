@@ -15,15 +15,23 @@ public class LemmingState : State<LemmingAI>
             Agent.Animator.Play(AnimationName);
         }
 
-        Agent.MovementController.OnArrived += OnArrivedAtWaypoint;
+       // Agent.MovementController.OnGetNextWaypoint += OnGetNextWaypoint;
     }
 
+    public override void TriggerEvent(int triggerEvent)
+    {
+        base.TriggerEvent(triggerEvent);
+        if(triggerEvent == (int) LemmingAI.Trigger.GetNextWaypoint)
+        {
+            OnGetNextWaypoint();
+        }
+    }
     public override void Update()
     {
         base.Update();
     }
 
-    public virtual void OnArrivedAtWaypoint()
+    public virtual void OnGetNextWaypoint()
     {
 
     }
@@ -31,6 +39,6 @@ public class LemmingState : State<LemmingAI>
     public override void Exit()
     {
         base.Exit();
-        Agent.MovementController.OnArrived -= OnArrivedAtWaypoint;
+       // Agent.MovementController.OnArrived -= OnGetNextWaypoint;
     }
 }
