@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using FiniteStateMachines;
+using UnityEngine;
 
 public class LemmingState : State<LemmingAI>
 {
@@ -10,7 +10,7 @@ public class LemmingState : State<LemmingAI>
     public override void Enter()
     {
         base.Enter();
-        if(AnimationName != "")
+        if (AnimationName != string.Empty)
         {
             Agent.Animator.Play(AnimationName);
         }
@@ -21,11 +21,12 @@ public class LemmingState : State<LemmingAI>
     public override void TriggerEvent(int triggerEvent)
     {
         base.TriggerEvent(triggerEvent);
-        if(triggerEvent == (int) LemmingAI.Trigger.GetNextWaypoint)
+        if (triggerEvent == (int)LemmingAI.Trigger.GetNextWaypoint)
         {
             OnGetNextWaypoint();
         }
     }
+
     public override void Update()
     {
         base.Update();
@@ -33,12 +34,10 @@ public class LemmingState : State<LemmingAI>
 
     public virtual void OnGetNextWaypoint()
     {
-
     }
 
     public override void Exit()
     {
         base.Exit();
-       // Agent.MovementController.OnArrived -= OnGetNextWaypoint;
     }
 }

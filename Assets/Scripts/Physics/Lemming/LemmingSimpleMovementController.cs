@@ -20,19 +20,16 @@ public class LemmingSimpleMovementController : MonoBehaviour
     private float turningRate = 7;
 
     [SerializeField]
-    private bool climb;
+    private float cornerDistance = 0.5f;
 
     private LayerMask wallsLayerMask;
     private LayerMask lemmingsActionLayerMask;
     private RaycastHit[] raycastHits;
     private Collider[] overlapSphereHits;
 
-    private bool climbing;
     private bool stopped = false;
     private bool arrived = false;
-
-    //Reference Variables
-    private LemmingStateController lemmingStateController;
+    
     private LemmingActions lemmingActions;
     private Vector3 nextWaypoint;
 
@@ -46,7 +43,25 @@ public class LemmingSimpleMovementController : MonoBehaviour
     private Direction movementDirection;
 
     [SerializeField]
-    private Direction facingDirection;
+    private Direction forwardDirection;
+
+    [SerializeField]
+    private bool useGravity = true;
+
+    private Vector3 facingDirectionVector;
+
+    public bool UseGravity
+    {
+        get
+        {
+            return useGravity;
+        }
+
+        set
+        {
+            useGravity = value;
+        }
+    }
 
     public enum Corner
     {
@@ -65,7 +80,6 @@ public class LemmingSimpleMovementController : MonoBehaviour
         //Initialize Variables
         targetPositionAddress = Vector3Int.RoundToInt(transform.position);
         nextWaypoint = this.transform.position;
-        lemmingStateController = this.GetComponent<LemmingStateController>();
         lemmingActions = GetComponent<LemmingActions>();
         movementDirection = Direction.West;
         wallsLayerMask = LayerMask.GetMask("Wall");
@@ -98,8 +112,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
                 break;
         }
 
-        float distance = 0.5f;
-        var distanceVec = directionVec.normalized * distance;
+        var distanceVec = directionVec.normalized * cornerDistance;
         Vector3 pos = centerPos + distanceVec;
         
         return pos;
@@ -125,43 +138,35 @@ public class LemmingSimpleMovementController : MonoBehaviour
                 return true;
             }
         }
+
         return false;
     }
 
-    public bool TrySetWaypointLemmingAction()
+    public ExitPoint CheckExitPoint()
     {
         int hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
         for (int i = 0; i < hits; i++)
         {
             var hit = overlapSphereHits[i];
 
-            LemmingStateController otherLemmingStateController = hit.GetComponentInParent<LemmingStateController>();
-
-            if (otherLemmingStateController != null)
+            ExitPoint exitPoint = hit.GetComponentInParent<ExitPoint>();
+            if (exitPoint != null)
             {
-                if (otherLemmingStateController.checkIsBlocker())
-                {
-                    var direction = otherLemmingStateController.BlockingDirection;
-                    if (movementDirection != direction)
-                    {
-                        movementDirection = direction;
-                        return true;
-                    }
-                }
+                return exitPoint;
             }
         }
 
-        return false;
+        return null;
     }
 
-    public void SetFacingDirection(Direction direction)
+    public void SetDirection(Direction direction)
     {
-        facingDirection = direction;
+        movementDirection = direction;
     }
 
     public Direction CheckChangeDirectionOrders()
     {
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, 0.5f, overlapSphereHits, lemmingsActionLayerMask);
+        int hits = Physics.OverlapSphereNonAlloc(targetPositionAddress, 0.5f, overlapSphereHits, lemmingsActionLayerMask);
         for (int i = 0; i < hits; i++)
         {
             var hit = overlapSphereHits[i];
@@ -183,25 +188,24 @@ public class LemmingSimpleMovementController : MonoBehaviour
 
     public bool CheckWallForward()
     {
-        Debug.DrawRay(transform.position, Directions.GetWorldDirection(facingDirection));
-        var hits = Physics.RaycastNonAlloc(this.transform.position, Directions.GetWorldDirection(facingDirection), raycastHits, 0.45f, wallsLayerMask);
+        Debug.DrawRay(transform.position, Directions.GetWorldDirection(forwardDirection));
+        var hits = Physics.RaycastNonAlloc(this.transform.position, Directions.GetWorldDirection(forwardDirection), raycastHits, 0.45f, wallsLayerMask);
         return hits > 0;
     }
     
-    public void SetWaypointForward()
+    public void SetDirectionForward()
     {
-        climbing = false;
-        movementDirection = facingDirection;
+       // climbing = false;
+        movementDirection = forwardDirection;
     }
 
-    public void SetWaypointTurnAround()
+    public void TurnAround()
     {
         movementDirection = Directions.getOppositeDirection(movementDirection);
     }
 
-    public void SetWaypointClimbing()
+    public void SetDirectionUp()
     {
-        climbing = true;
         movementDirection = Direction.Up;
     }
 
@@ -212,9 +216,14 @@ public class LemmingSimpleMovementController : MonoBehaviour
         lemmingActions.EnterExitPoint();
     }
 
-    public void SetWaypointFalling()
+    public void SetDirectionDown()
     {
         movementDirection = Direction.Down;
+    }
+
+    public void SetForwardDirection(Direction direction)
+    {
+        forwardDirection = direction;
     }
 
     private void ApplyGravity()
@@ -230,7 +239,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
         
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (stopped)
         {
@@ -252,14 +261,29 @@ public class LemmingSimpleMovementController : MonoBehaviour
             UpdateWaypoint(movementDirection);
             arrived = false;
         }
+
         var pos = GetTargetPosition(targetPositionAddress, currentCorner);
-        ApplyGravity();
-        transform.position = Vector3.MoveTowards(this.transform.position, pos, (movementSpeed + gravitySpeed) * Time.fixedDeltaTime);
 
-        var t = Vector3.RotateTowards(transform.forward, Directions.GetWorldDirection(facingDirection), turningRate * Time.fixedDeltaTime, 100);
-
-        transform.forward = t;
+        if(useGravity)
+        {
+            ApplyGravity();
+        }
         
+        transform.position = Vector3.MoveTowards(this.transform.position, pos, (movementSpeed + gravitySpeed) * Time.deltaTime);
+        Vector3 direction = pos - transform.position;
+        direction.y = 0;
+
+        if(direction.sqrMagnitude > 0)
+        {
+            facingDirectionVector = direction.normalized;
+        }
+        else
+        {
+            facingDirectionVector = Directions.GetWorldDirection(forwardDirection);
+        }
+
+        transform.forward = Vector3.RotateTowards(transform.forward, facingDirectionVector, turningRate * Time.deltaTime, 100);
+
         if ((pos - this.transform.position) == Vector3.zero)
         {
             arrived = true;
@@ -267,11 +291,10 @@ public class LemmingSimpleMovementController : MonoBehaviour
             {
                 OnArrived();
             }
-           // Debug.Break();
         }
     }
 
-    public bool TryMoveInCorners(Direction direction)
+    private bool TryMoveInCorners(Direction direction)
     {
         Corner[] directionCorners;
 
@@ -294,7 +317,8 @@ public class LemmingSimpleMovementController : MonoBehaviour
             case Direction.Down:
                 return false;
             case Direction.None:
-                return false;
+                currentCorner = Corner.Center;
+                return true;
             default:
                 return false;
         }
@@ -399,11 +423,12 @@ public class LemmingSimpleMovementController : MonoBehaviour
         }
     }
     
+
     private void UpdateWaypoint(Direction newDirection)
     {
-        if (newDirection != Direction.Up && newDirection != Direction.Down)
+        if (newDirection != Direction.Up && newDirection != Direction.Down && newDirection != Direction.None)
         {
-            facingDirection = newDirection;
+            forwardDirection = newDirection;
         }
 
         if (!TryMoveInCorners(newDirection))

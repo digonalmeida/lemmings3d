@@ -1,37 +1,50 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace FiniteStateMachines
+﻿namespace FiniteStateMachines
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+
     public class Transition<AgentType>
     {
         public static readonly int NoTrigger = -1;
 
-        private int _Trigger = -1;
-        public Condition _Condition = null; 
-        public State<AgentType> NextState;
-
-        public delegate bool Condition();
-
+        private int trigger = -1;
+        private Condition condition = null;
+        private State<AgentType> nextState;
+        
         public Transition(
             int trigger,
             Condition condition,
             State<AgentType> nextState)
         {
-            _Trigger = trigger;
-            _Condition = condition;
-            NextState = nextState;
+            this.trigger = trigger;
+            this.condition = condition;
+            this.nextState = nextState;
+        }
+        
+        public delegate bool Condition();
+
+        public State<AgentType> NextState
+        {
+            get
+            {
+                return nextState;
+            }
+
+            set
+            {
+                nextState = value;
+            }
         }
 
         public bool Check(List<int> triggers)
         {
-            if (triggers.Contains(_Trigger) || _Trigger == NoTrigger)
+            if (triggers.Contains(trigger) || trigger == NoTrigger)
             {
-                if (_Condition != null)
+                if (condition != null)
                 {
-                    if (_Condition())
+                    if (condition())
                     {
                         return true;
                     }

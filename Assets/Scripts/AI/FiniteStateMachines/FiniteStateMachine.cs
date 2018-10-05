@@ -1,62 +1,60 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace FiniteStateMachines
+﻿namespace FiniteStateMachines
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
 
     public class FiniteStateMachine<AgentType>
     {
-        public AgentType Agent;
-
-        private State<AgentType> _CurrentState;
-        List<int> triggeredEvents = new List<int>();
-
+        private State<AgentType> currentState;
+        private List<int> triggeredEvents = new List<int>();
 
         public FiniteStateMachine(AgentType agent)
         {
             Agent = agent;
         }
 
+        public AgentType Agent { get; set; }
+
         public void SetState(State<AgentType> state)
         {
-            if (_CurrentState != null)
+            if (currentState != null)
             {
-                _CurrentState.Exit();
+                currentState.Exit();
             }
-            _CurrentState = state;
-            if (_CurrentState != null)
+
+            currentState = state;
+
+            if (currentState != null)
             {
-                _CurrentState.Agent = Agent;
-                _CurrentState.StateMachine = this;
-                _CurrentState.Enter();
+                currentState.Agent = Agent;
+                currentState.StateMachine = this;
+                currentState.Enter();
             }
         }
 
         public void Update()
         {
-            if (_CurrentState != null)
+            if (currentState != null)
             {
-                _CurrentState.TriggeredEvents = triggeredEvents;
-                _CurrentState.CheckTransitions();
+                currentState.TriggeredEvents = triggeredEvents;
+                currentState.CheckTransitions();
                 triggeredEvents.Clear();
 
-                if (_CurrentState != null)
+                if (currentState != null)
                 {
-                    _CurrentState.Update();
+                    currentState.Update();
                 }
             }
         }
 
         public void TriggerEvent(int triggerEvent)
         {
-            if (_CurrentState != null)
+            if (currentState != null)
             {
                 triggeredEvents.Add(triggerEvent);
-                _CurrentState.TriggerEvent(triggerEvent);
+                currentState.TriggerEvent(triggerEvent);
             }
         }
     }
-
-
 }

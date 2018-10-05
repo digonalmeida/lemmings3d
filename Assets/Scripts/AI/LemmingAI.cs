@@ -11,9 +11,17 @@ public class LemmingAI : MonoBehaviour
     [SerializeField]
     private Animator animator = null;
 
+    [SerializeField]
+    private GameObject actionObject = null;
+
     private LemmingSimpleMovementController movementController;
     private LemmingStateController stateController;
-    
+    private LemmingState idleState = new LemmingState();
+    private LemmingWalkingState walkingState = new LemmingWalkingState();
+    private LemmingFallingState fallingState = new LemmingFallingState();
+    private LemmingClimbingState climbingState = new LemmingClimbingState();
+    private LemmingBlockingState blockingState = new LemmingBlockingState();
+
     public enum Trigger
     {
         StartGame,
@@ -28,7 +36,7 @@ public class LemmingAI : MonoBehaviour
             return animator;
         }
     }
-    
+
     public LemmingSimpleMovementController MovementController
     {
         get
@@ -45,15 +53,15 @@ public class LemmingAI : MonoBehaviour
         }
     }
 
-    public LemmingState IdleState { get; private set; }
+    public void SetBlockActionActive(bool actionActive)
+    {
+        if (actionObject == null)
+        {
+            return;
+        }
 
-    public LemmingWalkingState WalkingState { get; private set; }
-
-    public LemmingFallingState FallingState { get; private set; }
-
-    public LemmingClimbingState ClimbingState { get; private set; }
-
-    public LemmingState DeadState { get; private set; }
+        actionObject.SetActive(actionActive);
+    }
 
     private void Awake()
     {
@@ -64,20 +72,17 @@ public class LemmingAI : MonoBehaviour
         stateController = GetComponent<LemmingStateController>();
         stateMachine = new FiniteStateMachine<LemmingAI>(this);
 
-        IdleState = new LemmingState();
-        WalkingState = new LemmingWalkingState();
-        FallingState = new LemmingFallingState();
-        ClimbingState = new LemmingClimbingState();
+        idleState.AddTrigger((int)Trigger.StartGame, walkingState);
 
-        IdleState.AddTrigger((int)Trigger.StartGame, WalkingState);
-        WalkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, CheckClimb, ClimbingState);
-        WalkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => !movementController.CheckFloor(), FallingState);
+        walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, CheckIsBlocker, blockingState);
+        walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, CheckClimb, climbingState);
+        walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => !movementController.CheckFloor(), fallingState);
 
-        FallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), WalkingState);
+        fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), walkingState);
 
-        ClimbingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), WalkingState);
+        climbingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), walkingState);
 
-        stateMachine.SetState(IdleState);
+        stateMachine.SetState(idleState);
     }
 
     private void OnDestroy()
@@ -91,6 +96,12 @@ public class LemmingAI : MonoBehaviour
         bool b = movementController.CheckWallForward() && stateController.checkSkill(Skill.Climber);
         return b;
     }
+
+    private bool CheckIsBlocker()
+    {
+        return stateController.checkIsBlocker();
+    }
+
     private void OnArrivetAtWaypoint()
     {
         stateMachine.TriggerEvent((int)Trigger.ArrivedAtWaypoint);

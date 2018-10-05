@@ -68,9 +68,10 @@
             UpdateBlockState();
         }
         
+        /*
         private void Update()
         {
             UpdateBlockState();
-        }
+        }*/
     }
 }

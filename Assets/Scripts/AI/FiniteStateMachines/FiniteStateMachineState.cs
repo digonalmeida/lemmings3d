@@ -1,15 +1,67 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-namespace FiniteStateMachines
+﻿namespace FiniteStateMachines
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
 
     public abstract class State<AgentType>
     {
-        public AgentType Agent;
-        public FiniteStateMachine<AgentType> StateMachine;
-        public List<Transition<AgentType>> Transitions = new List<Transition<AgentType>>();
-        public List<int> TriggeredEvents = new List<int>();
+        private AgentType agent;
+        private FiniteStateMachine<AgentType> stateMachine = null;
+        private List<Transition<AgentType>> transitions = new List<Transition<AgentType>>();
+        private List<int> triggeredEvents = new List<int>();
+
+        public AgentType Agent
+        {
+            get
+            {
+                return agent;
+            }
+
+            set
+            {
+                agent = value;
+            }
+        }
+
+        public FiniteStateMachine<AgentType> StateMachine
+        {
+            get
+            {
+                return stateMachine;
+            }
+
+            set
+            {
+                stateMachine = value;
+            }
+        }
+
+        public List<Transition<AgentType>> Transitions
+        {
+            get
+            {
+                return transitions;
+            }
+
+            set
+            {
+                transitions = value;
+            }
+        }
+
+        public List<int> TriggeredEvents
+        {
+            get
+            {
+                return triggeredEvents;
+            }
+
+            set
+            {
+                triggeredEvents = value;
+            }
+        }
 
         public virtual void Enter()
         {
@@ -17,7 +69,6 @@ namespace FiniteStateMachines
 
         public virtual void Update()
         {
-
         }
 
         public virtual void Exit()
@@ -33,9 +84,10 @@ namespace FiniteStateMachines
             Transitions.Add(transition);
         }
 
-        public void AddTransition(int trigger,
-                                Transition<AgentType>.Condition condition,
-                                State<AgentType> nextState)
+        public void AddTransition(
+            int trigger,
+            Transition<AgentType>.Condition condition,
+            State<AgentType> nextState)
         {
             var transition = new Transition<AgentType>(trigger, condition, nextState);
             AddTransition(transition);
@@ -65,5 +117,4 @@ namespace FiniteStateMachines
             }
         }
     }
-
 }

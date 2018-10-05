@@ -18,14 +18,13 @@ public class LemmingClimbingState : LemmingState
     public override void OnGetNextWaypoint()
     {
         base.OnGetNextWaypoint();
-        if(Agent.MovementController.CheckWallForward())
+        if (Agent.MovementController.CheckWallForward())
         {
-            Agent.MovementController.SetWaypointClimbing();
+            Agent.MovementController.SetDirectionUp();
         }
         else
         {
-            Agent.MovementController.SetWaypointForward();
+            Agent.MovementController.SetDirectionForward();
         }
-        
     }
 }

@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fa204f95b3a8d488fb6ad33d640697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnable: {fileID: 1309299061133194, guid: 938c6697f6acff548809a5fafdd7d984, type: 2}
+  spawnable: {fileID: 1671082474350094, guid: b8fa64ec6479c114db093e6c02de6c4c, type: 2}
   count: 10
   interval: 1
 --- !u!114 &114647811104170942

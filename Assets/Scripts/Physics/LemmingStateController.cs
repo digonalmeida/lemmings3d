@@ -7,7 +7,6 @@ public class LemmingStateController : MonoBehaviour
     //Variables
     [SerializeField]
     private bool[] skillsArray;
-    private GameObject actionObject;
 
     //Start Method
     private void Start()
@@ -18,9 +17,6 @@ public class LemmingStateController : MonoBehaviour
         {
             skillsArray[i] = false;
         }
-
-        //Initialize Other Variables
-        actionObject = this.transform.GetChild(0).gameObject;
     }
 
     //Check Lemming for a certain skill
@@ -102,29 +98,29 @@ public class LemmingStateController : MonoBehaviour
 
     public bool checkIsBlocker()
     {
-        return skillsArray[(int)Skill.Blocker_TurnNorth] ||
-            skillsArray[(int)Skill.Blocker_TurnEast] ||
-            skillsArray[(int)Skill.Blocker_TurnSouth] ||
-            skillsArray[(int)Skill.Blocker_TurnWest];
+        return checkSkill(Skill.Blocker_TurnNorth) ||
+            checkSkill(Skill.Blocker_TurnEast) ||
+            checkSkill(Skill.Blocker_TurnSouth) ||
+            checkSkill(Skill.Blocker_TurnWest);
     }
 
     public Direction BlockingDirection
     {
         get
         {
-            if(skillsArray[(int)Skill.Blocker_TurnNorth])
+            if(checkSkill(Skill.Blocker_TurnNorth))
             {
                 return Direction.North;
             }
-            else if (skillsArray[(int)Skill.Blocker_TurnEast])
+            else if (checkSkill(Skill.Blocker_TurnEast))
             {
                 return Direction.East;
             }
-            else if (skillsArray[(int)Skill.Blocker_TurnSouth])
+            else if (checkSkill(Skill.Blocker_TurnSouth))
             {
                 return Direction.South;
             }
-            else if (skillsArray[(int)Skill.Blocker_TurnWest])
+            else if (checkSkill(Skill.Blocker_TurnWest))
             {
                 return Direction.West;
             }
