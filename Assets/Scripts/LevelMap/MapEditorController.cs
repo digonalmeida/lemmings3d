@@ -7,22 +7,25 @@
     public class MapEditorController : MonoBehaviour
     {
         [SerializeField]
-        private MapEditorCursor cursor;
+        private MapEditorCursor cursor = null;
 
         [SerializeField]
-        private MapBlock blockBrush;
+        private MapBlock blockBrush = null;
 
         private MapController mapController;
 
-        List<string> numkeyNames = new List<string>();
+        private List<string> numkeyNames = new List<string>();
+
         private void Awake()
         {
             mapController = FindObjectOfType<MapController>();
             cursor.OnActivate += OnCursorActivated;
+
             for (int i = 0; i < 10; i++)
             {
                 numkeyNames.Add(i.ToString());
             }
+
             SetBrushId(1);
         }
 
@@ -31,19 +34,21 @@
             cursor.OnActivate -= OnCursorActivated;
         }
 
-        public void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 ChangeBrushType();
             }
+
             if (Input.GetKeyDown(KeyCode.R))
             {
                 RotateBrush();
             }
+
             for (int i = 0; i < numkeyNames.Count; i++)
             {
-                if(Input.GetKeyDown(numkeyNames[i]))
+                if (Input.GetKeyDown(numkeyNames[i]))
                 {
                     SetBrushId(i);
                 }

@@ -90,7 +90,7 @@
             var block = GetSceneBlock(position);
             if (block != null)
             {
-                if(block.Block == levelBlock)
+                if (block.Block == levelBlock)
                 {
                     return;
                 }
@@ -98,7 +98,7 @@
             
             RemoveSceneBlock(position);
             block = MapManager.Instance.InstantiateSceneBlock(levelBlock);
-            if(block != null)
+            if (block != null)
             {
                 block.transform.position = position;
                 block.transform.parent = transform;

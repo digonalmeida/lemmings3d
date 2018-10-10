@@ -33,23 +33,6 @@ public class Spawner_Physics : MonoBehaviour
     {
         GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
 
-        if(startingMovementDirection == Direction.North)
-        {
-            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x + 0.3f, this.transform.position.y, this.transform.position.z - 0.3f), Directions.GetWorldDirection(startingMovementDirection));
-        }
-        else if (startingMovementDirection == Direction.East)
-        {
-            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x - 0.3f, this.transform.position.y, this.transform.position.z - 0.3f), Directions.GetWorldDirection(startingMovementDirection));
-        }
-        else if (startingMovementDirection == Direction.West)
-        {
-            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x + 0.3f, this.transform.position.y, this.transform.position.z + 0.3f), Directions.GetWorldDirection(startingMovementDirection));
-        }
-        else if (startingMovementDirection == Direction.South)
-        {
-            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x - 0.3f, this.transform.position.y, this.transform.position.z + 0.3f), Directions.GetWorldDirection(startingMovementDirection));
-        }
-
         return obj;
     }
 

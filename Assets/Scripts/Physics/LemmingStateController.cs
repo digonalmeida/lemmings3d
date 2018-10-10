@@ -14,6 +14,33 @@ public class LemmingStateController : MonoBehaviour
     //Control Variables
     private GameObject actionObject;
 
+    public Direction BlockingDirection
+    {
+        get
+        {
+            if (checkSkill(Skill.Blocker_TurnNorth))
+            {
+                return Direction.North;
+            }
+            else if (checkSkill(Skill.Blocker_TurnEast))
+            {
+                return Direction.East;
+            }
+            else if (checkSkill(Skill.Blocker_TurnSouth))
+            {
+                return Direction.South;
+            }
+            else if (checkSkill(Skill.Blocker_TurnWest))
+            {
+                return Direction.West;
+            }
+            else
+            {
+                return Direction.North;
+            }
+        }
+    }
+
     //Start Method
     private void Start()
     {
@@ -33,6 +60,15 @@ public class LemmingStateController : MonoBehaviour
         else queuedSkills.Enqueue(skill); //Other Skills
     }
 
+    public bool checkIsBlocker()
+    {
+        return checkSkill(Skill.Blocker_TurnNorth) ||
+            checkSkill(Skill.Blocker_TurnEast) ||
+            checkSkill(Skill.Blocker_TurnSouth) ||
+            checkSkill(Skill.Blocker_TurnWest);
+    }
+
+
     //Activate Lemming Action Trigger
     public void setLemmingActionTrigger(bool value)
     {
@@ -49,6 +85,11 @@ public class LemmingStateController : MonoBehaviour
     public bool isClimber()
     {
         return climber;
+    }
+
+    public bool checkSkill(Skill skill)
+    {
+        return checkEnqueuedSkill() == skill;
     }
 
     //Check current skill
