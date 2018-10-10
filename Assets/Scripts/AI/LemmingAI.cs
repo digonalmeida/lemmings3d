@@ -70,6 +70,18 @@ public class LemmingAI : MonoBehaviour
         movementController.OnGetNextWaypoint += OnGetNextWaypoint;
 
         stateController = GetComponent<LemmingStateController>();
+
+        SetupStateMachine();
+        
+    }
+
+    private void Start()
+    {
+        stateMachine.TriggerEvent((int)Trigger.StartGame);
+    }
+
+    public void SetupStateMachine()
+    {
         stateMachine = new FiniteStateMachine<LemmingAI>(this);
 
         idleState.AddTrigger((int)Trigger.StartGame, walkingState);
@@ -83,6 +95,7 @@ public class LemmingAI : MonoBehaviour
         climbingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), walkingState);
 
         stateMachine.SetState(idleState);
+
     }
 
     private void OnDestroy()
@@ -104,21 +117,29 @@ public class LemmingAI : MonoBehaviour
 
     private void OnArrivetAtWaypoint()
     {
+        if(!enabled)
+        {
+            return;
+        }
         stateMachine.TriggerEvent((int)Trigger.ArrivedAtWaypoint);
     }
 
     private void OnGetNextWaypoint()
     {
+        if (!enabled)
+        {
+            return;
+        }
         stateMachine.TriggerEvent((int)Trigger.GetNextWaypoint);
-    }
-
-    private void Start()
-    {
-        stateMachine.TriggerEvent((int)Trigger.StartGame);
     }
 
     private void Update()
     {
+        if(!enabled)
+        {
+            return;
+        }
+
         stateMachine.Update();
     }
 }

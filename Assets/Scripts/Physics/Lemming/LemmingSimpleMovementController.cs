@@ -81,7 +81,6 @@ public class LemmingSimpleMovementController : MonoBehaviour
         targetPositionAddress = Vector3Int.RoundToInt(transform.position);
         nextWaypoint = this.transform.position;
         lemmingActions = GetComponent<LemmingActions>();
-        movementDirection = Direction.West;
         wallsLayerMask = LayerMask.GetMask("Wall");
         lemmingsActionLayerMask = LayerMask.GetMask("LemmingAction");
         raycastHits = new RaycastHit[1];
@@ -423,7 +422,6 @@ public class LemmingSimpleMovementController : MonoBehaviour
         }
     }
     
-
     private void UpdateWaypoint(Direction newDirection)
     {
         if (newDirection != Direction.Up && newDirection != Direction.Down && newDirection != Direction.None)

@@ -22,6 +22,7 @@ public class LemmingWalkingState : LemmingState
         var changeDirectionOrder = Agent.MovementController.CheckChangeDirectionOrders();
         if (changeDirectionOrder != Direction.None)
         {
+            Debug.Log("here");
             Agent.MovementController.SetForwardDirection(changeDirectionOrder);
         }
 
