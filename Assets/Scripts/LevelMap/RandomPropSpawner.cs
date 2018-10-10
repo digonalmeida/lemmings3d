@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomPropSpawner : MonoBehaviour {
+public class RandomPropSpawner : MonoBehaviour
+{
     public List<GameObject> prefabs;
     public int currentPropIndex = -1;
-    private int lastPropIndex = -1;
     public GameObject currentProp = null;
 
     void UpdateProp()
@@ -18,7 +18,6 @@ public class RandomPropSpawner : MonoBehaviour {
         {
             currentProp = Instantiate(prefabs[currentPropIndex], transform.position, Quaternion.identity, transform);
         }
-        lastPropIndex = currentPropIndex;
     }
 
     void RandomizeProp()
@@ -30,13 +29,5 @@ public class RandomPropSpawner : MonoBehaviour {
     void Awake()
     {
         RandomizeProp();
-    }
-
-    void Update()
-    {
-        if(currentPropIndex != lastPropIndex)
-        {
-            UpdateProp();
-        }
     }
 }

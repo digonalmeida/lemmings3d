@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class FreeCameraMovement : MonoBehaviour
 {
-    private Vector3 velocity = new Vector3();
-
     [SerializeField]
     private float speed = 50;
 
@@ -15,18 +13,14 @@ public class FreeCameraMovement : MonoBehaviour
     [SerializeField]
     private float zoomSpeed = 1000;
 
-    void Update()
+    private void Update()
     {
-        velocity = Vector3.zero;
-
         if (Input.GetMouseButton(1))
         {
             var rotation = transform.rotation;
             rotation *= Quaternion.AngleAxis(-Input.GetAxis("Mouse Y") * turningRate * Mathf.Deg2Rad * Time.deltaTime, transform.worldToLocalMatrix * transform.right);
             rotation *= Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turningRate * Mathf.Deg2Rad * Time.deltaTime, transform.worldToLocalMatrix * Vector3.up);
             transform.rotation = rotation;
-           
-           
         }
 
         if (Input.GetMouseButton(2))
@@ -45,6 +39,7 @@ public class FreeCameraMovement : MonoBehaviour
         {
             angle -= 360;
         }
+
         angle = Mathf.Clamp(angle, -60, 60);
         euler.x = angle;
         transform.eulerAngles = euler;

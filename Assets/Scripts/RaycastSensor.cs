@@ -15,7 +15,7 @@ public class RaycastSensor
     private float distance = 1;
 
     [SerializeField]
-    private LayerMask layerMask;
+    private LayerMask layerMask = new LayerMask();
 
     private bool isTriggered = false;
     public bool IsTriggered

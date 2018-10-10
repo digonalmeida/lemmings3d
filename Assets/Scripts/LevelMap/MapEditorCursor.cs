@@ -15,6 +15,8 @@
         private bool isVisible = false;
         private float timeout = 0.0f;
         private State state;
+        private RaycastHit[] hitInfos = new RaycastHit[1];
+        private int blockLayerMask = 0;
 
         public enum State
         {
@@ -47,17 +49,17 @@
         
         public void SetCursorBlock(MapBlock block)
         {
-            if(blockController != null)
+            if (blockController != null)
             {
                 Destroy(blockController.gameObject);
             }
+
             blockController = MapManager.Instance.InstantiateSceneBlock(block);
-            if(blockController != null)
+            if (blockController != null)
             {
                 blockController.transform.position = transform.position;
                 blockController.transform.parent = transform;
-                //ignore raycast
-                SetLayerRecursive(blockController.transform, 2);
+                SetLayerRecursive(blockController.transform, 2); // ignore raycast
             }
         }
 
@@ -72,13 +74,12 @@
 
         public void UpdateCursorSelection()
         {
-            RaycastHit hitInfo;
-
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            bool hitted = Physics.Raycast(ray, out hitInfo, 1000, LayerMask.GetMask("Wall"));
-            IsVisible = hitted;
-            if (isVisible)
+            int hits = Physics.RaycastNonAlloc(ray, hitInfos, 1000, blockLayerMask);
+            IsVisible = hits > 0;
+            for (int i = 0; i < hits; i++)
             {
+                var hitInfo = hitInfos[i];
                 var block = hitInfo.collider.GetComponent<MapBlockController>();
                 if (block != null)
                 {
@@ -95,6 +96,11 @@
 
                 transform.position = AddPosition;
             }
+        }
+
+        private void Awake()
+        {
+            blockLayerMask = LayerMask.GetMask("Wall");
         }
 
         private void SetState(State state)

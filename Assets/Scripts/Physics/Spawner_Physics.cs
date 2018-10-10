@@ -15,6 +15,16 @@ public class Spawner_Physics : MonoBehaviour
     private Stack<GameObject> lemmingsPool;
     private float currentTimer;
 
+    private void OnEnable()
+    {
+        LevelController.ChangedSpawnRate += ChangeInterval;
+    }
+
+    private void OnDisable()
+    {
+        LevelController.ChangedSpawnRate -= ChangeInterval;
+    }
+
     //Start Method
     private void Start()
     {
@@ -26,29 +36,14 @@ public class Spawner_Physics : MonoBehaviour
             obj.SetActive(false);
             lemmingsPool.Push(obj);
         }
+
+        ChangeInterval(LevelController.currentRate);
     }
 
     //Create Lemming
     private GameObject createLemming()
     {
         GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
-
-        if(startingMovementDirection == Direction.North)
-        {
-            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x + 0.3f, this.transform.position.y, this.transform.position.z - 0.3f), Directions.GetWorldDirection(startingMovementDirection));
-        }
-        else if (startingMovementDirection == Direction.East)
-        {
-            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x - 0.3f, this.transform.position.y, this.transform.position.z - 0.3f), Directions.GetWorldDirection(startingMovementDirection));
-        }
-        else if (startingMovementDirection == Direction.West)
-        {
-            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x + 0.3f, this.transform.position.y, this.transform.position.z + 0.3f), Directions.GetWorldDirection(startingMovementDirection));
-        }
-        else if (startingMovementDirection == Direction.South)
-        {
-            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x - 0.3f, this.transform.position.y, this.transform.position.z + 0.3f), Directions.GetWorldDirection(startingMovementDirection));
-        }
 
         return obj;
     }
@@ -83,5 +78,10 @@ public class Spawner_Physics : MonoBehaviour
         }
 
         LevelController.TriggerLemmingSpawned();
+    }
+
+    private void ChangeInterval(int newSpawnRate)
+    {
+        interval = 1f + ((float)(60 - newSpawnRate)) / 20f;
     }
 }

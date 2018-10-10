@@ -24,7 +24,7 @@ public class PivotCameraMovement : MonoBehaviour
     [SerializeField]
     private Vector3 eulerRotation = new Vector3();
     
-	private void Update ()
+	private void Update()
     {
         if (Input.GetMouseButton(1))
         {
@@ -43,7 +43,7 @@ public class PivotCameraMovement : MonoBehaviour
             
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             pivotObject = null;
         }
@@ -54,10 +54,11 @@ public class PivotCameraMovement : MonoBehaviour
         var direction = Vector3.forward;
         direction = Quaternion.Euler(eulerRotation) * direction;
         var startPosition = pivotPosition;
-        if(pivotObject != null)
+        if (pivotObject != null)
         {
             startPosition += pivotObject.transform.position;
         }
+
         transform.position = startPosition - (direction * distance);
         transform.forward = direction.normalized;
 	}

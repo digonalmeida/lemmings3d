@@ -20,10 +20,12 @@
                 {
                     instance = FindObjectOfType<MapManager>();
                 }
+
                 if (instance == null)
                 {
                     instance = CreateInstance();
                 }
+
                 return instance;
             }
         }
@@ -34,6 +36,44 @@
             {
                 return blockPrefabs;
             }
+        }
+        
+        public MapBlockController FindBlockPrefabWithType(MapBlock.BlockType type)
+        {
+            foreach (var block in blockPrefabs)
+            {
+                if (block == null)
+                {
+                    continue;
+                }
+
+                if (block.Block.Type == type)
+                {
+                    return block;
+                }
+            }
+
+            return null;
+        }
+
+        public MapBlockController InstantiateSceneBlock(MapBlock mapBlock)
+        {
+            MapBlockController blockController = null;
+            if (mapBlock == null)
+            {
+                return null;
+            }
+
+            var prefab = FindBlockPrefabWithType(mapBlock.Type);
+            if (prefab == null)
+            {
+                return null;
+            }
+
+            blockController = Instantiate(prefab).GetComponent<MapBlockController>();
+            blockController.Block = mapBlock;
+            blockController.UpdateBlockState();
+            return blockController;
         }
 
         private static MapManager CreateInstance()
@@ -58,44 +98,6 @@
             return mapManagerInstance;
         }
 
-        public MapBlockController FindBlockPrefabWithType(MapBlock.BlockType type)
-        {
-            foreach (var block in blockPrefabs)
-            {
-                if (block == null)
-                {
-                    continue;
-                }
-
-                if (block.Block.Type == type)
-                {
-                    return block;
-                }
-            }
-
-            return null;
-        }
-
-        public MapBlockController InstantiateSceneBlock(MapBlock mapBlock)
-        {
-            MapBlockController blockController = null;
-            if(mapBlock == null)
-            {
-                return null;
-            }
-
-            var prefab = FindBlockPrefabWithType(mapBlock.Type);
-            if(prefab == null)
-            {
-                return null;
-            }
-
-            blockController = Instantiate(prefab).GetComponent<MapBlockController>();
-            blockController.Block = mapBlock;
-            blockController.UpdateBlockState();
-            return blockController;
-        }
-
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -107,6 +109,7 @@
                 {
                     continue;
                 }
+
                 thereAreOthers = true;
             }
 

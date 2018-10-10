@@ -4,6 +4,6 @@ using UnityEngine;
 
 public abstract class UIDockInfo : MonoBehaviour {
 
-    public abstract void UpdateInfo();
+    //public abstract void UpdateInfo();
 	
 }
