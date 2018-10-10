@@ -8,7 +8,13 @@ public class UIDockInfo_Timer : UIDockInfo {
     public Text timeText;
     public float time;
 
-    public override void UpdateInfo()
+    //TODO
+    private void Update()
+    {
+        UpdateInfo();
+    }
+
+    private void UpdateInfo()
     {
         time = Time.time;
         timeText.text = ((int)time / 60).ToString("0") + ":" + (time % 60).ToString("00");

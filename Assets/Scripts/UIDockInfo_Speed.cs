@@ -5,8 +5,42 @@ using UnityEngine.UI;
 
 public class UIDockInfo_Speed : UIDockInfo
 {
-    public override void UpdateInfo()
+
+    public Text rateText;
+    public Button minusSign;
+    public Button plusSign;
+
+    private void OnEnable()
     {
-        //TODO
+        LevelController.ChangedSpawnRate += UpdateInfo;
+    }
+
+    private void OnDisable()
+    {
+        LevelController.ChangedSpawnRate -= UpdateInfo;
+    }
+
+
+    private void Start()
+    {
+        UpdateInfo(LevelController.currentRate);
+    }
+
+    public void IncreaseRate()
+    {
+        LevelController.ChangeSpawnRate(1);
+    }
+
+    public void DecreaseRate()
+    {
+        LevelController.ChangeSpawnRate(-1);
+    }
+
+    private void UpdateInfo(int newSpawnRate)
+    {
+        rateText.text = newSpawnRate.ToString();
+
+        minusSign.interactable = LevelController.currentRate > LevelController.minimumSpawnRate;
+        plusSign.interactable = LevelController.currentRate < LevelController.maximumSpawnRate;
     }
 }
