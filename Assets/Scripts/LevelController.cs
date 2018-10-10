@@ -5,11 +5,18 @@ using UnityEngine;
 public class LevelController : MonoBehaviour {
 
     public delegate void LemmingDidAction();
+    public delegate void SpawnRateAction(int newRate);
     public static event LemmingDidAction LemmingReachedExit;
     public static event LemmingDidAction LemmingSpawned;
+    public static event LemmingDidAction LemmingUsedSkill;
+    public static event SpawnRateAction ChangedSpawnRate;
 
-    public int lemmingsSpawned { get; private set; }
-    public int lemmingsEnteredExit { get; private set; }
+    public static int lemmingsSpawned { get; private set; }
+    public static int lemmingsEnteredExit { get; private set; }
+
+    public static int minimumSpawnRate = 30;
+    public static int maximumSpawnRate = 70;
+    public static int currentRate = 50;
 
     private void OnEnable()
     {
@@ -49,6 +56,27 @@ public class LevelController : MonoBehaviour {
     {
         if (LemmingSpawned != null)
             LemmingSpawned.Invoke();
+    }
+
+    public static void TriggerLemmingUsedSkill()
+    {
+        if (LemmingUsedSkill != null)
+            LemmingUsedSkill.Invoke();
+    }
+
+    public static void ChangeSpawnRate(int increment)
+    {
+        if ((currentRate + increment) >= minimumSpawnRate && (currentRate + increment) <= maximumSpawnRate)
+        {
+            currentRate += increment;
+            TriggerSpawnRateChange(currentRate);
+        }
+    }
+
+    public static void TriggerSpawnRateChange(int newRate)
+    {
+        if (ChangedSpawnRate != null)
+            ChangedSpawnRate.Invoke(newRate);
     }
 
 }

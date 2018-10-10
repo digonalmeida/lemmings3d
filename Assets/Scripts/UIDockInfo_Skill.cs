@@ -14,13 +14,25 @@ public class UIDockInfo_Skill : UIDockInfo
     private int lastCount;
     public Skill skill;
     public Text skillCountText;
-    
+
+    private void OnEnable()
+    {
+        LevelController.LemmingUsedSkill += UpdateInfo;
+    }
+
+    private void OnDisable()
+    {
+        LevelController.LemmingUsedSkill -= UpdateInfo;
+    }
+
     //Start Method
     private void Start()
     {
         skillsControllerRef = SkillsController.Instance;
         togglePanelRef = toggleButton.transform.parent.GetComponent<Image>();
         lastCount = skillsControllerRef.getRemainingUses(skill);
+
+        UpdateInfo();
     }
 
     //Update Control Variables when Toggle Value Changes
@@ -45,7 +57,7 @@ public class UIDockInfo_Skill : UIDockInfo
     }
 
     //Update Display Variables
-    public override void UpdateInfo()
+    private void UpdateInfo()
     {
         int skillCount = skillsControllerRef.getRemainingUses(skill);
         if (lastCount > skillCount)

@@ -98,6 +98,8 @@ public class SkillsController : MonoBehaviour
     //Assign Skills
     public bool assignSkill(LemmingStateController lemming)
     {
+        bool usedSkill = false;
+
         switch(selectedSkill)
         {
             case Skill.Basher:
@@ -106,7 +108,8 @@ public class SkillsController : MonoBehaviour
                 {
                     lemming.giveSkill(Skill.Basher);
                     remainingBashers--;
-                    return true;
+                    usedSkill = true;
+                    break;
                 }
                 else return false;
             }
@@ -116,7 +119,8 @@ public class SkillsController : MonoBehaviour
                 {
                     lemming.giveSkill(Skill.Blocker_TurnNorth);
                     remainingBlockers--;
-                    return true;
+                    usedSkill = true;
+                    break;
                 }
                 else return false;
             }
@@ -126,7 +130,8 @@ public class SkillsController : MonoBehaviour
                 {
                     lemming.giveSkill(Skill.Blocker_TurnEast);
                     remainingBlockers--;
-                    return true;
+                    usedSkill = true;
+                    break;
                 }
                 else return false;
             }
@@ -136,7 +141,8 @@ public class SkillsController : MonoBehaviour
                 {
                     lemming.giveSkill(Skill.Blocker_TurnSouth);
                     remainingBlockers--;
-                    return true;
+                    usedSkill = true;
+                    break;
                 }
                 else return false;
             }
@@ -146,7 +152,8 @@ public class SkillsController : MonoBehaviour
                 {
                     lemming.giveSkill(Skill.Blocker_TurnWest);
                     remainingBlockers--;
-                    return true;
+                    usedSkill = true;
+                    break;
                 }
                 else return false;
             }
@@ -156,7 +163,8 @@ public class SkillsController : MonoBehaviour
                 {
                     lemming.giveSkill(Skill.Builder);
                     remainingBuilders--;
-                    return true;
+                    usedSkill = true;
+                    break;
                 }
                 else return false;
             }
@@ -168,7 +176,8 @@ public class SkillsController : MonoBehaviour
                     {
                         lemming.giveSkill(Skill.Climber);
                         remainingClimbers--;
-                        return true;
+                        usedSkill = true;
+                        break;
                     }
                     else return false;
                 }
@@ -180,7 +189,8 @@ public class SkillsController : MonoBehaviour
                 {
                     lemming.giveSkill(Skill.Digger);
                     remainingDiggers--;
-                    return true;
+                    usedSkill = true;
+                    break;
                 }
                 else return false;
             }
@@ -190,7 +200,8 @@ public class SkillsController : MonoBehaviour
                 {
                     lemming.giveSkill(Skill.Exploder);
                     remainingExploders--;
-                    return true;
+                    usedSkill = true;
+                    break;
                 }
                 else return false;
             }
@@ -202,7 +213,8 @@ public class SkillsController : MonoBehaviour
                     {
                         lemming.giveSkill(Skill.Floater);
                         remainingFloaters--;
-                        return true;
+                        usedSkill = true;
+                        break;
                     }
                     else return false;
                 }
@@ -210,8 +222,15 @@ public class SkillsController : MonoBehaviour
             }
         }
 
+        if (usedSkill)
+        {
+            LevelController.TriggerLemmingUsedSkill();
+            return true;
+        }
+
         //Finally...
         selectedSkill = Skill.None;
+
         return true;
     }
 }

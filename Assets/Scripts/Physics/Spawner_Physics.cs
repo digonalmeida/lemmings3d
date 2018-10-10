@@ -15,6 +15,16 @@ public class Spawner_Physics : MonoBehaviour
     private Stack<GameObject> lemmingsPool;
     private float currentTimer;
 
+    private void OnEnable()
+    {
+        LevelController.ChangedSpawnRate += ChangeInterval;
+    }
+
+    private void OnDisable()
+    {
+        LevelController.ChangedSpawnRate -= ChangeInterval;
+    }
+
     //Start Method
     private void Start()
     {
@@ -26,6 +36,8 @@ public class Spawner_Physics : MonoBehaviour
             obj.SetActive(false);
             lemmingsPool.Push(obj);
         }
+
+        ChangeInterval(LevelController.currentRate);
     }
 
     //Create Lemming
@@ -83,5 +95,10 @@ public class Spawner_Physics : MonoBehaviour
         }
 
         LevelController.TriggerLemmingSpawned();
+    }
+
+    private void ChangeInterval(int newSpawnRate)
+    {
+        interval = 1f + ((float)(60 - newSpawnRate)) / 20f;
     }
 }

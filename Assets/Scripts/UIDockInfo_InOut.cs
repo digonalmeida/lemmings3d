@@ -5,40 +5,31 @@ using UnityEngine.UI;
 
 public class UIDockInfo_InOut : UIDockInfo
 {
-    private LevelController levelController;
 
     public Text inText;
     public Text outText;
     public int inCount;
     public int outCount;
 
-    private void Awake()
-    {
-        levelController = GameObject.FindObjectOfType<LevelController>();
-    }
 
     private void OnEnable()
     {
-        LevelController.LemmingReachedExit += UpdateInfos;
-        LevelController.LemmingSpawned += UpdateInfos;
+        LevelController.LemmingReachedExit += UpdateInfo;
+        LevelController.LemmingSpawned += UpdateInfo;
     }
 
     private void OnDisable()
     {
-        LevelController.LemmingReachedExit -= UpdateInfos;
-        LevelController.LemmingSpawned -= UpdateInfos;
+        LevelController.LemmingReachedExit -= UpdateInfo;
+        LevelController.LemmingSpawned -= UpdateInfo;
     }
 
-    public override void UpdateInfo()
-    {
-        return;
-    }
 
-    public void UpdateInfos()
+    private void UpdateInfo()
     {
 
-        outCount = levelController.lemmingsSpawned;
-        inCount = levelController.lemmingsEnteredExit;
+        outCount = LevelController.lemmingsSpawned;
+        inCount = LevelController.lemmingsEnteredExit;
 
         outText.text = outCount.ToString();
         inText.text = outCount == 0 ? "0%" : (((int)(((float)inCount / (float)outCount) * 100)).ToString() + "%");
