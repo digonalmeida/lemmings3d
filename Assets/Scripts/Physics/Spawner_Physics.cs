@@ -7,12 +7,9 @@ public class Spawner_Physics : MonoBehaviour
     //Control Variables
     [SerializeField]
     private GameObject spawnable = null;
-
-    [SerializeField]
-    private int count = 10;
-
-    [SerializeField]
-    private float interval = 1f;
+    public int count = 10;
+    public float interval = 1f;
+    public Direction startingMovementDirection;
 
     //Internal Variables
     private Stack<GameObject> lemmingsPool;
@@ -25,10 +22,35 @@ public class Spawner_Physics : MonoBehaviour
         lemmingsPool = new Stack<GameObject>();
         for (int i = 0; i < count; i++)
         {
-            GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
+            GameObject obj = createLemming();
             obj.SetActive(false);
             lemmingsPool.Push(obj);
         }
+    }
+
+    //Create Lemming
+    private GameObject createLemming()
+    {
+        GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
+
+        if(startingMovementDirection == Direction.North)
+        {
+            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x + 0.3f, this.transform.position.y, this.transform.position.z - 0.3f), Directions.GetWorldDirection(startingMovementDirection));
+        }
+        else if (startingMovementDirection == Direction.East)
+        {
+            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x - 0.3f, this.transform.position.y, this.transform.position.z - 0.3f), Directions.GetWorldDirection(startingMovementDirection));
+        }
+        else if (startingMovementDirection == Direction.West)
+        {
+            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x + 0.3f, this.transform.position.y, this.transform.position.z + 0.3f), Directions.GetWorldDirection(startingMovementDirection));
+        }
+        else if (startingMovementDirection == Direction.South)
+        {
+            obj.GetComponent<LemmingMovementController>().setInitialMovementVariables(new Vector3(this.transform.position.x - 0.3f, this.transform.position.y, this.transform.position.z + 0.3f), Directions.GetWorldDirection(startingMovementDirection));
+        }
+
+        return obj;
     }
 
     //Update Method
@@ -54,6 +76,12 @@ public class Spawner_Physics : MonoBehaviour
             GameObject obj = lemmingsPool.Pop();
             obj.SetActive(true);
         }
-        else Instantiate(spawnable, this.transform.position, this.transform.rotation);
+        else
+        {
+            GameObject obj = createLemming();
+            lemmingsPool.Push(obj);
+        }
+
+        LevelController.TriggerLemmingSpawned();
     }
 }

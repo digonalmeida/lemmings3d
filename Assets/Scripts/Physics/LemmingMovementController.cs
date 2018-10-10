@@ -11,10 +11,11 @@ public class LemmingMovementController : MonoBehaviour
     private LayerMask lemmingsActionLayerMask;
     private RaycastHit[] raycastHits;
     private Collider[] overlapSphereHits;
-    private bool climbing;
+    private bool queuedChangeBehavior;
 
     //Reference Variables
     private LemmingStateController lemmingStateController;
+    private LemmingActions lemmingActions;
     private Vector3 nextWaypoint;
     private Vector3 movementDirection;
 
@@ -22,13 +23,21 @@ public class LemmingMovementController : MonoBehaviour
     void Start ()
     {
         //Initialize Variables
-        nextWaypoint = this.transform.position;
         lemmingStateController = this.GetComponent<LemmingStateController>();
-        movementDirection = Directions.East;
+        lemmingActions = GetComponent<LemmingActions>();
         wallsLayerMask = LayerMask.GetMask("Wall");
         lemmingsActionLayerMask = LayerMask.GetMask("LemmingAction");
         raycastHits = new RaycastHit[1];
         overlapSphereHits = new Collider[1];
+        queuedChangeBehavior = false;
+    }
+
+    //Set Initial Movement
+    public void setInitialMovementVariables(Vector3 initialPosition, Vector3 movementDirection)
+    {
+        this.transform.position = initialPosition;
+        nextWaypoint = this.transform.position;
+        this.movementDirection = movementDirection;
     }
 
     //Set Direction
@@ -49,36 +58,69 @@ public class LemmingMovementController : MonoBehaviour
         {
             //Check Floor
             int hits = Physics.RaycastNonAlloc(this.transform.position, Vector3.down, raycastHits, 1f, wallsLayerMask);
-            if (hits == 0 && !climbing)
+            if (hits == 0)
             {
-                nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y - 1f, nextWaypoint.z);
-                //TODO (Remove Skills, etc)
+                //nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y - 1f, nextWaypoint.z);
+                //Change Behavior to Falling!
             }
             else
             {
-                //Check Movement Impairing Skills
-                if (!lemmingStateController.checkMovementBlockingSkills())
+                //Check if there is a behavior queued
+                if (queuedChangeBehavior)
                 {
-                    //Check Other Lemming Actions
+                    //Change Behavior to Specific Skill!
+                }
+                else
+                {
+                    //Check Next Enqueued Skills
+                    Skill enqueuedSkill = lemmingStateController.checkEnqueuedSkill();
+                    if (enqueuedSkill != Skill.None)
+                    {
+                        //Move to Center
+                        nextWaypoint = new Vector3(Mathf.FloorToInt(this.transform.position.x), this.transform.position.y, Mathf.FloorToInt(this.transform.position.z));
+                        queuedChangeBehavior = true;
+                    }
+
+                    //Check if at Exit Point
                     hits = Physics.OverlapSphereNonAlloc(nextWaypoint, 0.1f, overlapSphereHits, lemmingsActionLayerMask);
                     for (int i = 0; i < hits; i++)
                     {
+                        ExitPoint exitPoint = overlapSphereHits[i].GetComponentInParent<ExitPoint>();
+                        if (exitPoint != null)
+                        {
+                            nextWaypoint = exitPoint.exitLemmingFinalTransform.position;
+                            //stopped = true
+                            //lemmingActions.EnterExitPoint();
+                            //return;
+
+                            //Change Behavior to Exiting Level!
+                        }
+
+                        //Check Other Lemmings Actions
                         LemmingStateController otherLemmingStateController = overlapSphereHits[i].GetComponentInParent<LemmingStateController>();
-                        if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnNorth) && movementDirection != Directions.North)
+                        if (otherLemmingStateController != null)
                         {
-                            setNewDirection(Directions.North);
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnEast) && movementDirection != Directions.East)
-                        {
-                            setNewDirection(Directions.East);
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnSouth) && movementDirection != Directions.South)
-                        {
-                            setNewDirection(Directions.South);
-                        }
-                        else if (otherLemmingStateController.checkSkill(Skill.Blocker_TurnWest) && movementDirection != Directions.West)
-                        {
-                            setNewDirection(Directions.West);
+                            Skill skill = otherLemmingStateController.checkEnqueuedSkill();
+                            if (skill == Skill.Blocker_TurnNorth && movementDirection != Directions.North)
+                            {
+                                setNewDirection(Directions.North);
+                                return;
+                            }
+                            else if (skill == Skill.Blocker_TurnEast && movementDirection != Directions.East)
+                            {
+                                setNewDirection(Directions.East);
+                                return;
+                            }
+                            else if (skill == Skill.Blocker_TurnSouth && movementDirection != Directions.South)
+                            {
+                                setNewDirection(Directions.South);
+                                return;
+                            }
+                            else if (skill == Skill.Blocker_TurnWest && movementDirection != Directions.West)
+                            {
+                                setNewDirection(Directions.West);
+                                return;
+                            }
                         }
                     }
 
@@ -86,10 +128,10 @@ public class LemmingMovementController : MonoBehaviour
                     hits = Physics.RaycastNonAlloc(this.transform.position, movementDirection, raycastHits, 0.45f, wallsLayerMask);
                     if (hits == 1)
                     {
-                        if (lemmingStateController.checkSkill(Skill.Climber))
+                        if (lemmingStateController.isClimber())
                         {
-                            climbing = true;
-                            nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y + 1f, nextWaypoint.z);
+                            //Change Behavior to Climbing!
+                            //nextWaypoint.Set(nextWaypoint.x, nextWaypoint.y + 1f, nextWaypoint.z);
                         }
                         else
                         {
@@ -103,12 +145,12 @@ public class LemmingMovementController : MonoBehaviour
                     else
                     {
                         //Move Normally
-                        climbing = false;
                         updateWaypoint(movementDirection);
                     }
                 }
             }
         }
+
         //Move Lemming
         else this.transform.position = Vector3.MoveTowards(this.transform.position, nextWaypoint, movementSpeed * Time.deltaTime);
     }

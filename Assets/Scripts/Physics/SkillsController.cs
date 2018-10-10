@@ -15,7 +15,6 @@ public enum Skill
     Digger,             //Vertical Dig
     Exploder,           //Self-Destruct
     Floater             //Umbrella
-    //Miner             //Diagonal Dig
 }
 
 public class SkillsController : MonoBehaviour
@@ -105,13 +104,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingBashers > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
-                    {
-                        lemming.setSkill(Skill.Basher, true);
-                        remainingBashers--;
-                        return true;
-                    }
-                    else return false;
+                    lemming.giveSkill(Skill.Basher);
+                    remainingBashers--;
+                    return true;
                 }
                 else return false;
             }
@@ -119,13 +114,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingBlockers > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
-                    {
-                        lemming.setSkill(Skill.Blocker_TurnNorth, true);
-                        remainingBlockers--;
-                        return true;
-                    }
-                    else return false;
+                    lemming.giveSkill(Skill.Blocker_TurnNorth);
+                    remainingBlockers--;
+                    return true;
                 }
                 else return false;
             }
@@ -133,13 +124,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingBlockers > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
-                    {
-                        lemming.setSkill(Skill.Blocker_TurnEast, true);
-                        remainingBlockers--;
-                        return true;
-                    }
-                    else return false;
+                    lemming.giveSkill(Skill.Blocker_TurnEast);
+                    remainingBlockers--;
+                    return true;
                 }
                 else return false;
             }
@@ -147,13 +134,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingBlockers > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
-                    {
-                        lemming.setSkill(Skill.Blocker_TurnSouth, true);
-                        remainingBlockers--;
-                        return true;
-                    }
-                    else return false;
+                    lemming.giveSkill(Skill.Blocker_TurnSouth);
+                    remainingBlockers--;
+                    return true;
                 }
                 else return false;
             }
@@ -161,13 +144,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingBlockers > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
-                    {
-                        lemming.setSkill(Skill.Blocker_TurnWest, true);
-                        remainingBlockers--;
-                        return true;
-                    }
-                    else return false;
+                    lemming.giveSkill(Skill.Blocker_TurnWest);
+                    remainingBlockers--;
+                    return true;
                 }
                 else return false;
             }
@@ -175,13 +154,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingBuilders > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
-                    {
-                        lemming.setSkill(Skill.Builder, true);
-                        remainingBuilders--;
-                        return true;
-                    }
-                    else return false;
+                    lemming.giveSkill(Skill.Builder);
+                    remainingBuilders--;
+                    return true;
                 }
                 else return false;
             }
@@ -189,9 +164,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingClimbers > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
+                    if (!lemming.isClimber())
                     {
-                        lemming.setSkill(Skill.Climber, true);
+                        lemming.giveSkill(Skill.Climber);
                         remainingClimbers--;
                         return true;
                     }
@@ -203,13 +178,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingDiggers > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
-                    {
-                        lemming.setSkill(Skill.Digger, true);
-                        remainingDiggers--;
-                        return true;
-                    }
-                    else return false;
+                    lemming.giveSkill(Skill.Digger);
+                    remainingDiggers--;
+                    return true;
                 }
                 else return false;
             }
@@ -217,13 +188,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingExploders > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
-                    {
-                        lemming.setSkill(Skill.Exploder, true);
-                        remainingExploders--;
-                        return true;
-                    }
-                    else return false;
+                    lemming.giveSkill(Skill.Exploder);
+                    remainingExploders--;
+                    return true;
                 }
                 else return false;
             }
@@ -231,9 +198,9 @@ public class SkillsController : MonoBehaviour
             {
                 if (remainingFloaters > 0)
                 {
-                    if (!lemming.checkSkill(selectedSkill))
+                    if (!lemming.isFloater())
                     {
-                        lemming.setSkill(Skill.Floater, true);
+                        lemming.giveSkill(Skill.Floater);
                         remainingFloaters--;
                         return true;
                     }
@@ -241,10 +208,10 @@ public class SkillsController : MonoBehaviour
                 }
                 else return false;
             }
-            default: return false;
         }
 
         //Finally...
         selectedSkill = Skill.None;
+        return true;
     }
 }
