@@ -7,8 +7,8 @@ public class UIDockInfo_Skill : UIDockInfo
 {
     //References
     public Toggle toggleButton;
+    public Image togglePanelRef;
     private SkillsController skillsControllerRef;
-    private Image togglePanelRef;
 
     //Control Variables
     private int lastCount;
@@ -29,9 +29,7 @@ public class UIDockInfo_Skill : UIDockInfo
     private void Start()
     {
         skillsControllerRef = SkillsController.Instance;
-        togglePanelRef = toggleButton.transform.parent.GetComponent<Image>();
         lastCount = skillsControllerRef.getRemainingUses(skill);
-
         UpdateInfo();
     }
 
