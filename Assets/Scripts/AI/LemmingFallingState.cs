@@ -13,13 +13,13 @@ public class LemmingFallingState : LemmingState
     public override void Enter()
     {
         base.Enter();
-        Agent.MovementController.SetDirectionDown();
+        Agent.MovementController.SetDirection(Direction.Down);
     }
 
     public override void OnGetNextWaypoint()
     {
         base.OnGetNextWaypoint();
 
-        Agent.MovementController.SetDirectionDown();
+        Agent.MovementController.SetDirection(Direction.Down);
     }
 }

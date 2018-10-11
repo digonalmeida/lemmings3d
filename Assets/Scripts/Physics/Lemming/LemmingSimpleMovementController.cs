@@ -11,10 +11,11 @@ public class LemmingSimpleMovementController : MonoBehaviour
     private float movementSpeed = 3;
 
     [SerializeField]
-    private float gravitySpeed = 0;
+    private float gravitySpeedGain = 2;
 
     [SerializeField]
-    private float gravityAcceleration = 10;
+    private int fallingKillThreshold = 3;
+    private int fallingBlocksCount;
 
     [SerializeField]
     private float turningRate = 7;
@@ -27,9 +28,10 @@ public class LemmingSimpleMovementController : MonoBehaviour
     private RaycastHit[] raycastHits;
     private Collider[] overlapSphereHits;
 
-    private bool stopped = false;
+    private bool stopped = false; //Can probably remove this according to waypoint logic
     private bool arrived = false;
-    
+
+    private LemmingStateController lemmingStateController;
     private LemmingActions lemmingActions;
     private Vector3 nextWaypoint;
 
@@ -45,23 +47,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
     [SerializeField]
     private Direction forwardDirection;
 
-    [SerializeField]
-    private bool useGravity = true;
-
     private Vector3 facingDirectionVector;
-
-    public bool UseGravity
-    {
-        get
-        {
-            return useGravity;
-        }
-
-        set
-        {
-            useGravity = value;
-        }
-    }
 
     public enum Corner
     {
@@ -83,8 +69,10 @@ public class LemmingSimpleMovementController : MonoBehaviour
         lemmingActions = GetComponent<LemmingActions>();
         wallsLayerMask = LayerMask.GetMask("Wall");
         lemmingsActionLayerMask = LayerMask.GetMask("LemmingAction");
+        lemmingStateController = GetComponent<LemmingStateController>();
         raycastHits = new RaycastHit[1];
         overlapSphereHits = new Collider[1];
+        fallingBlocksCount = 0;
     }
 
     public Vector3 GetTargetPosition(Vector3Int centerPos, Corner corner)
@@ -121,6 +109,11 @@ public class LemmingSimpleMovementController : MonoBehaviour
     {
         int hits = Physics.RaycastNonAlloc(this.transform.position, Vector3.down, raycastHits, 1f, wallsLayerMask);
         return hits > 0;
+    }
+
+    public Direction getForwardDirection()
+    {
+        return forwardDirection;
     }
 
     public bool TrySetWaypointExit()
@@ -191,7 +184,13 @@ public class LemmingSimpleMovementController : MonoBehaviour
         var hits = Physics.RaycastNonAlloc(this.transform.position, Directions.GetWorldDirection(forwardDirection), raycastHits, 0.45f, wallsLayerMask);
         return hits > 0;
     }
-    
+
+    public bool CheckCeilling()
+    {
+        var hits = Physics.RaycastNonAlloc(this.transform.position, Directions.Up, raycastHits, 0.45f, wallsLayerMask);
+        return hits > 0;
+    }
+
     public void SetDirectionForward()
     {
        // climbing = false;
@@ -203,11 +202,6 @@ public class LemmingSimpleMovementController : MonoBehaviour
         movementDirection = Directions.getOppositeDirection(movementDirection);
     }
 
-    public void SetDirectionUp()
-    {
-        movementDirection = Direction.Up;
-    }
-
     public void SetWaypontExit(ExitPoint exitPoint)
     {
         nextWaypoint = exitPoint.exitLemmingFinalTransform.position;
@@ -215,27 +209,15 @@ public class LemmingSimpleMovementController : MonoBehaviour
         lemmingActions.EnterExitPoint();
     }
 
-    public void SetDirectionDown()
-    {
-        movementDirection = Direction.Down;
-    }
-
     public void SetForwardDirection(Direction direction)
     {
         forwardDirection = direction;
     }
 
-    private void ApplyGravity()
+    private float ApplyGravity()
     {
-        if(movementDirection != Direction.Down)
-        {
-            gravitySpeed = 0;
-        }
-        else
-        {
-            gravitySpeed += gravityAcceleration * Time.fixedDeltaTime;
-        }
-        
+        if (movementDirection != Direction.Down) return 0f;
+        else return gravitySpeedGain;
     }
 
     private void Update()
@@ -263,12 +245,7 @@ public class LemmingSimpleMovementController : MonoBehaviour
 
         var pos = GetTargetPosition(targetPositionAddress, currentCorner);
 
-        if(useGravity)
-        {
-            ApplyGravity();
-        }
-        
-        transform.position = Vector3.MoveTowards(this.transform.position, pos, (movementSpeed + gravitySpeed) * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(this.transform.position, pos, (movementSpeed + ApplyGravity()) * Time.deltaTime);
         Vector3 direction = pos - transform.position;
         direction.y = 0;
 
@@ -422,12 +399,21 @@ public class LemmingSimpleMovementController : MonoBehaviour
         }
     }
     
+    public bool checkFallDeath()
+    {
+        return fallingBlocksCount >= fallingKillThreshold;
+    }
+
     private void UpdateWaypoint(Direction newDirection)
     {
         if (newDirection != Direction.Up && newDirection != Direction.Down && newDirection != Direction.None)
         {
             forwardDirection = newDirection;
         }
+
+        //Update Falling Block Count
+        if (newDirection == Direction.Down) fallingBlocksCount++;
+        else fallingBlocksCount = 0;
 
         if (!TryMoveInCorners(newDirection))
         {
