@@ -15,7 +15,7 @@ public class Inputs : MonoBehaviour
             if (highlightPointerRef.isHighlighting)
             {
                 LemmingStateController lemming = highlightPointerRef.highlightedObject.center.GetComponent<LemmingStateController>();
-                SkillsController.Instance.assignSkill(lemming);
+                ControllerManager.Instance.skillController.assignSkill(lemming);
             }
         }
 	}

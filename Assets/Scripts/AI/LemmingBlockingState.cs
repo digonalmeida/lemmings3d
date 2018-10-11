@@ -16,14 +16,13 @@ public class LemmingBlockingState : LemmingState
         Agent.MovementController.SetDirection(Direction.None);
 
         Agent.MovementController.SetForwardDirection(Agent.StateController.BlockingDirection);
-        Agent.SetBlockActionActive(true);
     }
 
     public override void OnGetNextWaypoint()
     {
         base.OnGetNextWaypoint();
-
         Agent.MovementController.SetDirection(Direction.None);
+        Agent.SetBlockActionActive(true);
     }
 
     public override void Exit()

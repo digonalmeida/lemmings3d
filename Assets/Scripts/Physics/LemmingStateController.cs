@@ -104,4 +104,12 @@ public class LemmingStateController : MonoBehaviour
     {
         queuedSkills.Dequeue();
     }
+
+    //Goodbye Cruel World
+    public void killLemming()
+    {
+        Debug.Log(gameObject.name + " - I'm dead");
+        Destroy(this.gameObject);
+        //TODO
+    }
 }

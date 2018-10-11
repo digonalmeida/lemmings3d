@@ -29,36 +29,6 @@ public class SkillsController : MonoBehaviour
     public int remainingFloaters;
     public Skill selectedSkill;
 
-    //Singleton Instance Variable
-    private static SkillsController instance;
-    public static SkillsController Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
-    //On Object Awake
-    private void Awake()
-    {
-        //Check Singleton
-        if (instance != null && instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
-    }
-
-    //On Object Destroy (Safeguard)
-    public void OnDestroy()
-    {
-        instance = null;
-    }
-
     //Start
     public void Start()
     {
