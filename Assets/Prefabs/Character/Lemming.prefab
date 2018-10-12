@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 114429336866163900}
   - component: {fileID: 114617343240883966}
   - component: {fileID: 114793982761911828}
+  - component: {fileID: 114748579136355474}
   m_Layer: 10
   m_Name: Lemming
   m_TagString: Untagged
@@ -1036,6 +1037,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a65f94d161296cf4f88da10406e08417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114748579136355474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1671082474350094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994e0ad5f3be244449953a69cd853eee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lemmingAnimator: {fileID: 95402904734752634}
 --- !u!114 &114793982761911828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1047,7 +1060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3da1450e8f5e15d438f1fa73ef49a353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 95402904734752634}
+  lemmingAnimationController: {fileID: 0}
   actionObject: {fileID: 1853045582963828}
 --- !u!135 &135027677934751936
 SphereCollider:

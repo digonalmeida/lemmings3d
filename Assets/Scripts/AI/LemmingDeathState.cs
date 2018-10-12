@@ -7,19 +7,15 @@ public class LemmingDeathState : LemmingState
     public LemmingDeathState()
         : base()
     {
-        AnimationName = "falling";
-        //TODO
+        AnimationName = "death";
     }
 
-    public override void Enter()
+    public override void Update()
     {
-        base.Enter();
-        Agent.GetComponent<LemmingStateController>().killLemming(); //Must change this to complete animation first!
-    }
-
-    public override void OnGetNextWaypoint()
-    {
-        base.OnGetNextWaypoint();
-        //TODO
+        base.Update();
+        if (Agent.AnimationController.isEndOfAnimation("death"))
+        {
+            Agent.GetComponent<LemmingStateController>().killLemming();
+        }
     }
 }

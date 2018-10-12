@@ -217,7 +217,11 @@ public class LemmingSimpleMovementController : MonoBehaviour
     private float ApplyGravity()
     {
         if (movementDirection != Direction.Down) return 0f;
-        else return gravitySpeedGain;
+        else
+        {
+            if (lemmingStateController.isFloater()) return gravitySpeedGain/2;
+            return gravitySpeedGain;
+        }
     }
 
     private void Update()

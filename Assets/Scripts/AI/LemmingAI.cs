@@ -9,7 +9,7 @@ public class LemmingAI : MonoBehaviour
     private FiniteStateMachine<LemmingAI> stateMachine;
 
     [SerializeField]
-    private LemmingAnimationController lemmingAnimationController = null;
+    private LemmingAnimationController lemmingAnimationController;
 
     [SerializeField]
     private GameObject actionObject = null;
@@ -72,6 +72,7 @@ public class LemmingAI : MonoBehaviour
 
     private void Awake()
     {
+        lemmingAnimationController = GetComponent<LemmingAnimationController>();
         movementController = GetComponent<LemmingSimpleMovementController>();
         movementController.OnArrived += OnArrivetAtWaypoint;
         movementController.OnGetNextWaypoint += OnGetNextWaypoint;
