@@ -9,7 +9,7 @@ public class LemmingAI : MonoBehaviour
     private FiniteStateMachine<LemmingAI> stateMachine;
 
     [SerializeField]
-    private Animator animator = null;
+    private LemmingAnimationController lemmingAnimationController = null;
 
     [SerializeField]
     private GameObject actionObject = null;
@@ -36,11 +36,11 @@ public class LemmingAI : MonoBehaviour
         FinishedTask
     }
 
-    public Animator Animator
+    public LemmingAnimationController AnimationController
     {
         get
         {
-            return animator;
+            return lemmingAnimationController;
         }
     }
 
