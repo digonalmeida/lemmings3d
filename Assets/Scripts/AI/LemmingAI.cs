@@ -27,10 +27,12 @@ public class LemmingAI : MonoBehaviour
     private LemmingBashingState bashingState = new LemmingBashingState();
     private LemmingExplodingState explodingState = new LemmingExplodingState();
     private LemmingBuildingState buildingState = new LemmingBuildingState();
+    private LemmingExitingLevelState exitingLevelState = new LemmingExitingLevelState();
 
     public enum Trigger
     {
         StartGame,
+        ArrivedAtExit,
         ArrivedAtWaypoint,
         GetNextWaypoint,
         FinishedTask
@@ -94,6 +96,7 @@ public class LemmingAI : MonoBehaviour
 
         idleState.AddTrigger((int)Trigger.StartGame, walkingState);
 
+        walkingState.AddTransition((int)Trigger.ArrivedAtExit, () => true, exitingLevelState);
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => !movementController.CheckFloor(), fallingState);
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, CheckIsBlocker, blockingState);
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckWallForward() && stateController.checkSkill(Skill.Basher), bashingState);

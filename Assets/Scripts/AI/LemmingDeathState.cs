@@ -10,6 +10,12 @@ public class LemmingDeathState : LemmingState
         AnimationName = "death";
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+        Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
+    }
+
     public override void Update()
     {
         base.Update();
