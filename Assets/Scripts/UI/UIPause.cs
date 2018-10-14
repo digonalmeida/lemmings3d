@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIPause : MonoBehaviour {
@@ -18,6 +19,7 @@ public class UIPause : MonoBehaviour {
         backgroundFaderImage.enabled = true;
         pausePanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
+        Time.timeScale = 0f;
     }
 
     public void UnPause()
@@ -26,6 +28,7 @@ public class UIPause : MonoBehaviour {
         backgroundFaderImage.enabled = false;
         pausePanel.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
+        Time.timeScale = 1f;
     }
 
     public void Exit()
@@ -34,8 +37,6 @@ public class UIPause : MonoBehaviour {
         backgroundFaderImage.enabled = false;
         pausePanel.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
-
-        // go to menu
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
-
 }
