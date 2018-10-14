@@ -14,6 +14,7 @@ public class LemmingExplodingState : LemmingState
     {
         base.Enter();
         Agent.MovementController.SetDirection(Direction.None);
+        Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
     }
 
     public override void OnGetNextWaypoint()

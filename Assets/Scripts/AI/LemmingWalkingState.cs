@@ -19,6 +19,12 @@ public class LemmingWalkingState : LemmingState
     {
         base.OnGetNextWaypoint();
 
+        if(Agent.MovementController.CheckExitPoint())
+        {
+            StateMachine.TriggerEvent((int)LemmingAI.Trigger.ArrivedAtExit);
+            return;
+        }
+
         var changeDirectionOrder = Agent.MovementController.CheckChangeDirectionOrders();
         if (changeDirectionOrder != Direction.None)
         {
