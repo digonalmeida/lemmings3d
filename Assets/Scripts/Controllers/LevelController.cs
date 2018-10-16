@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LevelMap;
 
 public class LevelController : MonoBehaviour
 {
@@ -78,5 +79,4 @@ public class LevelController : MonoBehaviour
         if (ChangedSpawnRate != null)
             ChangedSpawnRate.Invoke(newRate);
     }
-
 }

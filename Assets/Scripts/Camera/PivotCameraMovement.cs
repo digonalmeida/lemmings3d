@@ -34,15 +34,6 @@ public class PivotCameraMovement : MonoBehaviour
             transform.rotation = rotation;
         }
 
-        if (Input.GetMouseButton(2))
-        {
-            Vector3 velocity = Vector3.zero;
-            velocity += -transform.up * Input.GetAxis("Mouse Y");
-            velocity += -transform.right * Input.GetAxis("Mouse X");
-            pivotPosition += velocity * speed * Time.deltaTime;
-            
-        }
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             pivotObject = null;

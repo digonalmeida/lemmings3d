@@ -15,7 +15,7 @@
         private bool isVisible = false;
         private float timeout = 0.0f;
         private State state;
-        private RaycastHit[] hitInfos = new RaycastHit[1];
+        private RaycastHit hitInfo = new RaycastHit();
         private int blockLayerMask = 0;
 
         public enum State
@@ -75,11 +75,12 @@
         public void UpdateCursorSelection()
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            int hits = Physics.RaycastNonAlloc(ray, hitInfos, 1000, blockLayerMask);
-            IsVisible = hits > 0;
-            for (int i = 0; i < hits; i++)
+            bool hit = Physics.Raycast(ray, out hitInfo, 1000, blockLayerMask);
+            
+            IsVisible = hit;
+
+            if (hit)
             {
-                var hitInfo = hitInfos[i];
                 var block = hitInfo.collider.GetComponent<MapBlockController>();
                 if (block != null)
                 {
@@ -95,6 +96,7 @@
                 }
 
                 transform.position = AddPosition;
+                return;
             }
         }
 

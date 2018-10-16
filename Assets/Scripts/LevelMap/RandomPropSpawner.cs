@@ -8,7 +8,7 @@ public class RandomPropSpawner : MonoBehaviour
     public int currentPropIndex = -1;
     public GameObject currentProp = null;
 
-    void UpdateProp()
+    void SpawnProp()
     {
         if(currentProp != null)
         {
@@ -20,14 +20,27 @@ public class RandomPropSpawner : MonoBehaviour
         }
     }
 
-    void RandomizeProp()
+    public void TrySpawnProp(float chance)
     {
-        currentPropIndex = Random.Range(-120, prefabs.Count);
-        UpdateProp();
+        if (Random.Range(0.0f, 1.0f) < chance)
+        {
+            RandomizeProp();
+        }
+        else
+        {
+            currentPropIndex = -1;
+        }
+        SpawnProp();
+    }
+
+    public void RandomizeProp()
+    {
+        currentPropIndex = Random.Range(0, prefabs.Count);
     }
 
     void Awake()
     {
         RandomizeProp();
+        SpawnProp();
     }
 }

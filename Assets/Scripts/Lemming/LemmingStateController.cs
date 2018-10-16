@@ -52,12 +52,32 @@ public class LemmingStateController : MonoBehaviour
     }
 
     //Set a certain skill for Lemming
-    public void giveSkill(Skill skill)
+    public bool giveSkill(Skill skill)
     {
-        //Check Permanent Skills
-        if (skill == Skill.Climber) climber = true;
-        else if (skill == Skill.Floater) floater = true;
-        else queuedSkills.Enqueue(skill); //Other Skills
+        if (skill == Skill.Climber)
+        {
+            if (climber)
+            {
+                return false;
+            }
+
+            climber = true;
+        }
+        else if (skill == Skill.Floater)
+        {
+            if (floater)
+            {
+                return false;
+            }
+
+            floater = true;
+        }
+        else
+        {
+            queuedSkills.Enqueue(skill);
+        }
+
+        return true;
     }
 
     public bool checkIsBlocker()

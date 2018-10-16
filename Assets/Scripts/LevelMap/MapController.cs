@@ -1,5 +1,6 @@
 ﻿namespace LevelMap
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
@@ -10,21 +11,32 @@
         private MapData map;
 
         [SerializeField]
-        private Dictionary<Vector3Int, MapBlockController> levelBlocks = new Dictionary<Vector3Int, MapBlockController>();
+        private MapSettings settings;
 
         [SerializeField]
         private MapAsset mapAsset;
+
+        [SerializeField]
+        private float spawnPropChance = 0.1f;
+
+        [SerializeField]
+        private Dictionary<Vector3Int, MapBlockController> levelBlocks = new Dictionary<Vector3Int, MapBlockController>();
+
+       
+        public static event Action<MapSettings> OnLoadMap;
 
         public void LoadLevel()
         {
             LoadFromScene();
             map = mapAsset.LevelMap;
+            settings = mapAsset.Settings;
             RefreshScene();
         }
 
         public void SaveLevel()
         {
             LoadFromScene();
+            mapAsset.Settings = settings;
             mapAsset.LevelMap = map;
             RefreshScene();            
         }
@@ -33,13 +45,18 @@
         {
             ClearLevelBlocks();
             BuildMapScene();
+            if (OnLoadMap != null)
+            {
+                OnLoadMap(settings);
+            }
+
+            SpawnProps();
         }
 
         public void Clear()
         {
             map.Clear();
-            ClearLevelBlocks();
-            BuildMapScene();
+            RefreshScene();
         }
 
         public void ClearLevelBlocks()
@@ -70,6 +87,15 @@
             BuildMapScene();
         }
 
+        public void SpawnProps()
+        {
+            var props = GameObject.FindObjectsOfType<RandomPropSpawner>();
+            for (var i = 0; i < props.Length; i++)
+            {
+                props[i].TrySpawnProp(spawnPropChance);
+            }
+        }
+
         private void BuildMapScene()
         {
             var blocks = map.Blocks;
@@ -83,6 +109,11 @@
         {
             LoadFromScene();
             BuildMapScene();
+            if (OnLoadMap != null)
+            {
+                OnLoadMap(settings);
+            }
+            SpawnProps();
         }
 
         private void SpawnSceneBlock(Vector3Int position, MapBlock levelBlock)
@@ -152,5 +183,6 @@
         {
             return MapManager.Instance.FindBlockPrefabWithType(type);
         }
+
     }
 }
