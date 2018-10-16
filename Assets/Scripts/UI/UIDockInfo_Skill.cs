@@ -37,7 +37,8 @@ public class UIDockInfo_Skill : UIDockInfo
         if (active)
         {
             togglePanelRef.color = Color.red;
-            ControllerManager.Instance.skillController.changeSkill(skill);
+            ControllerManager.Instance.skillController.
+                changeSkill(skill);
         }
         else
         {

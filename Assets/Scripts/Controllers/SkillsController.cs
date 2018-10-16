@@ -78,6 +78,13 @@ public class SkillsController : MonoBehaviour
             return false;
         }
 
+        if (selectedSkill == Skill.Blocker)
+        {
+            blockerSelector.AttachToSomeone(lemming);
+            isWaitingForBlockerConfirmation = true;
+            return false;
+        }
+
         if(!lemming.giveSkill(selectedSkill))
         {
             return false;

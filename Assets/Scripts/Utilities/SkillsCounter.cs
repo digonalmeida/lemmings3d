@@ -167,6 +167,7 @@ public class SkillsCounter
             case Skill.Blocker_TurnEast:
             case Skill.Blocker_TurnSouth:
             case Skill.Blocker_TurnWest:
+            case Skill.Blocker:
                 return SkillType.Blocker;
 
             case Skill.None:
