@@ -91,11 +91,9 @@ public class SkillsController : MonoBehaviour
         }
 
         skillsCounter[selectedSkill]--;
-
-        LevelController.TriggerLemmingUsedSkill();
-
         selectedSkill = Skill.None;
-
+        LevelController.TriggerLemmingUsedSkill();
+        
         return true;
     }
 

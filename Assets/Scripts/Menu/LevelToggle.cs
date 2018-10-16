@@ -8,6 +8,7 @@ public class LevelToggle : MonoBehaviour
     //Variables
     public string levelName;
     public LevelSelector levelSelectorRef;
+    public int levelId;
 
     //Change Selected Level
     public void changeSelectedLevel(bool active)
@@ -15,7 +16,7 @@ public class LevelToggle : MonoBehaviour
         if(active)
         {
             this.GetComponent<Image>().color = Color.red;
-            levelSelectorRef.changeSelectedLevel(levelName);
+            levelSelectorRef.changeSelectedLevel(levelId);
         }
         else
         {
