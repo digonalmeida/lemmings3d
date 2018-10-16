@@ -17,7 +17,7 @@
         private MapAsset mapAsset;
 
         [SerializeField]
-        private float spawnPropChance = 0.5f;
+        private float spawnPropChance = 0.1f;
 
         [SerializeField]
         private Dictionary<Vector3Int, MapBlockController> levelBlocks = new Dictionary<Vector3Int, MapBlockController>();
