@@ -7,11 +7,22 @@
     [System.Serializable]
     public class MapData : ISerializationCallbackReceiver
     {
+        
         // Used to save level on serialization
         [SerializeField]
         private List<MapBlock> serializedLevelBlocks = new List<MapBlock>();
 
         private Dictionary<Vector3Int, MapBlock> blocks = new Dictionary<Vector3Int, MapBlock>();
+
+        public MapData()
+        {
+
+        }
+
+        public MapData(MapData other)
+        {
+            blocks = new Dictionary<Vector3Int, MapBlock>(other.blocks);
+        }
 
         public Dictionary<Vector3Int, MapBlock> Blocks
         {

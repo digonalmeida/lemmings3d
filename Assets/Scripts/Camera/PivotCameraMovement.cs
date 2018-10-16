@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class PivotCameraMovement : MonoBehaviour
 {
     public GameObject pivotObject = null;
@@ -30,10 +31,15 @@ public class PivotCameraMovement : MonoBehaviour
         {
             var rotation = transform.rotation;
             eulerRotation.x -= Input.GetAxis("Mouse Y") * turningRate * Time.deltaTime;
+            eulerRotation.x = Mathf.Clamp(eulerRotation.x, 0, 90);
             eulerRotation.y += Input.GetAxis("Mouse X") * turningRate * Time.deltaTime;
             transform.rotation = rotation;
+            Cursor.lockState = CursorLockMode.Locked;
         }
-
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             pivotObject = null;

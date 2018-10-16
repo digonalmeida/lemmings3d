@@ -16,6 +16,18 @@
         [SerializeField]
         private SkillsCounter skillsCounter = new SkillsCounter();
 
+        public MapSettings()
+        {
+
+        }
+
+        public MapSettings(MapSettings other)
+        {
+            lemmingsCount = other.lemmingsCount;
+            minimumVictoryCount = other.minimumVictoryCount;
+            skillsCounter = new SkillsCounter(other.skillsCounter);
+        }
+
         public int LemmingsCount
         {
             get

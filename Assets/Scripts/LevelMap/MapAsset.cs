@@ -22,12 +22,12 @@
         {
             get
             {
-                return level;
+                return new MapData(level);
             }
 
             set
             {
-                level = value;
+                level = new MapData(value);
                 UnityEditor.EditorUtility.SetDirty(this);
             }
         }
@@ -36,11 +36,11 @@
         {
             get
             {
-                return settings;
+                return new MapSettings(settings);
             }
             set
             {
-                settings = value;
+                settings = new MapSettings(value);
             }
         }
     }

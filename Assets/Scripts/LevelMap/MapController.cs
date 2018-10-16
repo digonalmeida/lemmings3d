@@ -28,7 +28,7 @@
         public void LoadLevel()
         {
             LoadFromScene();
-            map = mapAsset.LevelMap;
+            map =  mapAsset.LevelMap;
             settings = mapAsset.Settings;
             RefreshScene();
         }
