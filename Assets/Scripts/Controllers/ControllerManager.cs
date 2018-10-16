@@ -20,13 +20,17 @@ public class ControllerManager : MonoBehaviour
         //Check Singleton
         if (instance != null && instance != this)
         {
-            Destroy(this.gameObject);
+            DestroyImmediate(this.gameObject);
         }
         else
         {
             instance = this;
             setReferences();
         }
+
+        skillController = GetComponent<SkillsController>();
+        levelController = GetComponent<LevelController>();
+        mapController = GetComponentInChildren<LevelMap.MapController>();
     }
 
     //On Object Destroy (Safeguard)
@@ -36,9 +40,9 @@ public class ControllerManager : MonoBehaviour
     }
 
     //References
-    public SkillsController skillController;
-    public LevelController levelController;
-    public LevelMap.MapController mapController;
+    public SkillsController skillController { get; private set; }
+    public LevelController levelController { get; private set; }
+    public LevelMap.MapController mapController { get; private set; }
 
     //Start
     private void setReferences()

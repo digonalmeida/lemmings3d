@@ -84,9 +84,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e5f96dad8930b478de7ddc1c6aac00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillController: {fileID: 0}
-  levelController: {fileID: 0}
-  mapController: {fileID: 0}
 --- !u!114 &114212144340472340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -576,6 +573,8 @@ MonoBehaviour:
   remainingExploders: 99
   remainingFloaters: 99
   selectedSkill: 0
+  blockerSelectorPrefab: {fileID: 114942490245658128, guid: 834ebd2c511384e29b8d9782897a1655,
+    type: 2}
 --- !u!114 &114695880958481648
 MonoBehaviour:
   m_ObjectHideFlags: 1
