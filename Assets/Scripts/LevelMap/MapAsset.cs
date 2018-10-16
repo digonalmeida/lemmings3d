@@ -13,6 +13,9 @@
 #pragma warning restore 414
 
         [SerializeField]
+        private MapSettings settings = new MapSettings();
+
+        [SerializeField]
         private MapData level = new MapData();
 
         public MapData LevelMap
@@ -26,6 +29,18 @@
             {
                 level = value;
                 UnityEditor.EditorUtility.SetDirty(this);
+            }
+        }
+
+        public MapSettings Settings
+        {
+            get
+            {
+                return settings;
+            }
+            set
+            {
+                settings = value;
             }
         }
     }

@@ -23,7 +23,6 @@ public class LevelSelector : MonoBehaviour
     //Load Level
     public void loadLevel()
     {
-        Debug.Log("We need more puzzles!");
-        //SceneManager.LoadScene(selectedLevel, LoadSceneMode.Single);
+        SceneManager.LoadScene(selectedLevel, LoadSceneMode.Single);
     }
 }

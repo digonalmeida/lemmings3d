@@ -1,5 +1,6 @@
 ﻿namespace LevelMap
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
@@ -10,21 +11,28 @@
         private MapData map;
 
         [SerializeField]
-        private Dictionary<Vector3Int, MapBlockController> levelBlocks = new Dictionary<Vector3Int, MapBlockController>();
+        private MapSettings settings;
 
         [SerializeField]
         private MapAsset mapAsset;
+        
+        [SerializeField]
+        private Dictionary<Vector3Int, MapBlockController> levelBlocks = new Dictionary<Vector3Int, MapBlockController>();
+
+        public static event Action<MapSettings> OnLoadMap;
 
         public void LoadLevel()
         {
             LoadFromScene();
             map = mapAsset.LevelMap;
+            settings = mapAsset.Settings;
             RefreshScene();
         }
 
         public void SaveLevel()
         {
             LoadFromScene();
+            mapAsset.Settings = settings;
             mapAsset.LevelMap = map;
             RefreshScene();            
         }
@@ -33,13 +41,16 @@
         {
             ClearLevelBlocks();
             BuildMapScene();
+            if (OnLoadMap != null)
+            {
+                OnLoadMap(settings);
+            }
         }
 
         public void Clear()
         {
             map.Clear();
-            ClearLevelBlocks();
-            BuildMapScene();
+            RefreshScene();
         }
 
         public void ClearLevelBlocks()
@@ -83,6 +94,10 @@
         {
             LoadFromScene();
             BuildMapScene();
+            if (OnLoadMap != null)
+            {
+                OnLoadMap(settings);
+            }
         }
 
         private void SpawnSceneBlock(Vector3Int position, MapBlock levelBlock)
@@ -152,5 +167,6 @@
         {
             return MapManager.Instance.FindBlockPrefabWithType(type);
         }
+
     }
 }
