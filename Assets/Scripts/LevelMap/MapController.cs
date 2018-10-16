@@ -19,6 +19,9 @@
         [SerializeField]
         private MapSettings settings = new MapSettings();
 
+        [SerializeField]
+        private GameObject mapEditor;
+
         private Dictionary<Vector3Int, MapBlockController> levelBlocks = new Dictionary<Vector3Int, MapBlockController>();
 
         private GameObject blocksParent = null;
@@ -42,6 +45,11 @@
         }
 
         public static event Action<MapSettings> OnLoadMap;
+
+        public void ToggleMapEditor()
+        {
+            mapEditor.SetActive(!mapEditor.activeInHierarchy);
+        }
 
         public void LoadLevel()
         {

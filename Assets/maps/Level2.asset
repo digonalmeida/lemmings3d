@@ -20,7 +20,7 @@ MonoBehaviour:
       blockers: 0
       builders: 0
       climbers: 0
-      diggers: 99
+      diggers: 10
       exploders: 0
       floaters: 99
   level:
@@ -102,7 +102,7 @@ MonoBehaviour:
       direction: 0
     - position: {x: 0, y: 5, z: 0}
       type: 1
-      direction: 0
+      direction: 1
     - position: {x: 1, y: 5, z: 0}
       type: 1
       direction: 0
@@ -112,6 +112,12 @@ MonoBehaviour:
     - position: {x: 3, y: 5, z: 0}
       type: 1
       direction: 0
+    - position: {x: 22, y: 0, z: -17}
+      type: 3
+      direction: 0
     - position: {x: -3, y: 6, z: 0}
       type: 3
       direction: 1
+    - position: {x: -64, y: 0, z: 69}
+      type: 3
+      direction: 0
