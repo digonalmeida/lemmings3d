@@ -17,6 +17,12 @@ public class Spawner : MonoBehaviour
 
     public void Init()
     {
+        var block = GetComponent<LevelMap.MapBlockController>();
+        if(block != null)
+        {
+            startingMovementDirection = block.Block.Direction;
+        }
+
         currentTimer = 0f;
         lemmingsPool = new Stack<GameObject>();
         for (int i = 0; i < count; i++)
@@ -27,44 +33,64 @@ public class Spawner : MonoBehaviour
         }
 
         ChangeInterval(LevelController.currentRate);
+        StartCoroutine(SpawnRoutine());
+    }
+
+    public void Stop()
+    {
+        StopAllCoroutines();
+    }
+
+    private void OnDestroy()
+    {
+        Stop();
     }
 
     private void OnEnable()
     {
         LevelController.ChangedSpawnRate += ChangeInterval;
+        LevelController.OnStartGame += Init;
+        LevelController.OnEndGame += Stop;
     }
 
     private void OnDisable()
     {
         LevelController.ChangedSpawnRate -= ChangeInterval;
-    }
-
-    //Start Method
-    private void Start()
-    {
-        Init();
+        LevelController.OnStartGame -= Init;
+        LevelController.OnEndGame -= Stop;
     }
 
     //Create Lemming
     private GameObject createLemming()
     {
         GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
-
+        var movController = obj.GetComponent<LemmingSimpleMovementController>();
+        if(movController != null)
+        {
+            movController.SetDirection(startingMovementDirection);
+            movController.SetForwardDirection(startingMovementDirection);
+        }
         return obj;
     }
-
-    //Update Method
-    private void Update()
+    
+    private IEnumerator SpawnRoutine()
     {
-        if(count > 0)
+        while (true)
         {
-            if (currentTimer <= 0f)
+            if (count > 0)
             {
-                currentTimer = interval;
-                count--;
-                spawnLemming();
+                if (currentTimer <= 0f)
+                {
+                    currentTimer = interval;
+                    count--;
+                    spawnLemming();
+                }
+                else
+                {
+                    currentTimer -= Time.deltaTime;
+                }
             }
-            else currentTimer -= Time.deltaTime;
+            yield return null;
         }
     }
 

@@ -537,7 +537,7 @@ MonoBehaviour:
       direction: 0
     - position: {x: 4, y: 9, z: -2}
       type: 3
-      direction: 2
+      direction: 0
     - position: {x: 2, y: 2, z: -1}
       type: 1
       direction: 0

@@ -42,16 +42,16 @@
             float rot = 0;
             switch (block.Direction)
             {
-                case MapBlock.Directions.North:
+                case Direction.North:
                     rot = 0;
                     break;
-                case MapBlock.Directions.East:
+                case Direction.East:
                     rot = 90;
                     break;
-                case MapBlock.Directions.South:
+                case Direction.South:
                     rot = 180;
                     break;
-                case MapBlock.Directions.West:
+                case Direction.West:
                     rot = 270;
                     break;
                 default:

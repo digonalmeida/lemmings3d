@@ -25,22 +25,25 @@ MonoBehaviour:
       floaters: 99
   level:
     serializedLevelBlocks:
-    - position: {x: 0, y: 0, z: 0}
+    - position: {x: 3, y: 0, z: 0}
       type: 1
       direction: 0
-    - position: {x: 1, y: 0, z: 0}
+    - position: {x: 3, y: 1, z: 0}
+      type: 4
+      direction: 0
+    - position: {x: -2, y: 0, z: 0}
       type: 1
       direction: 0
     - position: {x: 2, y: 0, z: 0}
       type: 1
       direction: 0
-    - position: {x: 3, y: 0, z: 0}
-      type: 1
-      direction: 0
     - position: {x: -1, y: 0, z: 0}
       type: 1
       direction: 0
-    - position: {x: -2, y: 0, z: 0}
+    - position: {x: 1, y: 0, z: 0}
+      type: 1
+      direction: 0
+    - position: {x: 0, y: 0, z: 0}
       type: 1
       direction: 0
     - position: {x: -3, y: 0, z: 0}
@@ -54,9 +57,6 @@ MonoBehaviour:
       direction: 0
     - position: {x: -4, y: 3, z: 0}
       type: 1
-      direction: 0
-    - position: {x: 3, y: 1, z: 0}
-      type: 4
       direction: 0
     - position: {x: 4, y: 1, z: 0}
       type: 1
@@ -114,4 +114,4 @@ MonoBehaviour:
       direction: 0
     - position: {x: -3, y: 6, z: 0}
       type: 3
-      direction: 0
+      direction: 1

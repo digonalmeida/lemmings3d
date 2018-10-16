@@ -453,7 +453,7 @@ MonoBehaviour:
       direction: 0
     - position: {x: 3, y: 3, z: 2}
       type: 3
-      direction: 0
+      direction: 3
     - position: {x: 4, y: 6, z: -5}
       type: 4
       direction: 0

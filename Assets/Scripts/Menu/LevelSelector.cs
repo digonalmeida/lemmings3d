@@ -6,23 +6,23 @@ using UnityEngine.SceneManagement;
 public class LevelSelector : MonoBehaviour
 {
     //Variables
-    private string selectedLevel;
+    private int selectedLevel;
 
     //Start
     private void Start()
     {
-        selectedLevel = "Level1";
+        selectedLevel = 0;
     }
 
     //Change Selected Level
-    public void changeSelectedLevel(string newLevel)
+    public void changeSelectedLevel(int id)
     {
-        selectedLevel = newLevel;
+        selectedLevel = id;
     }
 
     //Load Level
     public void loadLevel()
     {
-        SceneManager.LoadScene(selectedLevel, LoadSceneMode.Single);
+        GameManager.Instance.LoadLevelById(selectedLevel);
     }
 }

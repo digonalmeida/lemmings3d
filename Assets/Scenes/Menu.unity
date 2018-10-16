@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,7 +39,6 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
-  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -55,10 +54,11 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
-    m_AtlasSize: 1024
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -290,6 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level7
   levelSelectorRef: {fileID: 1155506693}
+  levelId: 6
 --- !u!1 &149449221
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level5
   levelSelectorRef: {fileID: 1155506693}
+  levelId: 4
 --- !u!1 &229084109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,6 +1142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level1
   levelSelectorRef: {fileID: 1155506693}
+  levelId: 0
 --- !u!1 &592516592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,6 +1791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level3
   levelSelectorRef: {fileID: 1155506693}
+  levelId: 2
 --- !u!1 &769692227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,6 +2997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level6
   levelSelectorRef: {fileID: 1155506693}
+  levelId: 5
 --- !u!1 &1124131992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3096,6 +3101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level2
   levelSelectorRef: {fileID: 1155506693}
+  levelId: 1
 --- !u!1 &1136668222
 GameObject:
   m_ObjectHideFlags: 0
@@ -4079,6 +4085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level4
   levelSelectorRef: {fileID: 1155506693}
+  levelId: 3
 --- !u!1 &1504996519
 GameObject:
   m_ObjectHideFlags: 0
@@ -4901,6 +4908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level8
   levelSelectorRef: {fileID: 1155506693}
+  levelId: 7
 --- !u!1 &2097687857
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,21 +8,39 @@
     public class MapController : MonoBehaviour
     {
         [SerializeField]
-        private MapData map;
-
-        [SerializeField]
-        private MapSettings settings;
-
-        [SerializeField]
         private MapAsset mapAsset;
 
         [SerializeField]
         private float spawnPropChance = 0.1f;
 
         [SerializeField]
+        private MapData map = new MapData();
+
+        [SerializeField]
+        private MapSettings settings = new MapSettings();
+
         private Dictionary<Vector3Int, MapBlockController> levelBlocks = new Dictionary<Vector3Int, MapBlockController>();
 
-       
+        private GameObject blocksParent = null;
+
+        public GameObject BlocksParent
+        {
+            get
+            {
+                if (blocksParent == null)
+                {
+                    blocksParent = GameObject.Find("_LevelBlocks");
+                }
+
+                if (blocksParent == null)
+                {
+                    blocksParent = new GameObject("_LevelBlocks");
+                }
+
+                return blocksParent;
+            }
+        }
+
         public static event Action<MapSettings> OnLoadMap;
 
         public void LoadLevel()
@@ -49,8 +67,6 @@
             {
                 OnLoadMap(settings);
             }
-
-            SpawnProps();
         }
 
         public void Clear()
@@ -96,6 +112,22 @@
             }
         }
 
+        private void Awake()
+        {
+            LevelController.OnLoadGame += LoadGameMap;
+        }
+
+        private void OnDestroy()
+        {
+            LevelController.OnLoadGame -= LoadGameMap;
+        }
+
+        public void LoadGameMap()
+        {
+            mapAsset = GameManager.Instance.SelectedMapAsset;
+            LoadLevel();
+        }
+
         private void BuildMapScene()
         {
             var blocks = map.Blocks;
@@ -107,8 +139,12 @@
 
         private void Start()
         {
-            LoadFromScene();
-            BuildMapScene();
+            if (!GameManager.Instance.LoadAssetsOnLoad)
+            {
+                LoadFromScene();
+                BuildMapScene();
+            }
+            
             if (OnLoadMap != null)
             {
                 OnLoadMap(settings);
@@ -121,6 +157,7 @@
             var block = GetSceneBlock(position);
             if (block != null)
             {
+                block.UpdateBlockState();
                 if (block.Block == levelBlock)
                 {
                     return;
@@ -132,7 +169,7 @@
             if (block != null)
             {
                 block.transform.position = position;
-                block.transform.parent = transform;
+                block.transform.parent = BlocksParent.transform;
                 block.UpdateBlockState();
             }
 
@@ -167,7 +204,7 @@
 
         private void LoadFromScene()
         {
-            var children = GetComponentsInChildren<MapBlockController>();
+            var children = BlocksParent.GetComponentsInChildren<MapBlockController>();
             map.Clear();
             levelBlocks.Clear();
             foreach (var child in children)

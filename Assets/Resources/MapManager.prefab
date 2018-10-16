@@ -54,5 +54,5 @@ MonoBehaviour:
   blockPrefabs:
   - {fileID: 114494957267869400, guid: b83fc160b2b6c7a43b4bc8fe42ae87df, type: 2}
   - {fileID: 114924898166004006, guid: 15e72a618864c974cb14d293d558d933, type: 2}
-  - {fileID: 114079756600462144, guid: 26f8d0a5a8035ce45adfbad5c6668985, type: 2}
+  - {fileID: 114741391480063778, guid: 26f8d0a5a8035ce45adfbad5c6668985, type: 2}
   - {fileID: 114920141891270828, guid: c647c1b942ff7114486434232b68c4d3, type: 2}

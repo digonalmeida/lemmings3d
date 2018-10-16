@@ -16,8 +16,8 @@
         private BlockType type = BlockType.Simple;
 
         [SerializeField]
-        private Directions direction = Directions.North;
-        
+        private Direction direction = Direction.West;
+
         public MapBlock(MapBlock block)
         {
             position = block.position;
@@ -38,14 +38,6 @@
             End
         }
 
-        public enum Directions
-        {
-            North,
-            East,
-            South,
-            West
-        }
-
         public BlockType Type
         {
             get
@@ -59,7 +51,7 @@
             }
         }
 
-        public Directions Direction
+        public Direction Direction
         {
             get
             {
@@ -87,7 +79,7 @@
 
         public void Rotate()
         {
-            direction = (Directions)(((int)direction + 1) % 4);
+            direction = (Direction)(((int)direction + 1) % 4);
         }
     }
 }
