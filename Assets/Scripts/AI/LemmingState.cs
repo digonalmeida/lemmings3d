@@ -12,10 +12,10 @@ public class LemmingState : State<LemmingAI>
         base.Enter();
         if (AnimationName != string.Empty)
         {
-            Agent.Animator.Play(AnimationName);
+            Agent.AnimationController.PlayAnimation(AnimationName);
         }
 
-       // Agent.MovementController.OnGetNextWaypoint += OnGetNextWaypoint;
+        //Agent.MovementController.OnGetNextWaypoint += OnGetNextWaypoint;
     }
 
     public override void TriggerEvent(int triggerEvent)

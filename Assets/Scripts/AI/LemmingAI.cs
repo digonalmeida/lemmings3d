@@ -9,7 +9,7 @@ public class LemmingAI : MonoBehaviour
     private FiniteStateMachine<LemmingAI> stateMachine;
 
     [SerializeField]
-    private Animator animator = null;
+    private LemmingAnimationController lemmingAnimationController;
 
     [SerializeField]
     private GameObject actionObject = null;
@@ -27,20 +27,22 @@ public class LemmingAI : MonoBehaviour
     private LemmingBashingState bashingState = new LemmingBashingState();
     private LemmingExplodingState explodingState = new LemmingExplodingState();
     private LemmingBuildingState buildingState = new LemmingBuildingState();
+    private LemmingExitingLevelState exitingLevelState = new LemmingExitingLevelState();
 
     public enum Trigger
     {
         StartGame,
+        ArrivedAtExit,
         ArrivedAtWaypoint,
         GetNextWaypoint,
         FinishedTask
     }
 
-    public Animator Animator
+    public LemmingAnimationController AnimationController
     {
         get
         {
-            return animator;
+            return lemmingAnimationController;
         }
     }
 
@@ -72,6 +74,7 @@ public class LemmingAI : MonoBehaviour
 
     private void Awake()
     {
+        lemmingAnimationController = GetComponent<LemmingAnimationController>();
         movementController = GetComponent<LemmingSimpleMovementController>();
         movementController.OnArrived += OnArrivetAtWaypoint;
         movementController.OnGetNextWaypoint += OnGetNextWaypoint;
@@ -93,6 +96,7 @@ public class LemmingAI : MonoBehaviour
 
         idleState.AddTrigger((int)Trigger.StartGame, walkingState);
 
+        walkingState.AddTransition((int)Trigger.ArrivedAtExit, () => true, exitingLevelState);
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => !movementController.CheckFloor(), fallingState);
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, CheckIsBlocker, blockingState);
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckWallForward() && stateController.checkSkill(Skill.Basher), bashingState);

@@ -25,6 +25,7 @@ public class ControllerManager : MonoBehaviour
         else
         {
             instance = this;
+            setReferences();
         }
 
         skillController = GetComponent<SkillsController>();
@@ -43,5 +44,11 @@ public class ControllerManager : MonoBehaviour
     public LevelController levelController { get; private set; }
     public LevelMap.MapController mapController { get; private set; }
 
-
+    //Start
+    private void setReferences()
+    {
+        skillController = GetComponent<SkillsController>();
+        levelController = GetComponent<LevelController>();
+        mapController = GetComponentInChildren<LevelMap.MapController>();
+    }
 }

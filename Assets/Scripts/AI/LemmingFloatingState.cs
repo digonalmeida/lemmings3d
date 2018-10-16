@@ -7,8 +7,7 @@ public class LemmingFloatingState : LemmingState
     public LemmingFloatingState()
         : base()
     {
-        AnimationName = "falling";
-        //TODO!
+        AnimationName = "floating";
     }
 
     public override void Enter()
@@ -20,7 +19,6 @@ public class LemmingFloatingState : LemmingState
     public override void OnGetNextWaypoint()
     {
         base.OnGetNextWaypoint();
-
         Agent.MovementController.SetDirection(Direction.Down);
     }
 }
