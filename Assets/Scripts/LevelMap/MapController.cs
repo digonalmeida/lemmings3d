@@ -15,10 +15,14 @@
 
         [SerializeField]
         private MapAsset mapAsset;
-        
+
+        [SerializeField]
+        private float spawnPropChance = 0.5f;
+
         [SerializeField]
         private Dictionary<Vector3Int, MapBlockController> levelBlocks = new Dictionary<Vector3Int, MapBlockController>();
 
+       
         public static event Action<MapSettings> OnLoadMap;
 
         public void LoadLevel()
@@ -45,6 +49,8 @@
             {
                 OnLoadMap(settings);
             }
+
+            SpawnProps();
         }
 
         public void Clear()
@@ -81,6 +87,15 @@
             BuildMapScene();
         }
 
+        public void SpawnProps()
+        {
+            var props = GameObject.FindObjectsOfType<RandomPropSpawner>();
+            for (var i = 0; i < props.Length; i++)
+            {
+                props[i].TrySpawnProp(spawnPropChance);
+            }
+        }
+
         private void BuildMapScene()
         {
             var blocks = map.Blocks;
@@ -98,6 +113,7 @@
             {
                 OnLoadMap(settings);
             }
+            SpawnProps();
         }
 
         private void SpawnSceneBlock(Vector3Int position, MapBlock levelBlock)
