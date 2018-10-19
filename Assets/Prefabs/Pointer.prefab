@@ -55,9 +55,9 @@ MonoBehaviour:
   checkForHighlightable: 1
   highlaytableLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 16384
   distance: 50
-  radius: 1
+  radius: 0.25
 --- !u!114 &114908694996111802
 MonoBehaviour:
   m_ObjectHideFlags: 1

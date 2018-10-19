@@ -11,7 +11,7 @@ public class HighlightPointer : MonoBehaviour
     public float radius;
     public bool isHighlighting { get; private set; }
     public HighlightableObject highlightedObject { get; private set; }
-    
+
     void Update()
     {
         RaycastForHighlightable();
@@ -27,26 +27,35 @@ public class HighlightPointer : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Collider[] colliders = Physics.OverlapCapsule(ray.origin, ray.origin + ray.direction * distance, radius, highlaytableLayers, QueryTriggerInteraction.Collide);
 
-        RaycastHit[] hitInfo = Physics.CapsuleCastAll(ray.origin, ray.origin + ray.direction * distance, radius, ray.direction, 0, highlaytableLayers);
+        float distanceFromRay = float.MaxValue;
+        bool highlighted = false;
 
-        foreach (RaycastHit hit in hitInfo)
+        foreach (Collider col in colliders)
         {
-            highlightedObject = hit.collider.gameObject.GetComponentInParent<HighlightableObject>();
-            if (highlightedObject != null && highlightedObject.canBeHighlighted)
+            HighlightableObject highlightScript = col.gameObject.GetComponentInParent<HighlightableObject>();
+            if (highlightScript != null && highlightScript.canBeHighlighted)
             {
-
-                if (!isHighlighting)
+                float angle = Vector3.Angle(ray.direction, (col.bounds.center - Camera.main.transform.position));
+                float dist = Mathf.Sin(Mathf.Deg2Rad * angle) * Vector3.Distance(col.bounds.center, Camera.main.transform.position);
+                if (dist < distanceFromRay)
                 {
-                    HighlightOn();
+                    distanceFromRay = distance;
+                    highlightedObject = highlightScript;
+                    highlighted = true;
                 }
-                
-                return;
             }
         }
 
-
-        HighlightOff();
+        if (highlighted && !isHighlighting)
+        {
+            HighlightOn();
+        }
+        else if (!highlighted && isHighlighting)
+        {
+            HighlightOff();
+        }
     }
 
     private void OnDrawGizmos()
