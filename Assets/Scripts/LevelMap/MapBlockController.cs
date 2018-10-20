@@ -1,9 +1,10 @@
 ﻿namespace LevelMap
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    
+
     [System.Serializable]
     public class MapBlockController : MonoBehaviour
     {
@@ -67,9 +68,18 @@
         {
             UpdateBlockState();
         }
-        
 
-       
+        internal void SpawnProps(bool enabled)
+        {
+            RandomPropSpawner[] props = GetComponentsInChildren<RandomPropSpawner>();
+            foreach (RandomPropSpawner prop in props)
+            {
+                prop.Init(enabled);
+            }
+        }
+
+
+
 
         /*
         private void Update()

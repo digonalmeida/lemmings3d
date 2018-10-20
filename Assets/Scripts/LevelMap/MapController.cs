@@ -179,6 +179,7 @@
                 block.transform.position = position;
                 block.transform.parent = BlocksParent.transform;
                 block.UpdateBlockState();
+                block.SpawnProps(map.Get(new Vector3Int(position.x, position.y + 1, position.z)) == null ? true : false);
             }
 
             levelBlocks[position] = block;

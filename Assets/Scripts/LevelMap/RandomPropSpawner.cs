@@ -38,9 +38,15 @@ public class RandomPropSpawner : MonoBehaviour
         currentPropIndex = Random.Range(0, prefabs.Count);
     }
 
-    void Awake()
+    public void Init(bool enabled)
     {
-        RandomizeProp();
-        SpawnProp();
+        if (enabled)
+        {
+            RandomizeProp();
+            SpawnProp();
+        }
+        else {
+            Destroy(gameObject);
+        }
     }
 }

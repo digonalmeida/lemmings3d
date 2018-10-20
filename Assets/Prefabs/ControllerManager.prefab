@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 222962105987693640}
   - component: {fileID: 114985930449242540}
   - component: {fileID: 114897310099519828}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 65419145104562924}
   - component: {fileID: 114874638031280124}
   m_Layer: 2
-  m_Name: AddCursor (1)
+  m_Name: AddCursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 224215229851795114}
   - component: {fileID: 222678932217262394}
   - component: {fileID: 114502241435426010}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 222002535622886628}
   - component: {fileID: 114406434899630874}
   - component: {fileID: 114390224333486514}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Restart Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 224882013388136370}
   - component: {fileID: 222209714697560448}
   - component: {fileID: 114223884177883828}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LevelControllerGUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 224574303273413620}
   - component: {fileID: 222860849119981860}
   - component: {fileID: 114789239656871970}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,8 +233,7 @@ GameObject:
   - component: {fileID: 223306705226827094}
   - component: {fileID: 114213789974099828}
   - component: {fileID: 114874768325659450}
-  - component: {fileID: 114064238549400542}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LevelDebugCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +268,6 @@ GameObject:
   - component: {fileID: 223620895817434802}
   - component: {fileID: 114013037856027214}
   - component: {fileID: 114462483506206506}
-  - component: {fileID: 114732192407452928}
   m_Layer: 0
   m_Name: MapEditorCanvas
   m_TagString: Untagged
@@ -288,7 +286,7 @@ GameObject:
   - component: {fileID: 222287950892022996}
   - component: {fileID: 114950503516616914}
   - component: {fileID: 114091434306603310}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Load Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +303,7 @@ GameObject:
   - component: {fileID: 224909663655552518}
   - component: {fileID: 222786981435305008}
   - component: {fileID: 114719330481101724}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +320,7 @@ GameObject:
   - component: {fileID: 224287845241212420}
   - component: {fileID: 222861298300339434}
   - component: {fileID: 114717289620238242}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +337,7 @@ GameObject:
   - component: {fileID: 224827286942785404}
   - component: {fileID: 222863553017672124}
   - component: {fileID: 114303664299006406}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +444,7 @@ GameObject:
   - component: {fileID: 222830116701033504}
   - component: {fileID: 114999073196112230}
   - component: {fileID: 114460359917473614}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Edit Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,7 +462,7 @@ GameObject:
   - component: {fileID: 222545279926245054}
   - component: {fileID: 114714879254088294}
   - component: {fileID: 114238409260718874}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Start Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -481,7 +479,7 @@ GameObject:
   - component: {fileID: 224461965331367022}
   - component: {fileID: 222751725374550566}
   - component: {fileID: 114514528324666604}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,7 +497,7 @@ GameObject:
   - component: {fileID: 222973336574531820}
   - component: {fileID: 114881394044696492}
   - component: {fileID: 114380471200981276}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: End Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,7 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a8c7607d22e9546bb4a23c613d2fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapAsset: {fileID: 11400000, guid: 0d884d3cef7a4954e93a6324feac65f4, type: 2}
+  mapAsset: {fileID: 11400000, guid: b1302b5e6f4e59f429f5cff3ad2683e9, type: 2}
   spawnPropChance: 0.01
   map:
     serializedLevelBlocks:
@@ -872,17 +870,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114064238549400542
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1471982153506200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd85d9060cc06814fb8e1a7a259b599c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114091434306603310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1048,7 +1035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1508,7 +1495,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 42
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1776,17 +1763,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Restart
---- !u!114 &114732192407452928
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1515766266429140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd85d9060cc06814fb8e1a7a259b599c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114789239656871970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1887,11 +1863,11 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!114 &114876956737216130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2071,7 +2047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2374,10 +2350,10 @@ RectTransform:
   m_Father: {fileID: 224882013388136370}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 81.8, y: -15.4}
-  m_SizeDelta: {x: 163.6, y: 30.9}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.02999878, y: 117.04}
+  m_SizeDelta: {x: -12.729996, y: -241.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224286702394329734
 RectTransform:
@@ -2397,10 +2373,10 @@ RectTransform:
   m_Father: {fileID: 224882013388136370}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 85.600006, y: -147.01}
-  m_SizeDelta: {x: 171.2, y: 240.58}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.6000061, y: -13.5099945}
+  m_SizeDelta: {x: 1.199997, y: -26.419998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224287845241212420
 RectTransform:
@@ -2659,10 +2635,10 @@ RectTransform:
   m_Father: {fileID: 224526818669569916}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 403, y: 227}
-  m_SizeDelta: {x: -852.8, y: -500.7}
+  m_AnchoredPosition: {x: -113.5, y: -157}
+  m_SizeDelta: {x: 180.29999, y: 267.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224909663655552518
 RectTransform:

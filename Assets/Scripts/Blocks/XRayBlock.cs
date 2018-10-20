@@ -6,15 +6,9 @@ using UnityEngine;
 public class XRayBlock : MonoBehaviour {
 
     public bool canBeTranslucent = true;
-    public Material materialNotTranslucent;
-    public Material materialTranslucent;
-    private Renderer objRenderer;
+    public List<RenderersMaterials> xrayrenderers;
+    public Transform propsParents;
     private bool isTranslucent = false;
-
-    private void Awake()
-    {
-        objRenderer = GetComponent<Renderer>();
-    }
 
     private void Update()
     {
@@ -33,8 +27,12 @@ public class XRayBlock : MonoBehaviour {
 
     private void MakeNotTranslucent()
     {
-        objRenderer.material = materialNotTranslucent;
-        objRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        foreach (RenderersMaterials rm in xrayrenderers)
+        {
+            rm.MakeNotTranslucent();
+        }
+
+        if(propsParents!=null) propsParents.gameObject.SetActive(true);
     }
 
     public void MakeTranslucent()
@@ -42,9 +40,14 @@ public class XRayBlock : MonoBehaviour {
         if (!canBeTranslucent)
             return;
 
-        objRenderer.material = materialTranslucent;
-        isTranslucent = true;
+        foreach (RenderersMaterials rm in xrayrenderers)
+        {
+            rm.MakeTranslucent();
+        }
 
+        if (propsParents != null) propsParents.gameObject.SetActive(false);
+
+        isTranslucent = true;
     }
 
     public void MakeShadowOnly()
@@ -52,7 +55,46 @@ public class XRayBlock : MonoBehaviour {
         if (!canBeTranslucent)
             return;
 
-        objRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        foreach (RenderersMaterials rm in xrayrenderers)
+        {
+            rm.MakeShadowOnly();
+        }
+
+        if (propsParents != null) propsParents.gameObject.SetActive(false);
+
         isTranslucent = true;
+    }
+
+    [Serializable]
+    public class RenderersMaterials {
+        public List<Renderer> renderers;
+        public Material translucentMaterial;
+        public Material notTranslucentMaterial;
+
+        public void MakeTranslucent()
+        {
+            foreach (Renderer r in renderers)
+            {
+                r.material = translucentMaterial;
+            }
+        }
+
+        public void MakeNotTranslucent()
+        {
+            foreach (Renderer r in renderers)
+            {
+                r.material = notTranslucentMaterial;
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+        }
+
+        public void MakeShadowOnly()
+        {
+            foreach (Renderer r in renderers)
+            {
+                r.material = notTranslucentMaterial;
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+        }
     }
 }

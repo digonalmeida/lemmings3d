@@ -57,7 +57,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 7b59217b85e19e34cb59b554c009e6f0, type: 2}
   m_StaticBatchInfo:
@@ -110,9 +109,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeTranslucent: 1
-  materialNotTranslucent: {fileID: 2100000, guid: 7b59217b85e19e34cb59b554c009e6f0,
-    type: 2}
-  materialTranslucent: {fileID: 2100000, guid: 4f5a9c8bf22857b44986e06985902456, type: 2}
+  xrayrenderers:
+  - renderers:
+    - {fileID: 23777746463264728}
+    translucentMaterial: {fileID: 2100000, guid: 74dc66cdfded2fd429c49eac5d2f0314,
+      type: 2}
+    notTranslucentMaterial: {fileID: 2100000, guid: 7b59217b85e19e34cb59b554c009e6f0,
+      type: 2}
+  propsParents: {fileID: 0}
 --- !u!114 &114920141891270828
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -198,9 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeTranslucent: 1
-  materialNotTranslucent: {fileID: 2100000, guid: 0dab2c7341166f941b26a5164b243d48,
-    type: 2}
-  materialTranslucent: {fileID: 2100000, guid: 4f5a9c8bf22857b44986e06985902456, type: 2}
+  xrayrenderers: []
+  propsParents: {fileID: 0}
 --- !u!114 &114741391480063778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -230,6 +229,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeTranslucent: 1
-  materialNotTranslucent: {fileID: 2100000, guid: 0dab2c7341166f941b26a5164b243d48,
-    type: 2}
-  materialTranslucent: {fileID: 2100000, guid: 4f5a9c8bf22857b44986e06985902456, type: 2}
+  xrayrenderers:
+  - renderers:
+    - {fileID: 23351998688289562}
+    - {fileID: 23676995213543660}
+    translucentMaterial: {fileID: 2100000, guid: c3bfd5a2296b13f47aee122a711ba4dd,
+      type: 2}
+    notTranslucentMaterial: {fileID: 2100000, guid: 0dab2c7341166f941b26a5164b243d48,
+      type: 2}
+  propsParents: {fileID: 0}
