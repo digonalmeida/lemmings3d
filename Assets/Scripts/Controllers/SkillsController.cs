@@ -43,7 +43,7 @@ public class SkillsController : MonoBehaviour
     public void OnLoadMap(MapSettings settings)
     {
         skillsCounter = new SkillsCounter(settings.SkillsCounter);
-        LevelController.TriggerLemmingUsedSkill();
+        //LevelController.TriggerLemmingUsedSkill();
     }
 
     //Start

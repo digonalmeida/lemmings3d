@@ -21,7 +21,7 @@ MonoBehaviour:
       builders: 0
       climbers: 0
       diggers: 99
-      exploders: 0
+      exploders: 99
       floaters: 0
   level:
     serializedLevelBlocks:

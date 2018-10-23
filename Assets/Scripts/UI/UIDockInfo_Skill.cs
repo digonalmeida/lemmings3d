@@ -7,27 +7,28 @@ public class UIDockInfo_Skill : UIDockInfo
 {
     //References
     public Toggle toggleButton;
-    public Image togglePanelRef;
+    private Image togglePanelRef;
 
     //Control Variables
-    private int lastCount;
     public Skill skill;
     public Text skillCountText;
 
     private void OnEnable()
     {
         LevelController.LemmingUsedSkill += UpdateInfo;
+        LevelController.OnLoadGame += UpdateInfo;
     }
 
     private void OnDisable()
     {
         LevelController.LemmingUsedSkill -= UpdateInfo;
+        LevelController.OnLoadGame -= UpdateInfo;
     }
 
     //Start Method
     private void Start()
     {
-        lastCount = ControllerManager.Instance.skillController.getRemainingUses(skill);
+        togglePanelRef = GetComponent<Image>();
         UpdateInfo();
     }
 
@@ -37,32 +38,21 @@ public class UIDockInfo_Skill : UIDockInfo
         if (active)
         {
             togglePanelRef.color = Color.red;
-            ControllerManager.Instance.skillController.
-                changeSkill(skill);
+            ControllerManager.Instance.skillController.changeSkill(skill);
         }
         else
         {
             togglePanelRef.color = Color.white;
             ControllerManager.Instance.skillController.selectedSkill = Skill.None;
+            toggleButton.isOn = false;
         }
-    }
-
-    //Reset Toggle to Off State
-    private void resetToggle()
-    {
-        toggleButton.isOn = false;
     }
 
     //Update Display Variables
     private void UpdateInfo()
     {
+        updateState(ControllerManager.Instance.skillController.selectedSkill != Skill.None);
         int skillCount = ControllerManager.Instance.skillController.getRemainingUses(skill);
-        if (lastCount > skillCount)
-        {
-            resetToggle();
-            lastCount = skillCount;
-        }
-
         skillCountText.text = skillCount.ToString();
         toggleButton.interactable = skillCount > 0;
     }

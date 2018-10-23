@@ -105,6 +105,16 @@
             BuildMapScene();
         }
 
+        public void EraseWall(Vector3Int position)
+        {
+            LevelMap.MapBlock block = map.Get(position);
+            if (block != null && block.Type == MapBlock.BlockType.Simple)
+            {
+                map.Set(position, null);
+                BuildMapScene();
+            }
+        }
+
         public void Rotate(Vector3Int position)
         {
             map.Rotate(position);

@@ -27,7 +27,7 @@ public class LemmingDiggingState : LemmingState
         base.Update();
         if(Agent.AnimationController.isEndOfAnimation("digging"))
         {
-            ControllerManager.Instance.mapController.EraseBlock(Vector3Int.FloorToInt(Agent.transform.position + Vector3.down));
+            ControllerManager.Instance.mapController.EraseWall(Vector3Int.FloorToInt(Agent.transform.position + Vector3.down));
             Agent.StateController.dequeueSkill();
             this.StateMachine.TriggerEvent((int)LemmingAI.Trigger.FinishedTask);
         }

@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class UIDock : MonoBehaviour
 {
-
     public UnityEvent pause;
     public UnityEvent explodeAll;
 
@@ -19,7 +18,6 @@ public class UIDock : MonoBehaviour
     {
         explodeAll.Invoke();
     }
-
 
     public void DebugText(string text)
     {

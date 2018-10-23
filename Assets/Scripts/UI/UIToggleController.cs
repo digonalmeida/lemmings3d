@@ -10,8 +10,8 @@ public class UIToggleController : MonoBehaviour
 
     //Start
     private void Start()
-    {
-        togglePanelRef = this.transform.parent.GetComponent<Image>();
+    {  
+        togglePanelRef = this.transform.parent.parent.GetComponent<Image>();
     }
 
     //Change Color of Panel
