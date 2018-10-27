@@ -92,7 +92,7 @@ public class SkillsController : MonoBehaviour
 
         skillsCounter[selectedSkill]--;
         selectedSkill = Skill.None;
-        LevelController.TriggerLemmingUsedSkill();
+        GameEvents.Lemmings.LemmingUsedSkill.SafeInvoke();
         
         return true;
     }

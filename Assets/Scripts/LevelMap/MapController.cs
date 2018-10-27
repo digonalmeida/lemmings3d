@@ -132,12 +132,12 @@
 
         private void Awake()
         {
-            LevelController.OnLoadGame += LoadGameMap;
+            GameEvents.GameState.OnLoadGame += LoadGameMap;
         }
 
         private void OnDestroy()
         {
-            LevelController.OnLoadGame -= LoadGameMap;
+            GameEvents.GameState.OnLoadGame -= LoadGameMap;
         }
 
         public void LoadGameMap()
