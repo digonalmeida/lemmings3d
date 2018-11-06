@@ -16,7 +16,12 @@
         private float timeout = 0.0f;
         private State state;
         private RaycastHit hitInfo = new RaycastHit();
-        private int blockLayerMask = 0;
+
+        [SerializeField]
+        private LayerMask targetLayerMask;
+
+        [SerializeField]
+        private LayerMask raycastLayerMask;
 
         public enum State
         {
@@ -72,15 +77,33 @@
             }
         }
 
+        public bool CheckValidClick()
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            bool hit = Physics.Raycast(ray, out hitInfo, 1000, raycastLayerMask);
+
+            IsVisible = hit;
+
+            if (hit)
+            {
+                var hitLayer = hitInfo.collider.gameObject.layer;
+
+                return targetLayerMask == (targetLayerMask | (1 << hitLayer));
+            }
+
+            return false;
+        }
+
         public void UpdateCursorSelection()
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            bool hit = Physics.Raycast(ray, out hitInfo, 1000, blockLayerMask);
+            bool hit = Physics.Raycast(ray, out hitInfo, 1000, targetLayerMask);
             
             IsVisible = hit;
 
             if (hit)
             {
+
                 var block = hitInfo.collider.GetComponent<MapBlockController>();
                 if (block != null)
                 {
@@ -102,7 +125,7 @@
 
         private void Awake()
         {
-            blockLayerMask = LayerMask.GetMask("Wall");
+            //targetLayerMask = LayerMask.GetMask("Wall");
         }
 
         private void SetState(State state)
@@ -125,11 +148,16 @@
             timeout -= Time.deltaTime;
             if (timeout <= 0)
             {
+                
                 timeout = interval;
-                if (OnActivate != null)
+                if (CheckValidClick())
                 {
-                    OnActivate();
+                    if (OnActivate != null)
+                    {
+                        OnActivate();
+                    }
                 }
+                
             }
 
             if (Input.GetMouseButtonUp(0))
@@ -149,6 +177,11 @@
                     SetState(State.Active);
                 }
             }
+        }
+
+        private void OnDisable()
+        {
+            SetState(State.Inactive);
         }
 
         private void Update()

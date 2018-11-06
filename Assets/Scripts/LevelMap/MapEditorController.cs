@@ -1,11 +1,16 @@
 ﻿namespace LevelMap
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
 
     public class MapEditorController : MonoBehaviour
     {
+        public static Action OnUpdate;
+
+        private static Action OnToggleMapEditor;
+
         [SerializeField]
         private MapEditorCursor cursor = null;
 
@@ -13,8 +18,48 @@
         private MapBlock blockBrush = null;
 
         private MapController mapController;
-
+        
         private List<string> numkeyNames = new List<string>();
+
+        public MapBlock.BlockType BrushType
+        {
+            get
+            {
+                if (blockBrush == null)
+                {
+                    return MapBlock.BlockType.Empty;
+                }
+                return blockBrush.Type;
+            }
+            set
+            {
+                if (blockBrush != null)
+                {
+                    blockBrush.Type = value;
+                }
+                NotifyUpdate();
+            }
+        }
+
+        private void NotifyUpdate()
+        {
+            if (OnUpdate != null)
+            {
+                OnUpdate();
+            }
+        }
+        public static void ToggleMapEditor()
+        {
+            if (OnToggleMapEditor != null)
+            {
+                OnToggleMapEditor();
+            }
+        }
+
+        private void Toggle()
+        {
+            gameObject.SetActive(!gameObject.activeInHierarchy);
+        }
 
         private void Awake()
         {
@@ -27,11 +72,14 @@
             }
 
             SetBrushId(1);
+
+            OnToggleMapEditor += Toggle;
         }
 
         private void OnDestroy()
         {
             cursor.OnActivate -= OnCursorActivated;
+            OnToggleMapEditor -= Toggle;
         }
 
         private void Update()
@@ -54,6 +102,13 @@
                 }
             }
         }
+
+        public void SetBrushType(MapBlock.BlockType type)
+        {
+
+        }
+
+   
 
         private void ChangeBrushType()
         {
