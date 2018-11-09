@@ -28,7 +28,7 @@ public class LemmingBashingState : LemmingState
         if (Agent.AnimationController.isEndOfAnimation("bashing"))
         {
             Vector3 forward = Directions.GetWorldDirection(Agent.MovementController.getForwardDirection());
-            ControllerManager.Instance.mapController.EraseWall(new Vector3Int(Mathf.CeilToInt(Agent.transform.position.x + forward.x), Mathf.CeilToInt(Agent.transform.position.y + forward.y), Mathf.CeilToInt(Agent.transform.position.z + forward.z)));
+            LevelMap.MapController.Instance.EraseWall(new Vector3Int(Mathf.CeilToInt(Agent.transform.position.x + forward.x), Mathf.CeilToInt(Agent.transform.position.y + forward.y), Mathf.CeilToInt(Agent.transform.position.z + forward.z)));
             Agent.StateController.dequeueSkill();
             this.StateMachine.TriggerEvent((int)LemmingAI.Trigger.FinishedTask);
         }

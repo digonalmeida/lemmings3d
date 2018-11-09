@@ -22,12 +22,12 @@ public class LemmingExplodingState : LemmingState
         base.Update();
         if (Agent.AnimationController.isEndOfAnimation("exploding"))
         {
-            ControllerManager.Instance.mapController.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.down));
-            ControllerManager.Instance.mapController.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.up));
-            ControllerManager.Instance.mapController.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.left));
-            ControllerManager.Instance.mapController.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.right));
-            ControllerManager.Instance.mapController.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.forward));
-            ControllerManager.Instance.mapController.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.back));
+            LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.down));
+            LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.up));
+            LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.left));
+            LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.right));
+            LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.forward));
+            LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.back));
             Agent.StateController.killLemming();
         }
     }
