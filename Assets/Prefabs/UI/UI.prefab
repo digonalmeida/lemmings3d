@@ -1880,7 +1880,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleButton: {fileID: 114806959713062772}
-  togglePanelRef: {fileID: 114897214616103942}
   skill: 10
   skillCountText: {fileID: 114044376433471248}
 --- !u!114 &114056452124613076
@@ -2305,7 +2304,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleButton: {fileID: 114139003390861236}
-  togglePanelRef: {fileID: 114915450031705792}
   skill: 2
   skillCountText: {fileID: 114001458514233148}
 --- !u!114 &114121501142743280
@@ -2964,7 +2962,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleButton: {fileID: 114842796556981872}
-  togglePanelRef: {fileID: 114248473918957422}
   skill: 1
   skillCountText: {fileID: 114898933906909696}
 --- !u!114 &114232329272769054
@@ -3801,7 +3798,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleButton: {fileID: 114957757549610192}
-  togglePanelRef: {fileID: 114415635342572486}
   skill: 7
   skillCountText: {fileID: 114932879255895376}
 --- !u!114 &114431996316174236
@@ -4366,7 +4362,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleButton: {fileID: 114847806520634096}
-  togglePanelRef: {fileID: 114226937891601620}
   skill: 8
   skillCountText: {fileID: 114952420528906006}
 --- !u!114 &114608196007147828
@@ -4604,7 +4599,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleButton: {fileID: 114139128676807150}
-  togglePanelRef: {fileID: 114052451539514892}
   skill: 11
   skillCountText: {fileID: 114066533963397794}
 --- !u!114 &114665783989425908
@@ -5735,7 +5729,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleButton: {fileID: 114934164344131078}
-  togglePanelRef: {fileID: 114213428827745744}
   skill: 9
   skillCountText: {fileID: 114806589331863838}
 --- !u!114 &114895955074494896

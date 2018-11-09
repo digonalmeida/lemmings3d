@@ -273,7 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmAudioSource: {fileID: 82096723148782742}
   sfxAudioSource: {fileID: 82462365272627436}
-  mainBGM: {fileID: 0}
+  mainBGM: {fileID: 8300000, guid: a79738b6fe663e147b31ebc41d96735f, type: 3}
   selectSkill: {fileID: 8300000, guid: b96590337401366419fe5cb77e2d6f80, type: 3}
   giveSkill: {fileID: 8300000, guid: a79738b6fe663e147b31ebc41d96735f, type: 3}
   lemmingDie: {fileID: 11400000, guid: a758d05882a6b494a9a9385376a79780, type: 2}

@@ -30,8 +30,9 @@ public class SkillsController : Singleton<SkillsController>
     private BlockerDirectionSelector blockerSelector;
     public bool isWaitingForBlockerConfirmation { get; private set; }
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         MapController.OnLoadMap += OnLoadMap;
     }
 

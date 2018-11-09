@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : Singleton<LevelController>
 {
-
-
     public static int lemmingsSpawned { get; private set; }
     public static int lemmingsEnteredExit { get; private set; }
 
@@ -27,8 +25,9 @@ public class LevelController : Singleton<LevelController>
         GameEvents.Lemmings.LemmingSpawned -= LemmingEnter;
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         lemmingsSpawned = 0;
         lemmingsEnteredExit = 0;
     }

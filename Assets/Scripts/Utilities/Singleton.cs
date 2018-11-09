@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : Singleton<T>
+public class Singleton<T> : MonoBehaviour where T : Component
 {
 
     public static T Instance
@@ -8,16 +8,16 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         get; private set;
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (Instance != null)
         {
-            DestroyImmediate(this.gameObject); //DestroyImmediate(gameObject);
-            return;
+            DestroyImmediate(gameObject);
         }
-
-        Instance = this.GetComponent<T>();
-        DontDestroyOnLoad(this.gameObject);
+        else
+        {
+            Instance = this as T;
+            DontDestroyOnLoad(this);
+        }
     }
-
 }
