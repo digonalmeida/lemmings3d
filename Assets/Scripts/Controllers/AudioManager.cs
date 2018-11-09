@@ -10,59 +10,91 @@ public class AudioManager : MonoBehaviour {
 
     private Coroutine volumeTransitionCoroutine;
     private float globalVolume = 1f;
+    private float currentVolume = 0f;
+
+    [Header("BGM")]
+    public AudioClip mainBGM;
 
     [Header("SFX Audios")]
     public AudioClip selectSkill;
     public AudioClip giveSkill;
+    public AudioList lemmingDie;
 
     private void OnEnable()
     {
+        GameEvents.GameState.OnStartGame += () => StartBGM(mainBGM);
+        GameEvents.GameState.OnEndGame += StopBGM;
         GameEvents.UI.SelectedSkill += () => sfxAudioSource.PlayOneShot(selectSkill);
         GameEvents.Lemmings.LemmingUsedSkill += () => sfxAudioSource.PlayOneShot(giveSkill);
+        GameEvents.Lemmings.LemmingDied += () => sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());
+
     }
 
     private void OnDisable()
     {
+        GameEvents.GameState.OnStartGame -= () => StartBGM(mainBGM);
+        GameEvents.GameState.OnEndGame -= StopBGM;
         GameEvents.UI.SelectedSkill -= () => sfxAudioSource.PlayOneShot(selectSkill);
         GameEvents.Lemmings.LemmingUsedSkill -= () => sfxAudioSource.PlayOneShot(giveSkill);
+        GameEvents.Lemmings.LemmingDied -= () => sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());
     }
 
-    private void ChangeVolume(float newVolume)
+    private void ChangeGlobalVolume(float newVolume, bool updateAudioSources)
     {
         globalVolume = newVolume;
-        bgmAudioSource.volume = globalVolume;
-        sfxAudioSource.volume = globalVolume;
+        if(updateAudioSources) ChangeAudioSourcesVolume(globalVolume);
+    }
+
+    private void ChangeAudioSourcesVolume(float newVolume)
+    {
+        currentVolume = newVolume;
+        bgmAudioSource.volume = currentVolume;
+        sfxAudioSource.volume = currentVolume;
     }
 
     private void StartBGM(AudioClip bgm) {
+
+        // set bgm
         bgmAudioSource.clip = bgm;
         bgmAudioSource.loop = true;
         bgmAudioSource.Play();
+
+        // transition volume from zero to current
+        ChangeAudioSourcesVolume(0f);
+        MaxVolume(null);
     }
 
-    public void Mute()
+    private void StopBGM() {
+        Mute(()=> {
+            bgmAudioSource.clip = null;
+            bgmAudioSource.Stop();
+        });
+    }
+
+    public void Mute(Action callback)
     {
         if(volumeTransitionCoroutine!=null) StopCoroutine(volumeTransitionCoroutine);
-        volumeTransitionCoroutine = StartCoroutine(VolumeTransition(1f, 0f));
+        volumeTransitionCoroutine = StartCoroutine(VolumeTransition(1f, 0f, callback));
     }
 
-    public void MaxVolume()
-    {
+    private void MaxVolume(Action callback) {
         if (volumeTransitionCoroutine != null) StopCoroutine(volumeTransitionCoroutine);
-        volumeTransitionCoroutine = StartCoroutine(VolumeTransition(1f, 1f));
+        volumeTransitionCoroutine = StartCoroutine(VolumeTransition(1f, globalVolume, callback));
     }
 
-    private IEnumerator VolumeTransition(float duration, float finalVolume)
+    private IEnumerator VolumeTransition(float duration, float finalVolume, Action callback)
     {
-        float initialValue = globalVolume;
+        float initialValue = currentVolume;
         float timer = 0;
         while (timer <= duration)
         {
-            ChangeVolume(timer / duration * (finalVolume - initialValue) + initialValue);
+            ChangeAudioSourcesVolume(timer / duration * (finalVolume - initialValue) + initialValue);
             timer += Time.deltaTime;
             yield return null;
         }
-        globalVolume = finalVolume;
+        ChangeAudioSourcesVolume(finalVolume);
+
+        if (callback != null) callback.Invoke();
         
     }
 

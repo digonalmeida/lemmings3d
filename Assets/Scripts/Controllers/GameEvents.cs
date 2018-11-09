@@ -47,6 +47,7 @@ public static class GameEvents {
         public static Action LemmingReachedExit;
         public static Action LemmingSpawned;
         public static Action LemmingUsedSkill;
+        public static Action LemmingDied;
         public static event SpawnRateAction ChangedSpawnRate;
 
         

@@ -130,6 +130,7 @@ public class LemmingStateController : MonoBehaviour
     {
         Debug.Log(gameObject.name + " - I'm dead");
         Destroy(this.gameObject);
+        GameEvents.Lemmings.LemmingDied.SafeInvoke();
         //TODO
     }
 }
