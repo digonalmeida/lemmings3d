@@ -12,12 +12,12 @@ public class InputsController : MonoBehaviour
     {
 		if(Input.GetMouseButtonDown(0))
         {
-            if (!ControllerManager.Instance.skillController.isWaitingForBlockerConfirmation)
+            if (!SkillsController.Instance.isWaitingForBlockerConfirmation)
             {
                 if (highlightPointerRef.isHighlighting)
                 {
                     LemmingStateController lemming = highlightPointerRef.highlightedObject.center.GetComponent<LemmingStateController>();
-                    ControllerManager.Instance.skillController.assignSkill(lemming);
+                    SkillsController.Instance.assignSkill(lemming);
 
                 }
             }
