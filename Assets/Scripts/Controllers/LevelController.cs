@@ -4,7 +4,7 @@ using UnityEngine;
 using LevelMap;
 using UnityEngine.SceneManagement;
 
-public class LevelController : MonoBehaviour
+public class LevelController : Singleton
 {
 
 
