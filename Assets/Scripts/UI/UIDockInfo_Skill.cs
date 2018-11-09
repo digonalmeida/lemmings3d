@@ -15,14 +15,14 @@ public class UIDockInfo_Skill : UIDockInfo
 
     private void OnEnable()
     {
-        LevelController.LemmingUsedSkill += UpdateInfo;
-        LevelController.OnLoadGame += UpdateInfo;
+        GameEvents.Lemmings.LemmingUsedSkill += UpdateInfo;
+        GameEvents.GameState.OnLoadGame += UpdateInfo;
     }
 
     private void OnDisable()
     {
-        LevelController.LemmingUsedSkill -= UpdateInfo;
-        LevelController.OnLoadGame -= UpdateInfo;
+        GameEvents.Lemmings.LemmingUsedSkill -= UpdateInfo;
+        GameEvents.GameState.OnLoadGame -= UpdateInfo;
     }
 
     //Start Method
@@ -39,6 +39,7 @@ public class UIDockInfo_Skill : UIDockInfo
         {
             togglePanelRef.color = Color.red;
             ControllerManager.Instance.skillController.changeSkill(skill);
+            GameEvents.UI.SelectedSkill.SafeInvoke();
         }
         else
         {

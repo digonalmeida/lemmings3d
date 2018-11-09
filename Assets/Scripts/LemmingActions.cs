@@ -39,6 +39,6 @@ public class LemmingActions : MonoBehaviour {
 
     private void CountExit()
     {
-        LevelController.TriggerLemmingReachedExit();
+        GameEvents.Lemmings.LemmingReachedExit.SafeInvoke();
     }
 }

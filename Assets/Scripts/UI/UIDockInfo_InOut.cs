@@ -14,14 +14,14 @@ public class UIDockInfo_InOut : UIDockInfo
 
     private void OnEnable()
     {
-        LevelController.LemmingReachedExit += UpdateInfo;
-        LevelController.LemmingSpawned += UpdateInfo;
+        GameEvents.Lemmings.LemmingReachedExit += UpdateInfo;
+        GameEvents.Lemmings.LemmingSpawned += UpdateInfo;
     }
 
     private void OnDisable()
     {
-        LevelController.LemmingReachedExit -= UpdateInfo;
-        LevelController.LemmingSpawned -= UpdateInfo;
+        GameEvents.Lemmings.LemmingReachedExit -= UpdateInfo;
+        GameEvents.Lemmings.LemmingSpawned -= UpdateInfo;
     }
 
 

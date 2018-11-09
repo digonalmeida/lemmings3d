@@ -48,16 +48,16 @@ public class Spawner : MonoBehaviour
 
     private void OnEnable()
     {
-        LevelController.ChangedSpawnRate += ChangeInterval;
-        LevelController.OnStartGame += Init;
-        LevelController.OnEndGame += Stop;
+        GameEvents.Lemmings.ChangedSpawnRate += ChangeInterval;
+        GameEvents.GameState.OnStartGame += Init;
+        GameEvents.GameState.OnEndGame += Stop;
     }
 
     private void OnDisable()
     {
-        LevelController.ChangedSpawnRate -= ChangeInterval;
-        LevelController.OnStartGame -= Init;
-        LevelController.OnEndGame -= Stop;
+        GameEvents.Lemmings.ChangedSpawnRate -= ChangeInterval;
+        GameEvents.GameState.OnStartGame -= Init;
+        GameEvents.GameState.OnEndGame -= Stop;
     }
 
     //Create Lemming
@@ -108,7 +108,7 @@ public class Spawner : MonoBehaviour
             lemmingsPool.Push(obj);
         }
 
-        LevelController.TriggerLemmingSpawned();
+        GameEvents.Lemmings.LemmingSpawned.SafeInvoke();
     }
 
     private void ChangeInterval(int newSpawnRate)

@@ -12,12 +12,12 @@ public class UIDockInfo_Speed : UIDockInfo
 
     private void OnEnable()
     {
-        LevelController.ChangedSpawnRate += UpdateInfo;
+        GameEvents.Lemmings.ChangedSpawnRate += UpdateInfo;
     }
 
     private void OnDisable()
     {
-        LevelController.ChangedSpawnRate -= UpdateInfo;
+        GameEvents.Lemmings.ChangedSpawnRate -= UpdateInfo;
     }
 
 
