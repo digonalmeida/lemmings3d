@@ -50,34 +50,31 @@ public class LevelController : Singleton<LevelController>
         lemmingsSpawned++;
     }
 
-
-
     public static void ChangeSpawnRate(int increment)
     {
         if ((currentRate + increment) >= minimumSpawnRate && (currentRate + increment) <= maximumSpawnRate)
         {
             currentRate += increment;
-            GameEvents.Lemmings.TriggerSpawnRateChange(currentRate);
+            GameEvents.Lemmings.ChangedSpawnRate.SafeInvoke(currentRate);
         }
     }
-
 
     public void LoadGame()
     {
         Debug.Log("load game");
-        GameEvents.GameState.TriggerOnLoadGame();
+        GameEvents.GameState.OnLoadGame.SafeInvoke();
     }
 
     public void StartGame()
     {
         Debug.Log("Start Game");
-        GameEvents.GameState.TriggerOnStartGame();
+        GameEvents.GameState.OnStartGame.SafeInvoke();
     }
 
     public void EndGame()
     {
         Debug.Log("End Game");
-        GameEvents.GameState.TriggerOnEndGame();
+        GameEvents.GameState.OnEndGame.SafeInvoke();
     }
 
     public void RestartGame()

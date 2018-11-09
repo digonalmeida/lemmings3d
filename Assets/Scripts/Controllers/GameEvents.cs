@@ -3,35 +3,11 @@
 public static class GameEvents {
 
     public static class GameState {
-        public delegate void GameStateAction();
 
-        public static event GameStateAction OnStartGame;
-        public static event GameStateAction OnEndGame;
-        public static event GameStateAction OnLoadGame;
-
-        public static void TriggerOnLoadGame()
-        {
-            if (OnLoadGame != null)
-            {
-                OnLoadGame.Invoke();
-            }
-        }
-
-        public static void TriggerOnStartGame()
-        {
-            if (OnStartGame != null)
-            {
-                OnStartGame.Invoke();
-            }
-        }
-
-        public static void TriggerOnEndGame() {
-            if (OnEndGame != null)
-            {
-                OnEndGame.Invoke();
-            }
-        }
-}
+        public static Action OnStartGame;
+        public static Action OnEndGame;
+        public static Action OnLoadGame;
+    }
 
     public static class UI {
         public static Action SelectedSkill;
@@ -48,14 +24,6 @@ public static class GameEvents {
         public static Action LemmingSpawned;
         public static Action LemmingUsedSkill;
         public static Action LemmingDied;
-        public static event SpawnRateAction ChangedSpawnRate;
-
-        
-        public static void TriggerSpawnRateChange(int newRate)
-        {
-            if (ChangedSpawnRate != null)
-                ChangedSpawnRate.Invoke(newRate);
-        }
-
+        public static Action<int> ChangedSpawnRate;
     }
 }
