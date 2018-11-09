@@ -46,22 +46,22 @@ public class BlockerDirectionSelector : MonoBehaviour {
             switch (direction)
             {
                 case 0:
-                    ControllerManager.Instance.skillController.selectedSkill = Skill.Blocker_TurnEast;
+                    SkillsController.Instance.selectedSkill = Skill.Blocker_TurnEast;
                     break;
                 case 1:
-                    ControllerManager.Instance.skillController.selectedSkill = Skill.Blocker_TurnNorth;
+                    SkillsController.Instance.selectedSkill = Skill.Blocker_TurnNorth;
                     break;
                 case 2:
-                    ControllerManager.Instance.skillController.selectedSkill = Skill.Blocker_TurnWest;
+                    SkillsController.Instance.selectedSkill = Skill.Blocker_TurnWest;
                     break;
                 case 3:
-                    ControllerManager.Instance.skillController.selectedSkill = Skill.Blocker_TurnSouth; 
+                    SkillsController.Instance.selectedSkill = Skill.Blocker_TurnSouth; 
                     break;
                 default:
                     break;
             }
 
-            ControllerManager.Instance.skillController.assignSkill(followingLemming);
+            SkillsController.Instance.assignSkill(followingLemming);
 
             Detach();
 

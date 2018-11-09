@@ -38,13 +38,13 @@ public class UIDockInfo_Skill : UIDockInfo
         if (active)
         {
             togglePanelRef.color = Color.red;
-            ControllerManager.Instance.skillController.changeSkill(skill);
+            SkillsController.Instance.changeSkill(skill);
             GameEvents.UI.SelectedSkill.SafeInvoke();
         }
         else
         {
             togglePanelRef.color = Color.white;
-            ControllerManager.Instance.skillController.selectedSkill = Skill.None;
+            SkillsController.Instance.selectedSkill = Skill.None;
             toggleButton.isOn = false;
         }
     }
@@ -52,8 +52,8 @@ public class UIDockInfo_Skill : UIDockInfo
     //Update Display Variables
     private void UpdateInfo()
     {
-        updateState(ControllerManager.Instance.skillController.selectedSkill != Skill.None);
-        int skillCount = ControllerManager.Instance.skillController.getRemainingUses(skill);
+        updateState(SkillsController.Instance.selectedSkill != Skill.None);
+        int skillCount = SkillsController.Instance.getRemainingUses(skill);
         skillCountText.text = skillCount.ToString();
         toggleButton.interactable = skillCount > 0;
     }

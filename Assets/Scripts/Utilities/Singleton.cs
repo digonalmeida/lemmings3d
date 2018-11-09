@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public class Singleton : MonoBehaviour
+public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
 
-    public static Singleton Instance
+    public static T Instance
     {
         get; private set;
     }
@@ -12,11 +12,12 @@ public class Singleton : MonoBehaviour
     {
         if (Instance != null)
         {
-            DestroyImmediate(this); //DestroyImmediate(gameObject);
+            DestroyImmediate(this.gameObject); //DestroyImmediate(gameObject);
             return;
         }
 
-        Instance = this;
+        Instance = this.GetComponent<T>();
+        DontDestroyOnLoad(this.gameObject);
     }
 
 }

@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class MapController : Singleton
+    public class MapController : Singleton<MapController>
     {
         [SerializeField]
         private float spawnPropChance = 0.1f;

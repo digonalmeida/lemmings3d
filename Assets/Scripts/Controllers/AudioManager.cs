@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : Singleton {
+public class AudioManager : Singleton<AudioManager> {
 
     [SerializeField] private AudioSource bgmAudioSource;
     [SerializeField] private AudioSource sfxAudioSource;

@@ -19,7 +19,7 @@ public enum Skill
     Floater             //Umbrella
 }
 
-public class SkillsController : MonoBehaviour
+public class SkillsController : Singleton<SkillsController>
 {
     [SerializeField]
     SkillsCounter skillsCounter;
