@@ -14,7 +14,7 @@ public class LemmingAI : MonoBehaviour
     [SerializeField]
     private GameObject actionObject = null;
 
-    private LemmingSimpleMovementController movementController;
+    private LemmingMovementController movementController;
     private LemmingStateController stateController;
     private LemmingState idleState = new LemmingState();
     private LemmingWalkingState walkingState = new LemmingWalkingState();
@@ -46,7 +46,7 @@ public class LemmingAI : MonoBehaviour
         }
     }
 
-    public LemmingSimpleMovementController MovementController
+    public LemmingMovementController MovementController
     {
         get
         {
@@ -75,7 +75,7 @@ public class LemmingAI : MonoBehaviour
     private void Awake()
     {
         lemmingAnimationController = GetComponent<LemmingAnimationController>();
-        movementController = GetComponent<LemmingSimpleMovementController>();
+        movementController = GetComponent<LemmingMovementController>();
         movementController.OnArrived += OnArrivetAtWaypoint;
         movementController.OnGetNextWaypoint += OnGetNextWaypoint;
 

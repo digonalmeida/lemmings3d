@@ -37,7 +37,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1708539938886730}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
   m_LocalPosition: {x: -14.735056, y: 4.4013844, z: -26.645756}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -108,9 +108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317a6b0a60801124fbcae715d3d9990e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockType: 1
   destroyEffectPrefab: {fileID: 1819064822894524, guid: cdbdcc3536e960544b29ce3705b988ff,
     type: 2}
+  block:
+    position: {x: 0, y: 0, z: 0}
+    type: 1
+    direction: 3
 --- !u!114 &114538339768680630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -123,6 +126,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeTranslucent: 1
-  materialNotTranslucent: {fileID: 2100000, guid: 575de339cb5209a4da184a94cf7b8df2,
-    type: 2}
-  materialTranslucent: {fileID: 2100000, guid: 4f5a9c8bf22857b44986e06985902456, type: 2}
+  xrayrenderers: []
+  propsParents: {fileID: 0}

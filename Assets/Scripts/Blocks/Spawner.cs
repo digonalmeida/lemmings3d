@@ -64,7 +64,7 @@ public class Spawner : MonoBehaviour
     private GameObject createLemming()
     {
         GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
-        var movController = obj.GetComponent<LemmingSimpleMovementController>();
+        var movController = obj.GetComponent<LemmingMovementController>();
         if(movController != null)
         {
             movController.SetDirection(startingMovementDirection);

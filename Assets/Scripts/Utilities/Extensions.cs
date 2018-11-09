@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public static class Extensions {
 
@@ -8,5 +10,17 @@ public static class Extensions {
         {
             action.Invoke();
         }
+    }
+
+    public static void WaitAndAct(this MonoBehaviour mono, float waitTime, Action endAction)
+    {
+        mono.StartCoroutine(WaitAndAct(waitTime, endAction));
+    }
+
+    private static IEnumerator WaitAndAct(float time, Action action)
+    {
+        yield return new WaitForSeconds(time);
+
+        action.Invoke();
     }
 }
