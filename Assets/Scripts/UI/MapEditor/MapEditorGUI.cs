@@ -18,17 +18,17 @@ public class MapEditorGUI : MonoBehaviour
 
     public void SaveMap()
     {
-        ControllerManager.Instance.mapController.SaveLevel();
+        MapController.Instance.SaveLevel();
     }
 
     public void LoadMap()
     {
-        ControllerManager.Instance.mapController.LoadLevel();
+        MapController.Instance.LoadLevel();
     }
 
     public void Refresh()
     {
-        ControllerManager.Instance.mapController.RefreshScene();
+        MapController.Instance.RefreshScene();
     }
 
     public void Start()

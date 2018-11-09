@@ -12,17 +12,17 @@ public class LevelControllerGUI: MonoBehaviour
 
     public void StartGame()
     {
-        ControllerManager.Instance.levelController.StartGame();
+        LevelController.Instance.StartGame();
     }
     
     public void LoadGame()
     {
-        ControllerManager.Instance.levelController.LoadGame();
+        LevelController.Instance.LoadGame();
     }
 
     public void EndGame()
     {
-        ControllerManager.Instance.levelController.EndGame();
+        LevelController.Instance.EndGame();
     }
 
     public void Restart()
@@ -33,7 +33,6 @@ public class LevelControllerGUI: MonoBehaviour
     public void ToggleEditor()
     {
         MapEditorController.ToggleMapEditor();
-        //ControllerManager.Instance.mapController.ToggleMapEditor();
     }
 
     public void Start()
