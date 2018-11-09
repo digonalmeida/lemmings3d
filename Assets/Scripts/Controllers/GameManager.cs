@@ -36,14 +36,6 @@ public class GameManager : MonoBehaviour {
         private set;
     }
 
-    public MapAsset SelectedMapAsset
-    {
-        get
-        {
-            return selectedMapAsset;
-        }
-    }
-
     public static GameManager CreateInstance()
     {
         var resource = Resources.Load<GameObject>(resourceName);
@@ -93,7 +85,11 @@ public class GameManager : MonoBehaviour {
             return false;
         }
 
-        selectedMapAsset = mapAssets[id];
+        if (!MapManager.Instance.TrySelectMapById(id))
+        {
+            return false;
+        }
+
         LoadAssetsOnLoad = true;
 
         SceneManager.LoadScene(gameplaySceneName);

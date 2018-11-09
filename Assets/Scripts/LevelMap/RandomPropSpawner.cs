@@ -45,8 +45,12 @@ public class RandomPropSpawner : MonoBehaviour
             RandomizeProp();
             SpawnProp();
         }
-        else {
-            Destroy(gameObject);
+        else
+        {
+            if(Application.isPlaying)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

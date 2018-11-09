@@ -1,5 +1,6 @@
 ﻿namespace LevelMap
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
@@ -11,6 +12,43 @@
 
         [SerializeField]
         private List<MapBlockController> blockPrefabs = new List<MapBlockController>();
+
+        [SerializeField]
+        private MapAsset selectedMapAsset;
+
+        [SerializeField]
+        private List<MapAsset> mapAssets = new List<MapAsset>();
+        
+        public MapAsset SelectedMapAsset
+        {
+            get
+            {
+                return selectedMapAsset;
+            }
+            set
+            {
+                selectedMapAsset = value;
+            }
+        }
+
+        public int SelectedMapIndex
+        {
+            get
+            {
+                return mapAssets.FindIndex((mapAsset) => selectedMapAsset == mapAsset);
+            }
+        }
+
+        public bool TrySelectMapById(int id)
+        {
+            if (id < 0 || id > mapAssets.Count)
+            {
+                return false;
+            }
+
+            selectedMapAsset = mapAssets[id];
+            return true;
+        }
 
         public static MapManager Instance
         {
@@ -35,6 +73,14 @@
             get
             {
                 return blockPrefabs;
+            }
+        }
+
+        public List<MapAsset> MapAssets
+        {
+            get
+            {
+                return mapAssets;
             }
         }
         
@@ -98,6 +144,17 @@
             return mapManagerInstance;
         }
 
+        public void LoadMapAssets()
+        {
+            var mapAssetsArray = Resources.LoadAll<MapAsset>("maps/");
+            mapAssets = new List<MapAsset>(mapAssetsArray);
+        }
+
+        public void OnValidate()
+        {
+            LoadMapAssets();
+        }
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -121,6 +178,8 @@
             {
                 instance = this;
             }
+
+            LoadMapAssets();
         }
     }
 }

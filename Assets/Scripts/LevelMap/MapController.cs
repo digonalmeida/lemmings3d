@@ -8,9 +8,6 @@
     public class MapController : MonoBehaviour
     {
         [SerializeField]
-        private MapAsset mapAsset;
-
-        [SerializeField]
         private float spawnPropChance = 0.1f;
 
         [SerializeField]
@@ -54,16 +51,16 @@
         public void LoadLevel()
         {
             LoadFromScene();
-            map =  mapAsset.LevelMap;
-            settings = mapAsset.Settings;
+            map =  MapManager.Instance.SelectedMapAsset.LevelMap;
+            settings = MapManager.Instance.SelectedMapAsset.Settings;
             RefreshScene();
         }
 
         public void SaveLevel()
         {
             LoadFromScene();
-            mapAsset.Settings = settings;
-            mapAsset.LevelMap = map;
+            MapManager.Instance.SelectedMapAsset.Settings = settings;
+            MapManager.Instance.SelectedMapAsset.LevelMap = map;
             RefreshScene();            
         }
 
@@ -137,12 +134,12 @@
 
         private void OnDestroy()
         {
+
             GameEvents.GameState.OnLoadGame -= LoadGameMap;
         }
 
         public void LoadGameMap()
         {
-            mapAsset = GameManager.Instance.SelectedMapAsset;
             LoadLevel();
         }
 
@@ -239,6 +236,5 @@
         {
             return MapManager.Instance.FindBlockPrefabWithType(type);
         }
-
     }
 }
