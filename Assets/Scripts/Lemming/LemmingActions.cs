@@ -17,28 +17,25 @@ public class LemmingActions : MonoBehaviour {
         // turn off highlightable  object
         highlightableScript.canBeHighlighted = false;
 
-        // trigger animation
-
-
-        // trigger effects
-
-
-        // update level lemming counter
-        //TODO
-
-        // destroy
-        (this).WaitAndAct(timeToDetroyAfterEnterExitPoint, () => EliminateLemming());
+        // trigger event
+        GameEvents.Lemmings.LemmingReachedExit.SafeInvoke();
     }
 
-    private void EliminateLemming()
-    {
-        CountExit();
 
+    //Goodbye Cruel World
+    public void KillLemming()
+    {
+        Debug.Log(gameObject.name + " - I'm dead");
+        GameEvents.Lemmings.LemmingDied.SafeInvoke();
+
+        EliminateLemming();
+
+        //TODO
+    }
+
+    public void EliminateLemming()
+    {
         Destroy(gameObject);
     }
 
-    private void CountExit()
-    {
-        GameEvents.Lemmings.LemmingReachedExit.SafeInvoke();
-    }
 }

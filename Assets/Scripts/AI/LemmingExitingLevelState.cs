@@ -12,8 +12,11 @@ public class LemmingExitingLevelState : LemmingState
 
     public override void Enter()
     {
+        Debug.Log("entered exit point");
+        Debug.Break();
         base.Enter();
         Agent.MovementController.SetDirection(Direction.None);
+        Agent.LemmingActions.EnterExitPoint();
     }
 
     public override void OnGetNextWaypoint()
@@ -25,6 +28,8 @@ public class LemmingExitingLevelState : LemmingState
     public override void Update()
     {
         base.Update();
-        if (Agent.AnimationController.isEndOfAnimation("exiting")) Agent.StateController.killLemming();
+        if (Agent.AnimationController.isEndOfAnimation("exiting")) {
+            Agent.LemmingActions.EliminateLemming();
+        }
     }
 }

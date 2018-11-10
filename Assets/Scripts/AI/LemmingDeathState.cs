@@ -21,7 +21,7 @@ public class LemmingDeathState : LemmingState
         base.Update();
         if (Agent.AnimationController.isEndOfAnimation("death"))
         {
-            Agent.GetComponent<LemmingStateController>().killLemming();
+            Agent.LemmingActions.KillLemming();
         }
     }
 }

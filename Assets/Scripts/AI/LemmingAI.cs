@@ -8,8 +8,10 @@ public class LemmingAI : MonoBehaviour
     [SerializeField]
     private FiniteStateMachine<LemmingAI> stateMachine;
 
-    [SerializeField]
     private LemmingAnimationController lemmingAnimationController;
+
+    [SerializeField]
+    private LemmingActions lemmingActions;
 
     [SerializeField]
     private GameObject actionObject = null;
@@ -36,6 +38,13 @@ public class LemmingAI : MonoBehaviour
         ArrivedAtWaypoint,
         GetNextWaypoint,
         FinishedTask
+    }
+
+    public LemmingActions LemmingActions {
+        get
+        {
+            return lemmingActions;
+        }
     }
 
     public LemmingAnimationController AnimationController

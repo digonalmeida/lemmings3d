@@ -1077,7 +1077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3da1450e8f5e15d438f1fa73ef49a353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lemmingAnimationController: {fileID: 0}
+  lemmingActions: {fileID: 114429336866163900}
   actionObject: {fileID: 1853045582963828}
 --- !u!135 &135027677934751936
 SphereCollider:
