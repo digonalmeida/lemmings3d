@@ -112,6 +112,11 @@
             }
         }
 
+        public MapBlock GetBlockAtPosition(Vector3Int position)
+        {
+            return map.Get(position);
+        }
+
         public void Rotate(Vector3Int position)
         {
             map.Rotate(position);
@@ -127,8 +132,9 @@
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             GameEvents.GameState.OnLoadGame += LoadGameMap;
         }
 

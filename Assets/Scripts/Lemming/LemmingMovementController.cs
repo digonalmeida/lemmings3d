@@ -145,9 +145,15 @@ public class LemmingMovementController : MonoBehaviour
 
     public bool CheckExitPoint()
     {
-        int hits = Physics.OverlapSphereNonAlloc(targetPositionAddress, 0.1f, overlapSphereHits, exitLayerMask);
-        if (hits > 0) return true;
-        else return false;
+        var block = LevelMap.MapController.Instance.GetBlockAtPosition(targetPositionAddress);
+        if(block != null)
+        {
+            if(block.Type == LevelMap.MapBlock.BlockType.End)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public bool CheckWallForward()
