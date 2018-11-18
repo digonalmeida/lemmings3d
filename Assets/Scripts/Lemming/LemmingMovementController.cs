@@ -59,6 +59,7 @@ public class LemmingMovementController : MonoBehaviour
     }
 
     public Action OnArrived;
+    public Action OnArrivedAndRotated;
     public Action OnGetNextWaypoint;
 
     private void Start ()
@@ -233,8 +234,16 @@ public class LemmingMovementController : MonoBehaviour
         {
             arrived = true;
             if (OnArrived != null)
-            {
+            {               
                 OnArrived();
+
+                if (transform.forward == facingDirectionVector)
+                {
+                    if (OnArrivedAndRotated != null)
+                    {
+                        OnArrivedAndRotated();
+                    }
+                }
             }
         }
     }
