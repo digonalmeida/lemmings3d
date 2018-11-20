@@ -14,7 +14,6 @@ public static class GameEvents {
         public static Action DeselectedSkill;
         public static Action IncreasedSpawnRate;
         public static Action DecreasedSpawnRate;
-        public static Action ToggleMapEditor;
     }
 
     public static class Lemmings {
