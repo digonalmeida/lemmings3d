@@ -7,9 +7,8 @@
 
     public class MapEditorController : MonoBehaviour
     {
+        
         public static Action OnUpdate;
-
-        private static Action OnToggleMapEditor;
 
         [SerializeField]
         private MapEditorCursor cursor = null;
@@ -20,7 +19,27 @@
         private MapController mapController;
         
         private List<string> numkeyNames = new List<string>();
+        
+        [SerializeField]
+        private GameObject contentGameObject = null;
 
+        [SerializeField]
+        private bool _activeOnAwake;
+
+        private bool _isActive;
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (contentGameObject != null)
+                {
+                    contentGameObject.SetActive(_isActive);
+                }
+            }
+        }
         public MapBlock.BlockType BrushType
         {
             get
@@ -41,6 +60,12 @@
             }
         }
 
+        private void OnValidate()
+        {
+            contentGameObject = transform.GetChild(0).gameObject;
+            IsActive = _activeOnAwake;
+        }
+
         private void NotifyUpdate()
         {
             if (OnUpdate != null)
@@ -48,17 +73,10 @@
                 OnUpdate();
             }
         }
-        public static void ToggleMapEditor()
-        {
-            if (OnToggleMapEditor != null)
-            {
-                OnToggleMapEditor();
-            }
-        }
-
+        
         private void Toggle()
         {
-            gameObject.SetActive(!gameObject.activeInHierarchy);
+            IsActive = !IsActive;
         }
 
         private void Awake()
@@ -73,17 +91,22 @@
 
             SetBrushId(1);
 
-            OnToggleMapEditor += Toggle;
+            GameEvents.UI.ToggleMapEditor += Toggle;
         }
 
         private void OnDestroy()
         {
             cursor.OnActivate -= OnCursorActivated;
-            OnToggleMapEditor -= Toggle;
+            GameEvents.UI.ToggleMapEditor -= Toggle;
         }
 
         private void Update()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+            
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 ChangeBrushType();
@@ -102,14 +125,7 @@
                 }
             }
         }
-
-        public void SetBrushType(MapBlock.BlockType type)
-        {
-
-        }
-
-   
-
+        
         private void ChangeBrushType()
         {
             SetBrushId((int)blockBrush.Type + 1);
