@@ -12,7 +12,7 @@ public class LemmingState : State<LemmingAI>
         base.Enter();
         if (AnimationName != string.Empty)
         {
-            Agent.AnimationController.PlayAnimation(AnimationName);
+            //Agent.AnimationController.PlayAnimation(AnimationName);
         }
 
         //Agent.MovementController.OnGetNextWaypoint += OnGetNextWaypoint;
