@@ -32,7 +32,7 @@ public class LevelControllerGUI: MonoBehaviour
 
     public void ToggleEditor()
     {
-        MapEditorController.ToggleMapEditor();
+        GameEvents.UI.ToggleMapEditor.SafeInvoke();
     }
 
     public void Start()
