@@ -1,13 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
 
-public class BlockerDirectionSelector : MonoBehaviour {
+public class BlockerDirectionSelector : MonoBehaviour
+{
 
     private LemmingStateController followingLemming;
-    private float cameraScale;
-    private bool visible;
+    private float cameraScale = 1;
+    private bool visible = false;
     public GameObject parentPanel;
+
+    private DirectionerButton[] buttons;
+    public bool someButtonHighlighted { get; private set; }
+
+    void Awake()
+    {
+        buttons = GetComponentsInChildren<DirectionerButton>();
+    }
+
+    void Update()
+    {
+        if (visible)
+        {
+            someButtonHighlighted = buttons.Where(i => i.isHighlighted).ToArray().Length > 0;
+        }
+    }
+
+    void LateUpdate()
+    {
+
+        if (visible)
+        {
+            if (followingLemming != null) transform.position = followingLemming.transform.position;
+            transform.localScale = Vector3.one * cameraScale * Vector3.Distance(Camera.main.transform.position, transform.position);
+        }
+
+    }
 
     public void AttachToSomeone(LemmingStateController following)
     {
@@ -23,21 +53,11 @@ public class BlockerDirectionSelector : MonoBehaviour {
 
     private void Start()
     {
-        cameraScale = transform.localScale.x / Vector3.Distance(Camera.main.transform.position,transform.position);
-
+        cameraScale = transform.localScale.x / Vector3.Distance(Camera.main.transform.position, transform.position);
         Hide();
     }
 
 
-    void LateUpdate () {
-
-        if (visible)
-        {
-            if(followingLemming != null) transform.position = followingLemming.transform.position;
-            transform.localScale = Vector3.one * cameraScale * Vector3.Distance(Camera.main.transform.position, transform.position);
-        }
-
-    }
 
     public void ClickDirection(int direction)
     {
@@ -55,7 +75,7 @@ public class BlockerDirectionSelector : MonoBehaviour {
                     SkillsController.Instance.selectedSkill = Skill.Blocker_TurnWest;
                     break;
                 case 3:
-                    SkillsController.Instance.selectedSkill = Skill.Blocker_TurnSouth; 
+                    SkillsController.Instance.selectedSkill = Skill.Blocker_TurnSouth;
                     break;
                 default:
                     break;
@@ -74,12 +94,14 @@ public class BlockerDirectionSelector : MonoBehaviour {
     {
         parentPanel.SetActive(true);
         visible = true;
+        someButtonHighlighted = false;
     }
 
     private void Hide()
     {
         parentPanel.SetActive(false);
         visible = false;
+        someButtonHighlighted = false;
     }
 
 }

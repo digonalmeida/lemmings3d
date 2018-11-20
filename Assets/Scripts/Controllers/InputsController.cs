@@ -8,19 +8,40 @@ public class InputsController : MonoBehaviour
     public HighlightPointer highlightPointerRef;
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
-		if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (!SkillsController.Instance.isWaitingForBlockerConfirmation)
+            // if has any selected skill
+            if (SkillsController.Instance.selectedSkill != Skill.None)
             {
-                if (highlightPointerRef.isHighlighting)
+                if (SkillsController.Instance.isWaitingForBlockerConfirmation)
                 {
-                    LemmingStateController lemming = highlightPointerRef.highlightedObject.center.GetComponent<LemmingStateController>();
-                    SkillsController.Instance.assignSkill(lemming);
+                    if (!SkillsController.Instance.blockerSelector.someButtonHighlighted)
+                    {
+                        //Cancel Directioner
+                        SkillsController.Instance.cancelSkill();
+                        return;
+                    }
+                }
+                else
+                {
+                    if (!highlightPointerRef.isHighlighting)
+                    {
+                        SkillsController.Instance.cancelSkill();
+                        return;
+                    }
+                }
 
+                if (!SkillsController.Instance.isWaitingForBlockerConfirmation)
+                {
+                    if (highlightPointerRef.isHighlighting)
+                    {
+                        LemmingStateController lemming = highlightPointerRef.highlightedObject.center.GetComponent<LemmingStateController>();
+                        SkillsController.Instance.assignSkill(lemming);
+                    }
                 }
             }
         }
-	}
+    }
 }
