@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class LemmingDiggingState : LemmingState
 {
-    public LemmingDiggingState()
-        : base()
-    {
-        AnimationName = "digging";
-    }
-
     public override void Enter()
     {
         base.Enter();
+        Agent.AnimationController.setTrigger("DigDown");
         Agent.MovementController.SetDirection(Direction.None);
     }
 
@@ -25,7 +20,7 @@ public class LemmingDiggingState : LemmingState
     public override void Update()
     {
         base.Update();
-        if(Agent.AnimationController.isEndOfAnimation("digging"))
+        if(Agent.AnimationController.isEndOfAnimation("DigDown"))
         {
             LevelMap.MapController.Instance.EraseWall(Vector3Int.FloorToInt(Agent.transform.position + Vector3.down));
             Agent.StateController.dequeueSkill();

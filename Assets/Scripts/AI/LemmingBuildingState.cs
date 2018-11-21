@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class LemmingBuildingState : LemmingState
 {
-    public LemmingBuildingState()
-        : base()
-    {
-        AnimationName = "building";
-    }
-
     public override void Enter()
     {
         base.Enter();

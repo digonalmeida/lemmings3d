@@ -30,6 +30,7 @@ public class LemmingAI : MonoBehaviour
     private LemmingExplodingState explodingState = new LemmingExplodingState();
     private LemmingBuildingState buildingState = new LemmingBuildingState();
     private LemmingExitingLevelState exitingLevelState = new LemmingExitingLevelState();
+    private LemmingLandingState landingState = new LemmingLandingState();
 
     public enum Trigger
     {
@@ -115,10 +116,12 @@ public class LemmingAI : MonoBehaviour
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.checkSkill(Skill.Builder), buildingState);
 
         fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor() && movementController.checkFallDeath(), deathState);
-        fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), walkingState);
+        fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), landingState);
         fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.isFloater(), floatingState);
 
-        floatingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), walkingState);
+        floatingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), landingState);
+
+        landingState.AddTransition((int)Trigger.FinishedTask, () => true, walkingState);
 
         climbingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), walkingState);
 
@@ -127,7 +130,6 @@ public class LemmingAI : MonoBehaviour
         buildingState.AddTransition((int)Trigger.FinishedTask, () => true, walkingState);
 
         stateMachine.SetState(idleState);
-
     }
 
     private void OnDestroy()

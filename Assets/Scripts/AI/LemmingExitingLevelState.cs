@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class LemmingExitingLevelState : LemmingState
 {
-    public LemmingExitingLevelState()
-        : base()
-    {
-        AnimationName = "exiting";
-    }
-
     public override void Enter()
     {
-        Debug.Log("entered exit point");
-        Debug.Break();
         base.Enter();
+        Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
+        Agent.AnimationController.setBool("Walking", false);
         Agent.MovementController.SetDirection(Direction.None);
         Agent.LemmingActions.EnterExitPoint();
     }
@@ -28,7 +22,8 @@ public class LemmingExitingLevelState : LemmingState
     public override void Update()
     {
         base.Update();
-        if (Agent.AnimationController.isEndOfAnimation("exiting")) {
+        if (Agent.AnimationController.isEndOfAnimation("exiting"))
+        {
             Agent.LemmingActions.EliminateLemming();
         }
     }
