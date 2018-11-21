@@ -744,13 +744,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1315093547655236}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.5097924, y: 0, z: 0, w: 0.8602975}
+  m_LocalPosition: {x: 0.02, y: -0.178, z: 0.16}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4951872872034994}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -61.3, y: 0, z: 0}
 --- !u!4 &4249672745794268
 Transform:
   m_ObjectHideFlags: 1
@@ -1172,7 +1172,7 @@ Transform:
   m_GameObject: {fileID: 1103962656705922}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4951872872034994}
   m_RootOrder: 2
@@ -1230,6 +1230,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 426f5082688563640b753b0843ff38b3, type: 3}
   - {fileID: 2100002, guid: 426f5082688563640b753b0843ff38b3, type: 3}
@@ -1303,6 +1304,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95354354383001934
 Animator:
   serializedVersion: 3
@@ -1320,6 +1322,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95758102507844730
 Animator:
   serializedVersion: 3
@@ -1337,6 +1340,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114164844960188124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1380,7 +1384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeHighlighted: 1
-  center: {fileID: 4057334807345498}
+  center: {fileID: 4951872872034994}
 --- !u!114 &114752841814382906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1406,6 +1410,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lemmingAnimator: {fileID: 95354354383001934}
+  pickaxeObject: {fileID: 1315093547655236}
+  umbrellaObject: {fileID: 1103962656705922}
 --- !u!114 &114853522514968514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1457,6 +1463,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 60bd7cbd0fc73564b93707a4c8d14049, type: 3}
   - {fileID: 2100002, guid: 60bd7cbd0fc73564b93707a4c8d14049, type: 3}
@@ -1541,6 +1548,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: feda00af59b38c947a15fd46dea173b7, type: 3}
   - {fileID: 2100002, guid: feda00af59b38c947a15fd46dea173b7, type: 3}

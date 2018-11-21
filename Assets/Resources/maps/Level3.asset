@@ -22,7 +22,7 @@ MonoBehaviour:
       climbers: 0
       diggers: 0
       exploders: 0
-      floaters: 0
+      floaters: 1
   level:
     serializedLevelBlocks:
     - position: {x: 3, y: 0, z: 3}

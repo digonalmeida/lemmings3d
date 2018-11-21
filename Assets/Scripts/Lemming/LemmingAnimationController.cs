@@ -6,6 +6,8 @@ public class LemmingAnimationController : MonoBehaviour
 {
     //Variables
     public Animator lemmingAnimator;
+    public GameObject pickaxeObject;
+    public GameObject umbrellaObject;
 
     //Play Animation
     public void PlayAnimation(string animationName)
@@ -40,5 +42,23 @@ public class LemmingAnimationController : MonoBehaviour
     {
         if (active) lemmingAnimator.SetTrigger(variable);
         else lemmingAnimator.ResetTrigger(variable);
+    }
+
+    //Enable/Disable Pickaxe
+    public void setActivePickaxe(bool active)
+    {
+        pickaxeObject.SetActive(active);
+    }
+
+    //Set Pickaxe Animation (Dig Forward)
+    public void setDigForwardPickaxeAnimation()
+    {
+        pickaxeObject.GetComponent<Animator>().SetTrigger("DigForward");
+    }
+
+    //Set Pickaxe Animation (Dig Down)
+    public void setDigDownPickaxeAnimation()
+    {
+        pickaxeObject.GetComponent<Animator>().SetTrigger("DigDown");
     }
 }

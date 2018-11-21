@@ -16,13 +16,13 @@ MonoBehaviour:
     lemmingsCount: 10
     minimumVictoryCount: 3
     skillsCounter:
-      bashers: 0
-      blockers: 0
-      builders: 0
-      climbers: 0
-      diggers: 99
-      exploders: 99
-      floaters: 0
+      bashers: 1
+      blockers: 1
+      builders: 1
+      climbers: 1
+      diggers: 1
+      exploders: 1
+      floaters: 1
   level:
     serializedLevelBlocks:
     - position: {x: 0, y: 0, z: 0}

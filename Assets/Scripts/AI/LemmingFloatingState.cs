@@ -7,6 +7,7 @@ public class LemmingFloatingState : LemmingState
     public override void Enter()
     {
         base.Enter();
+        Agent.AnimationController.setBool("Falling", true);
         Agent.AnimationController.setBool("Floater", true);
         Agent.MovementController.SetDirection(Direction.Down);
     }
