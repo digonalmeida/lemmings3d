@@ -275,6 +275,6 @@ MonoBehaviour:
   sfxAudioSource: {fileID: 82462365272627436}
   mainBGM: {fileID: 8300000, guid: 81005a38bb4452744bf1d2db35c6fb28, type: 3}
   selectSkill: {fileID: 8300000, guid: b96590337401366419fe5cb77e2d6f80, type: 3}
-  deselectSkill: {fileID: 8300000, guid: 3657d8d7d637df043a9bece70e94a673, type: 3}
+  deselectSkill: {fileID: 8300000, guid: 342ad1acac6451840bf38645137350c3, type: 3}
   giveSkill: {fileID: 8300000, guid: a79738b6fe663e147b31ebc41d96735f, type: 3}
   lemmingDie: {fileID: 11400000, guid: a758d05882a6b494a9a9385376a79780, type: 2}
