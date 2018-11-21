@@ -686,9 +686,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 
-  projectName: Template_3D
-  organizationId: 
+  cloudProjectId: cf39e922-785c-4ddf-92d3-873d2cf77ffe
+  projectName: lemmings3d
+  organizationId: rafael-rodrigo-thiago
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

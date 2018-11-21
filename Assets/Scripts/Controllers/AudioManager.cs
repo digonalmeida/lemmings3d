@@ -17,26 +17,36 @@ public class AudioManager : Singleton<AudioManager> {
 
     [Header("SFX Audios")]
     public AudioClip selectSkill;
+    public AudioClip deselectSkill;
     public AudioClip giveSkill;
     public AudioList lemmingDie;
 
+    private void PlayBGM_Main() {StartBGM(mainBGM);}
+    private void PlaySFX_SelectSkill() {sfxAudioSource.PlayOneShot(selectSkill);}
+    private void PlaySFX_DeselectSkill() {sfxAudioSource.PlayOneShot(deselectSkill);}
+    private void PlaySFX_GiveSkill() {sfxAudioSource.PlayOneShot(giveSkill);}
+    private void PlaySFX_LemmingDie() {sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());}
+
+
     private void OnEnable()
     {
-        GameEvents.GameState.OnStartGame += () => StartBGM(mainBGM);
+        GameEvents.GameState.OnStartGame += PlayBGM_Main;
         GameEvents.GameState.OnEndGame += StopBGM;
-        GameEvents.UI.SelectedSkill += () => sfxAudioSource.PlayOneShot(selectSkill);
-        GameEvents.Lemmings.LemmingUsedSkill += () => sfxAudioSource.PlayOneShot(giveSkill);
-        GameEvents.Lemmings.LemmingDied += () => sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());
+        GameEvents.UI.SelectedSkill += PlaySFX_SelectSkill;
+        GameEvents.UI.DeselectedSkill += PlaySFX_DeselectSkill;
+        GameEvents.Lemmings.LemmingUsedSkill += PlaySFX_GiveSkill;
+        GameEvents.Lemmings.LemmingDied += PlaySFX_LemmingDie;
 
     }
 
     private void OnDisable()
     {
-        GameEvents.GameState.OnStartGame -= () => StartBGM(mainBGM);
+        GameEvents.GameState.OnStartGame -= PlayBGM_Main;
         GameEvents.GameState.OnEndGame -= StopBGM;
-        GameEvents.UI.SelectedSkill -= () => sfxAudioSource.PlayOneShot(selectSkill);
-        GameEvents.Lemmings.LemmingUsedSkill -= () => sfxAudioSource.PlayOneShot(giveSkill);
-        GameEvents.Lemmings.LemmingDied -= () => sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());
+        GameEvents.UI.SelectedSkill -= PlaySFX_SelectSkill;
+        GameEvents.UI.DeselectedSkill -= PlaySFX_DeselectSkill;
+        GameEvents.Lemmings.LemmingUsedSkill -= PlaySFX_GiveSkill;
+        GameEvents.Lemmings.LemmingDied -= PlaySFX_LemmingDie;
     }
 
     private void ChangeGlobalVolume(float newVolume, bool updateAudioSources)

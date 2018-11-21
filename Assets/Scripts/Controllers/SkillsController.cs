@@ -27,7 +27,7 @@ public class SkillsController : Singleton<SkillsController>
     public Skill selectedSkill;
 
     public BlockerDirectionSelector blockerSelectorPrefab;
-    private BlockerDirectionSelector blockerSelector;
+    public BlockerDirectionSelector blockerSelector {get; private set;}
     public bool isWaitingForBlockerConfirmation { get; private set; }
 
     protected override void Awake()
@@ -98,8 +98,13 @@ public class SkillsController : Singleton<SkillsController>
         return true;
     }
 
-    public void CancelBlocker()
-    {
-        blockerSelector.Detach();
+    public void cancelSkill(){
+
+        if(selectedSkill == Skill.Blocker){
+            blockerSelector.Detach();
+        }
+        selectedSkill = Skill.None;
+        GameEvents.UI.DeselectedSkill.SafeInvoke();
     }
+
 }
