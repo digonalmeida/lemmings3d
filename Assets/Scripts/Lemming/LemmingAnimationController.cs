@@ -50,6 +50,18 @@ public class LemmingAnimationController : MonoBehaviour
         pickaxeObject.SetActive(active);
     }
 
+    //Enable/Disable Umbrella
+    public void setActiveUmbrella(bool active)
+    {
+        umbrellaObject.SetActive(active);
+    }
+
+    //Set Umbrella Animation
+    public void setUmbrellaAnimation(bool value)
+    {
+        umbrellaObject.GetComponent<Animator>().SetBool("Falling", value);
+    }
+
     //Set Pickaxe Animation (Dig Forward)
     public void setDigForwardPickaxeAnimation()
     {
