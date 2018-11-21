@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class LemmingBlockingState : LemmingState
 {
-    public LemmingBlockingState()
-        : base()
-    {
-        AnimationName = "blocking";
-    }
-
     public override void Enter()
     {
         base.Enter();
+        Agent.AnimationController.setBool("Blocking", true);
         Agent.MovementController.SetDirection(Direction.None);
         Agent.MovementController.SetForwardDirection(Agent.StateController.BlockingDirection);
         Agent.MovementController.OnArrivedAndRotated += activateLemmingAction;
@@ -26,7 +21,8 @@ public class LemmingBlockingState : LemmingState
 
     public override void Exit()
     {
-        base.Exit();
+        Agent.AnimationController.setBool("Blocking", false);
         Agent.SetBlockActionActive(false);
+        base.Exit();
     }
 }

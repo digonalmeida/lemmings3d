@@ -5,19 +5,6 @@ using UnityEngine;
 
 public class LemmingState : State<LemmingAI>
 {
-    protected string AnimationName { get; set; }
-
-    public override void Enter()
-    {
-        base.Enter();
-        if (AnimationName != string.Empty)
-        {
-            //Agent.AnimationController.PlayAnimation(AnimationName);
-        }
-
-        //Agent.MovementController.OnGetNextWaypoint += OnGetNextWaypoint;
-    }
-
     public override void TriggerEvent(int triggerEvent)
     {
         base.TriggerEvent(triggerEvent);

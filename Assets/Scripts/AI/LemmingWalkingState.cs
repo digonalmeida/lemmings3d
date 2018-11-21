@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class LemmingWalkingState : LemmingState
 {
-    public LemmingWalkingState()
-        : base()
-    {
-        AnimationName = "walking";
-    }
-
     public override void Enter()
     {
         base.Enter();
+        Agent.AnimationController.setBool("Walking", true);
     }
 
     public override void OnGetNextWaypoint()
@@ -38,5 +33,11 @@ public class LemmingWalkingState : LemmingState
         }
 
         Agent.MovementController.SetDirectionForward();
+    }
+
+    public override void Exit()
+    {
+        Agent.AnimationController.setBool("Walking", false);
+        base.Exit();
     }
 }

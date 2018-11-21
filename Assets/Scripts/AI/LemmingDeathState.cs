@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class LemmingDeathState : LemmingState
 {
-    public LemmingDeathState()
-        : base()
-    {
-        AnimationName = "death";
-    }
-
     public override void Enter()
     {
         base.Enter();
+        Agent.AnimationController.setBool("Death", true);
         Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
     }
 

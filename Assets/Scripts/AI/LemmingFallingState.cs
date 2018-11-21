@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class LemmingFallingState : LemmingState
 {
-    public LemmingFallingState()
-        : base()
-    {
-        AnimationName = "falling";
-    }
-
     public override void Enter()
     {
         base.Enter();
+        Agent.AnimationController.setBool("Falling", true);
         Agent.MovementController.SetDirection(Direction.Down);
     }
 
@@ -21,5 +16,11 @@ public class LemmingFallingState : LemmingState
         base.OnGetNextWaypoint();
 
         Agent.MovementController.SetDirection(Direction.Down);
+    }
+
+    public override void Exit()
+    {
+        Agent.AnimationController.setBool("Falling", false);
+        base.Exit();
     }
 }

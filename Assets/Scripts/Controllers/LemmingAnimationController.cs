@@ -22,4 +22,23 @@ public class LemmingAnimationController : MonoBehaviour
         }
         else return false;
     }
+
+    //Set Bool
+    public void setBool(string variable, bool value)
+    {
+        lemmingAnimator.SetBool(variable, value);
+    }
+
+    //Set Int
+    public void setInt(string variable, int value)
+    {
+        lemmingAnimator.SetInteger(variable, value);
+    }
+
+    //Set Trigger
+    public void setTrigger(string variable, bool active = true)
+    {
+        if (active) lemmingAnimator.SetTrigger(variable);
+        else lemmingAnimator.ResetTrigger(variable);
+    }
 }

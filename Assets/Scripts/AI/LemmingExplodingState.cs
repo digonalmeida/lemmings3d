@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class LemmingExplodingState : LemmingState
 {
-    public LemmingExplodingState()
-        : base()
-    {
-        AnimationName = "exploding";
-    }
-
     public override void Enter()
     {
         base.Enter();
+        Agent.AnimationController.setTrigger("Explode");
         Agent.MovementController.SetDirection(Direction.None);
         Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
     }
@@ -20,7 +15,7 @@ public class LemmingExplodingState : LemmingState
     public override void Update()
     {
         base.Update();
-        if (Agent.AnimationController.isEndOfAnimation("exploding"))
+        if (Agent.AnimationController.isEndOfAnimation("Exploding_Loop"))
         {
             LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.down));
             LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.up));

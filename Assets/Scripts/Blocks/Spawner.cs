@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour
     //Control Variables
     [SerializeField]
     private GameObject spawnable = null;
-    public int count = 10;
+    public int count = 1;
     public float interval = 1f;
     public Direction startingMovementDirection;
 

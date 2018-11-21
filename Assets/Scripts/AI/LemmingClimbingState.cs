@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class LemmingClimbingState : LemmingState
 {
-    public LemmingClimbingState()
-        : base()
-    {
-        AnimationName = "climbing";
-    }
-
     public override void Enter()
     {
         base.Enter();
+        Agent.AnimationController.setBool("Climbing", true);
     }
 
     public override void OnGetNextWaypoint()
@@ -29,6 +24,14 @@ public class LemmingClimbingState : LemmingState
         else
         {
             Agent.MovementController.SetDirectionForward();
+            Agent.AnimationController.setBool("Climbing", false);
+            Agent.AnimationController.setBool("Walking", true);
         }
+    }
+
+    public override void Exit()
+    {
+        Agent.AnimationController.setBool("Climbing", false);
+        base.Exit();
     }
 }
