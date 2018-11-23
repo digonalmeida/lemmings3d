@@ -36,5 +36,7 @@ public static class GameEvents
         public static Action OnMapLoaded;
         public static Action<Vector3Int, MapBlock> OnAddBlock;
         public static Action<Vector3Int> OnRemoveBlock;
+        public static Action<MapSettings> OnLoadMap;
     }
+
 }

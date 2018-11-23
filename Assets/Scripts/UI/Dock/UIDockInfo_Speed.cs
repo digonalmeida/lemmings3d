@@ -40,7 +40,7 @@ public class UIDockInfo_Speed : UIDockInfo
     {
         rateText.text = newSpawnRate.ToString();
 
-        minusSign.interactable = LevelController.Instance.CurrentRate > LevelController.Instance.MinimumSpawnRate;
-        plusSign.interactable = LevelController.Instance.CurrentRate < LevelController.Instance.MaximumSpawnRate;
+        minusSign.interactable = LevelController.Instance.CurrentRate > LevelController.Instance.CurrentMapSettings.MinimumSpawnRate;
+        plusSign.interactable = LevelController.Instance.CurrentRate < LevelController.Instance.CurrentMapSettings.MaximumSpawnRate;
     }
 }

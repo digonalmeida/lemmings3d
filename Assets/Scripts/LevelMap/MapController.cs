@@ -42,7 +42,7 @@
         }
 
 
-        public static event Action<MapSettings> OnLoadMap;
+        
 
         public void ToggleMapEditor()
         {
@@ -84,10 +84,7 @@
         {
             ClearLevelBlocks();
             BuildMapScene();
-            if (OnLoadMap != null)
-            {
-                OnLoadMap(settings);
-            }
+            GameEvents.Map.OnLoadMap.SafeInvoke(settings);
         }
 
         public void Clear()
@@ -183,10 +180,7 @@
                 BuildMapScene();
             }
             
-            if (OnLoadMap != null)
-            {
-                OnLoadMap(settings);
-            }
+            GameEvents.Map.OnLoadMap.SafeInvoke(settings);
             SpawnProps();
         }
 

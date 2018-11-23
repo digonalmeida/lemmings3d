@@ -33,12 +33,12 @@ public class SkillsController : Singleton<SkillsController>
     protected override void Awake()
     {
         base.Awake();
-        MapController.OnLoadMap += OnLoadMap;
+        GameEvents.Map.OnLoadMap += OnLoadMap;
     }
 
     public void OnDestroy()
     {
-        MapController.OnLoadMap -= OnLoadMap;
+        GameEvents.Map.OnLoadMap -= OnLoadMap;
     }
 
     public void OnLoadMap(MapSettings settings)
