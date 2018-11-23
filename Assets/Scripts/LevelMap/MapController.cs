@@ -41,9 +41,6 @@
             }
         }
 
-
-        
-
         public void ToggleMapEditor()
         {
             mapEditor.SetActive(!mapEditor.activeInHierarchy);
@@ -65,8 +62,6 @@
         {
             LoadFromScene();
             map =  MapManager.Instance.SelectedMapAsset.LevelMap;
-            settings = MapManager.Instance.SelectedMapAsset.Settings;
-
             
             RefreshScene();
             GameEvents.Map.OnMapLoaded.SafeInvoke();
@@ -84,7 +79,6 @@
         {
             ClearLevelBlocks();
             BuildMapScene();
-            GameEvents.Map.OnLoadMap.SafeInvoke(settings);
         }
 
         public void Clear()
@@ -154,7 +148,6 @@
 
         private void OnDestroy()
         {
-
             GameEvents.GameState.OnLoadGame -= LoadGameMap;
         }
 
@@ -179,8 +172,7 @@
                 LoadFromScene();
                 BuildMapScene();
             }
-            
-            GameEvents.Map.OnLoadMap.SafeInvoke(settings);
+
             SpawnProps();
         }
 
@@ -247,11 +239,6 @@
                 levelBlocks[position] = child;
                 map.Set(position, child.Block);
             }
-        }
-
-        private MapBlockController FindBlockPrefabWithType(MapBlock.BlockType type)
-        {
-            return MapManager.Instance.FindBlockPrefabWithType(type);
         }
     }
 }

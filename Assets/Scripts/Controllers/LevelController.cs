@@ -20,9 +20,6 @@ public class LevelController : Singleton<LevelController>
     {
         GameEvents.Lemmings.LemmingReachedExit += LemmingExit;
         GameEvents.Lemmings.LemmingSpawned += LemmingEnter;
-
-        GameEvents.Map.OnLoadMap += SetLevelConditions;
-
         GameEvents.GameState.OnLoadGame += ResetVariables;
     }
 
@@ -30,9 +27,6 @@ public class LevelController : Singleton<LevelController>
     {
         GameEvents.Lemmings.LemmingReachedExit -= LemmingExit;
         GameEvents.Lemmings.LemmingSpawned -= LemmingEnter;
-
-        GameEvents.Map.OnLoadMap -= SetLevelConditions;
-
         GameEvents.GameState.OnLoadGame -= ResetVariables;
     }
 
@@ -62,8 +56,14 @@ public class LevelController : Singleton<LevelController>
         lemmingsSpawned++;
     }
 
-    public void SetLevelConditions(MapSettings settings)
+    public void SetLevelConditions()
     {
+        var settings = MapManager.Instance.SelectedMapAsset.Settings;
+        if(settings == null)
+        {
+            return;
+        }
+
         currentMapSettings = new MapSettings(settings);
     }
 
@@ -82,6 +82,8 @@ public class LevelController : Singleton<LevelController>
         lemmingsSpawned = 0;
         lemmingsEnteredExit = 0;
         lemmingsOnScene.Clear();
+
+        SetLevelConditions();
     }
 
     public void LoadGame()
