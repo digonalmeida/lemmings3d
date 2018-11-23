@@ -115,7 +115,7 @@ public class SkillsController : Singleton<SkillsController>
         // explode every lemming
         foreach (var lemming in LevelController.Instance.lemmingsOnScene)
         {
-            lemming.GetComponent<LemmingStateController>().giveSkill(Skill.Exploder);
+            lemming.GetComponent<LemmingStateController>().setForceExplode(true);
 
         }
 

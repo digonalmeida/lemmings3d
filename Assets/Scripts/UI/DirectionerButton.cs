@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 
 public class DirectionerButton : Button
 {
+    BaseEventData m_eventData;
 
-    BaseEventData m_evendData;
-
-    public bool isHighlighted { get { return IsHighlighted(m_evendData); } }
+    public bool isHighlighted { get { return IsHighlighted(m_eventData); } }
 }
