@@ -6,10 +6,12 @@ public class LemmingActions : MonoBehaviour {
 
     public float timeToDetroyAfterEnterExitPoint = 2f;
     private HighlightableObject highlightableScript;
+    private LemmingAI lemmingAIScript;
 
     private void Awake()
     {
         highlightableScript = GetComponent<HighlightableObject>();
+        lemmingAIScript = GetComponent<LemmingAI>();
     }
 
     public void EnterExitPoint()
@@ -18,7 +20,7 @@ public class LemmingActions : MonoBehaviour {
         highlightableScript.canBeHighlighted = false;
 
         // trigger event
-        GameEvents.Lemmings.LemmingReachedExit.SafeInvoke();
+        GameEvents.Lemmings.LemmingReachedExit.SafeInvoke(lemmingAIScript);
     }
 
 

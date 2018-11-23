@@ -23,11 +23,11 @@ public class SkillsController : Singleton<SkillsController>
 {
     [SerializeField]
     SkillsCounter skillsCounter;
-    
+
     public Skill selectedSkill;
 
     public BlockerDirectionSelector blockerSelectorPrefab;
-    public BlockerDirectionSelector blockerSelector {get; private set;}
+    public BlockerDirectionSelector blockerSelector { get; private set; }
     public bool isWaitingForBlockerConfirmation { get; private set; }
 
     protected override void Awake()
@@ -74,7 +74,7 @@ public class SkillsController : Singleton<SkillsController>
     //Assign Skills
     public bool assignSkill(LemmingStateController lemming)
     {
-        if(skillsCounter[selectedSkill] <= 0)
+        if (skillsCounter[selectedSkill] <= 0)
         {
             return false;
         }
@@ -86,7 +86,7 @@ public class SkillsController : Singleton<SkillsController>
             return false;
         }
 
-        if(!lemming.giveSkill(selectedSkill))
+        if (!lemming.giveSkill(selectedSkill))
         {
             return false;
         }
@@ -94,17 +94,34 @@ public class SkillsController : Singleton<SkillsController>
         skillsCounter[selectedSkill]--;
         selectedSkill = Skill.None;
         GameEvents.Lemmings.LemmingUsedSkill.SafeInvoke();
-        
+
         return true;
     }
 
-    public void cancelSkill(){
+    public void cancelSkill()
+    {
 
-        if(selectedSkill == Skill.Blocker){
+        if (selectedSkill == Skill.Blocker)
+        {
             blockerSelector.Detach();
         }
         selectedSkill = Skill.None;
         GameEvents.UI.DeselectedSkill.SafeInvoke();
+    }
+
+    public void explodeAll()
+    {
+
+        // explode every lemming
+        foreach (var lemming in LevelController.Instance.lemmingsOnScene)
+        {
+            lemming.GetComponent<LemmingStateController>().giveSkill(Skill.Exploder);
+
+        }
+
+        // end game
+        LevelController.Instance.EndGame();
+
     }
 
 }

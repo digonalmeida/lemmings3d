@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
             lemmingsPool.Push(obj);
         }
 
-        ChangeInterval(LevelController.currentRate);
+        ChangeInterval(LevelController.Instance.CurrentRate);
         StartCoroutine(SpawnRoutine());
     }
 
@@ -97,22 +97,24 @@ public class Spawner : MonoBehaviour
     //Spawn New Lemming
     private void spawnLemming()
     {
+        GameObject obj;
         if (lemmingsPool.Count > 0)
         {
-            GameObject obj = lemmingsPool.Pop();
+            obj = lemmingsPool.Pop();
             obj.SetActive(true);
         }
         else
         {
-            GameObject obj = createLemming();
+            obj = createLemming();
             lemmingsPool.Push(obj);
         }
-
-        GameEvents.Lemmings.LemmingSpawned.SafeInvoke();
+        LemmingAI lemmingAIScript = obj.GetComponent<LemmingAI>();
+        GameEvents.Lemmings.LemmingSpawned.SafeInvoke(lemmingAIScript);
     }
 
     private void ChangeInterval(int newSpawnRate)
     {
         interval = 1f + ((float)(60 - newSpawnRate)) / 20f;
     }
+
 }

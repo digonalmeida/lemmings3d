@@ -23,24 +23,24 @@ public class UIDockInfo_Speed : UIDockInfo
 
     private void Start()
     {
-        UpdateInfo(LevelController.currentRate);
+        UpdateInfo(LevelController.Instance.CurrentRate);
     }
 
     public void IncreaseRate()
     {
-        LevelController.ChangeSpawnRate(1);
+        LevelController.Instance.ChangeSpawnRate(1);
     }
 
     public void DecreaseRate()
     {
-        LevelController.ChangeSpawnRate(-1);
+        LevelController.Instance.ChangeSpawnRate(-1);
     }
 
     private void UpdateInfo(int newSpawnRate)
     {
         rateText.text = newSpawnRate.ToString();
 
-        minusSign.interactable = LevelController.currentRate > LevelController.minimumSpawnRate;
-        plusSign.interactable = LevelController.currentRate < LevelController.maximumSpawnRate;
+        minusSign.interactable = LevelController.Instance.CurrentRate > LevelController.Instance.MinimumSpawnRate;
+        plusSign.interactable = LevelController.Instance.CurrentRate < LevelController.Instance.MaximumSpawnRate;
     }
 }

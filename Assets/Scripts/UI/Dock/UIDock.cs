@@ -9,7 +9,6 @@ public class UIDock : MonoBehaviour
 {
     public ToggleGroup toggleGroup;
     public UnityEvent pause;
-    public UnityEvent explodeAll;
 
     void OnEnable(){
         GameEvents.UI.DeselectedSkill += SwitchAllOff;
@@ -26,7 +25,7 @@ public class UIDock : MonoBehaviour
 
     public void ExplodeAllButton()
     {
-        explodeAll.Invoke();
+        SkillsController.Instance.explodeAll();
     }
 
     public void DebugText(string text)
