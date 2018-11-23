@@ -33,16 +33,17 @@ public class SkillsController : Singleton<SkillsController>
     protected override void Awake()
     {
         base.Awake();
-        GameEvents.Map.OnLoadMap += OnLoadMap;
+        GameEvents.GameState.OnLoadGame += OnLoadMap;
     }
 
     public void OnDestroy()
     {
-        GameEvents.Map.OnLoadMap -= OnLoadMap;
+        GameEvents.GameState.OnLoadGame -= OnLoadMap;
     }
 
-    public void OnLoadMap(MapSettings settings)
+    public void OnLoadMap()
     {
+        MapSettings settings = MapManager.Instance.SelectedMapAsset.Settings;
         skillsCounter = new SkillsCounter(settings.SkillsCounter);
         //LevelController.TriggerLemmingUsedSkill();
     }
