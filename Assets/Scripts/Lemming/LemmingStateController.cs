@@ -7,6 +7,7 @@ public class LemmingStateController : MonoBehaviour
     //Permanent Skills
     private bool floater;
     private bool climber;
+    private bool forceExplode;
 
     //Queue Skills
     private Queue<Skill> queuedSkills;
@@ -47,6 +48,7 @@ public class LemmingStateController : MonoBehaviour
         //Initialize Variables
         floater = false;
         climber = false;
+        forceExplode = false;
         queuedSkills = new Queue<Skill>();
         actionObject = this.transform.GetChild(0).gameObject;
     }
@@ -95,6 +97,10 @@ public class LemmingStateController : MonoBehaviour
         this.transform.GetChild(0).gameObject.SetActive(value);
     }
 
+    public void setForceExplode(bool _forceExplode){
+        forceExplode = _forceExplode;
+    }
+
     //Check Permanent Skills (Floater)
     public bool isFloater()
     {
@@ -105,6 +111,11 @@ public class LemmingStateController : MonoBehaviour
     public bool isClimber()
     {
         return climber;
+    }
+    
+    public bool checkForceExplode()
+    {
+        return forceExplode;
     }
 
     public bool checkSkill(Skill skill)

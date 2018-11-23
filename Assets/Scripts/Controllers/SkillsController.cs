@@ -33,16 +33,17 @@ public class SkillsController : Singleton<SkillsController>
     protected override void Awake()
     {
         base.Awake();
-        MapController.OnLoadMap += OnLoadMap;
+        GameEvents.GameState.OnLoadGame += OnLoadMap;
     }
 
     public void OnDestroy()
     {
-        MapController.OnLoadMap -= OnLoadMap;
+        GameEvents.GameState.OnLoadGame -= OnLoadMap;
     }
 
-    public void OnLoadMap(MapSettings settings)
+    public void OnLoadMap()
     {
+        MapSettings settings = MapManager.Instance.SelectedMapAsset.Settings;
         skillsCounter = new SkillsCounter(settings.SkillsCounter);
         //LevelController.TriggerLemmingUsedSkill();
     }
@@ -115,7 +116,7 @@ public class SkillsController : Singleton<SkillsController>
         // explode every lemming
         foreach (var lemming in LevelController.Instance.lemmingsOnScene)
         {
-            lemming.GetComponent<LemmingStateController>().giveSkill(Skill.Exploder);
+            lemming.GetComponent<LemmingStateController>().setForceExplode(true);
 
         }
 

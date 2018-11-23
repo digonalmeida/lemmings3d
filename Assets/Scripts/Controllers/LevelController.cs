@@ -8,21 +8,18 @@ public class LevelController : Singleton<LevelController>
 {
     public int lemmingsSpawned { get; private set; }
     public int lemmingsEnteredExit { get; private set; }
-    public List<LemmingAI> lemmingsOnScene = new List<LemmingAI>(); 
+    public List<LemmingAI> lemmingsOnScene = new List<LemmingAI>();
 
-    [SerializeField] private int minimumSpawnRate = 30;
-    [SerializeField] private int maximumSpawnRate = 70;
+    // settings
     private int currentRate = 50;
-
-    public int MinimumSpawnRate {get{return minimumSpawnRate;}}
-    public int MaximumSpawnRate {get{return maximumSpawnRate;}}
-    public int CurrentRate {get{return currentRate;}}
+    public int CurrentRate { get { return currentRate; } }
+    private MapSettings currentMapSettings;
+    public MapSettings CurrentMapSettings { get { return currentMapSettings; } }
 
     private void OnEnable()
     {
         GameEvents.Lemmings.LemmingReachedExit += LemmingExit;
         GameEvents.Lemmings.LemmingSpawned += LemmingEnter;
-
         GameEvents.GameState.OnLoadGame += ResetVariables;
     }
 
@@ -30,7 +27,6 @@ public class LevelController : Singleton<LevelController>
     {
         GameEvents.Lemmings.LemmingReachedExit -= LemmingExit;
         GameEvents.Lemmings.LemmingSpawned -= LemmingEnter;
-
         GameEvents.GameState.OnLoadGame -= ResetVariables;
     }
 
@@ -60,19 +56,34 @@ public class LevelController : Singleton<LevelController>
         lemmingsSpawned++;
     }
 
+    public void SetLevelConditions()
+    {
+        var settings = MapManager.Instance.SelectedMapAsset.Settings;
+        if(settings == null)
+        {
+            return;
+        }
+
+        currentMapSettings = new MapSettings(settings);
+    }
+
+
     public void ChangeSpawnRate(int increment)
     {
-        if ((currentRate + increment) >= minimumSpawnRate && (currentRate + increment) <= maximumSpawnRate)
+        if ((currentRate + increment) >= currentMapSettings.MinimumSpawnRate && (currentRate + increment) <= currentMapSettings.MaximumSpawnRate)
         {
             currentRate += increment;
             GameEvents.Lemmings.ChangedSpawnRate.SafeInvoke(currentRate);
         }
     }
 
-    public void ResetVariables(){
+    public void ResetVariables()
+    {
         lemmingsSpawned = 0;
         lemmingsEnteredExit = 0;
         lemmingsOnScene.Clear();
+
+        SetLevelConditions();
     }
 
     public void LoadGame()

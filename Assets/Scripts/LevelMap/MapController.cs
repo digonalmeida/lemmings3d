@@ -41,19 +41,30 @@
             }
         }
 
-        public static event Action<MapSettings> OnLoadMap;
-
         public void ToggleMapEditor()
         {
             mapEditor.SetActive(!mapEditor.activeInHierarchy);
+        }
+
+        public MapData Map
+        {
+            get
+            {
+                return map;
+            }
+            set
+            {
+                map = value;
+            }
         }
 
         public void LoadLevel()
         {
             LoadFromScene();
             map =  MapManager.Instance.SelectedMapAsset.LevelMap;
-            settings = MapManager.Instance.SelectedMapAsset.Settings;
+            
             RefreshScene();
+            GameEvents.Map.OnMapLoaded.SafeInvoke();
         }
 
         public void SaveLevel()
@@ -68,10 +79,6 @@
         {
             ClearLevelBlocks();
             BuildMapScene();
-            if (OnLoadMap != null)
-            {
-                OnLoadMap(settings);
-            }
         }
 
         public void Clear()
@@ -93,12 +100,14 @@
         public void AddBlock(Vector3Int position, MapBlock blockModel)
         {
             map.Set(position, new MapBlock(blockModel));
+            GameEvents.Map.OnAddBlock.SafeInvoke(position, blockModel);
             BuildMapScene();
         }
 
         public void EraseBlock(Vector3Int position)
         {
             map.Set(position, null);
+            GameEvents.Map.OnRemoveBlock.SafeInvoke(position);
             BuildMapScene();
         }
 
@@ -107,8 +116,7 @@
             LevelMap.MapBlock block = map.Get(position);
             if (block != null && block.Type == MapBlock.BlockType.Simple)
             {
-                map.Set(position, null);
-                BuildMapScene();
+                EraseBlock(position);
             }
         }
 
@@ -140,7 +148,6 @@
 
         private void OnDestroy()
         {
-
             GameEvents.GameState.OnLoadGame -= LoadGameMap;
         }
 
@@ -149,7 +156,7 @@
             LoadLevel();
         }
 
-        private void BuildMapScene()
+        public void BuildMapScene()
         {
             var blocks = map.Blocks;
             foreach (var pair in blocks)
@@ -165,11 +172,7 @@
                 LoadFromScene();
                 BuildMapScene();
             }
-            
-            if (OnLoadMap != null)
-            {
-                OnLoadMap(settings);
-            }
+
             SpawnProps();
         }
 
@@ -236,11 +239,6 @@
                 levelBlocks[position] = child;
                 map.Set(position, child.Block);
             }
-        }
-
-        private MapBlockController FindBlockPrefabWithType(MapBlock.BlockType type)
-        {
-            return MapManager.Instance.FindBlockPrefabWithType(type);
         }
     }
 }
