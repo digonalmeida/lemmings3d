@@ -22,6 +22,7 @@
         public MapData(MapData other)
         {
             blocks = new Dictionary<Vector3Int, MapBlock>(other.blocks);
+
         }
 
         public Dictionary<Vector3Int, MapBlock> Blocks
