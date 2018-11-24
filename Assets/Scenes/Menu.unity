@@ -2197,6 +2197,63 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 836196940}
+--- !u!1001 &889448807
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4697300878208308, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 2.51432
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697300878208308, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.7697458
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697300878208308, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.10655594
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697300878208308, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697300878208308, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697300878208308, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697300878208308, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697300878208308, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114331307417081480, guid: f5b222637a5424946b805ab270f91a06,
+        type: 2}
+      propertyPath: m_OfflineScene
+      value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 114331307417081480, guid: f5b222637a5424946b805ab270f91a06,
+        type: 2}
+      propertyPath: m_LobbyScene
+      value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 114331307417081480, guid: f5b222637a5424946b805ab270f91a06,
+        type: 2}
+      propertyPath: levelId
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f5b222637a5424946b805ab270f91a06, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &929906522
 GameObject:
   m_ObjectHideFlags: 0

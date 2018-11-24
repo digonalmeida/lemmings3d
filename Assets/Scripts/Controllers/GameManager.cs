@@ -12,10 +12,7 @@ public class GameManager : MonoBehaviour {
     public string gameplaySceneName;
 
     [SerializeField]
-    private MapAsset selectedMapAsset;
-
-    [SerializeField]
-    public List<MapAsset> mapAssets;
+    private bool loadAssetsOnLoad = false;
     
     public static GameManager Instance
     {
@@ -32,8 +29,14 @@ public class GameManager : MonoBehaviour {
 
     public bool LoadAssetsOnLoad
     {
-        get;
-        private set;
+        get
+        {
+            return loadAssetsOnLoad;
+        }
+        private set
+        {
+            loadAssetsOnLoad = value;
+        }
     }
 
     public static GameManager CreateInstance()
@@ -75,16 +78,10 @@ public class GameManager : MonoBehaviour {
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-        LoadAssetsOnLoad = false;
     }
 
     public bool LoadLevelById(int id)
     {
-        if (id < 0 || id > mapAssets.Count)
-        {
-            return false;
-        }
-
         if (!MapManager.Instance.TrySelectMapById(id))
         {
             return false;

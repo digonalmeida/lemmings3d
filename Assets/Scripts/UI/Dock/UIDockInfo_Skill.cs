@@ -43,7 +43,7 @@ public class UIDockInfo_Skill : UIDockInfo
         }
         else
         {
-            togglePanelRef.color = Color.white;
+//            togglePanelRef.color = Color.white;
             SkillsController.Instance.selectedSkill = Skill.None;
             toggleButton.isOn = false;
         }
@@ -52,6 +52,7 @@ public class UIDockInfo_Skill : UIDockInfo
     //Update Display Variables
     private void UpdateInfo()
     {
+
         updateState(SkillsController.Instance.selectedSkill != Skill.None);
         int skillCount = SkillsController.Instance.getRemainingUses(skill);
         skillCountText.text = skillCount.ToString();
