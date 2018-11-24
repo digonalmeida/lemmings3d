@@ -22,6 +22,10 @@ public class SceneLoader : MonoBehaviour
         {
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);
         }
+        if (sceneToLoad == SceneName.Lobby)
+        {
+            SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
+        }
         else if (sceneToLoad == SceneName.Level)
         {
             SceneManager.LoadScene("DefaultLevel", LoadSceneMode.Single);
