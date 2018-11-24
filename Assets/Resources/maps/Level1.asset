@@ -15,6 +15,10 @@ MonoBehaviour:
   settings:
     lemmingsCount: 10
     minimumVictoryCount: 3
+    minimumSpawnRate: 30
+    maximumSpawnRate: 70
+    startSpawnRate: 50
+    levelTime: 10
     skillsCounter:
       bashers: 1
       blockers: 1

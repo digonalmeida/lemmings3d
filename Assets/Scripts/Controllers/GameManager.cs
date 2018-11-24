@@ -12,9 +12,6 @@ public class GameManager : MonoBehaviour {
     public string gameplaySceneName;
 
     [SerializeField]
-    private MapAsset selectedMapAsset;
-
-    [SerializeField]
     public List<MapAsset> mapAssets;
     
     public static GameManager Instance

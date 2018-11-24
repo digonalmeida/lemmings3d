@@ -13,18 +13,15 @@ public class UIDockInfo_Speed : UIDockInfo
     private void OnEnable()
     {
         GameEvents.Lemmings.ChangedSpawnRate += UpdateInfo;
+        GameEvents.GameState.OnLoadGame += UpdateInfo;
     }
 
     private void OnDisable()
     {
         GameEvents.Lemmings.ChangedSpawnRate -= UpdateInfo;
+        GameEvents.GameState.OnLoadGame -= UpdateInfo;
     }
 
-
-    private void Start()
-    {
-        UpdateInfo(LevelController.Instance.CurrentRate);
-    }
 
     public void IncreaseRate()
     {
@@ -36,11 +33,13 @@ public class UIDockInfo_Speed : UIDockInfo
         LevelController.Instance.ChangeSpawnRate(-1);
     }
 
-    private void UpdateInfo(int newSpawnRate)
+    private void UpdateInfo()
     {
+        int newSpawnRate = LevelController.Instance.currentSpawnRate;
+
         rateText.text = newSpawnRate.ToString();
 
-        minusSign.interactable = LevelController.Instance.CurrentRate > LevelController.Instance.CurrentMapSettings.MinimumSpawnRate;
-        plusSign.interactable = LevelController.Instance.CurrentRate < LevelController.Instance.CurrentMapSettings.MaximumSpawnRate;
+        minusSign.interactable = LevelController.Instance.currentSpawnRate > LevelController.Instance.CurrentMapSettings.MinimumSpawnRate;
+        plusSign.interactable = LevelController.Instance.currentSpawnRate < LevelController.Instance.CurrentMapSettings.MaximumSpawnRate;
     }
 }

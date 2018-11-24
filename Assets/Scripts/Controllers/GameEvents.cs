@@ -28,7 +28,7 @@ public static class GameEvents
         public static Action<LemmingAI> LemmingSpawned;
         public static Action LemmingUsedSkill;
         public static Action LemmingDied;
-        public static Action<int> ChangedSpawnRate;
+        public static Action ChangedSpawnRate;
     }
 
     public static class Map

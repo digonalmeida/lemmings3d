@@ -16,7 +16,7 @@ public class UIDockInfo_Timer : UIDockInfo {
 
     private void UpdateInfo()
     {
-        time = Time.time;
+        time = LevelController.Instance.remainingTime;
         timeText.text = ((int)time / 60).ToString("0") + ":" + (time % 60).ToString("00");
     }
 }

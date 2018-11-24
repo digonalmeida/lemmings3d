@@ -12,6 +12,7 @@
         [SerializeField] private int minimumSpawnRate = 30;
         [SerializeField] private int maximumSpawnRate = 70;
         [SerializeField] private int startSpawnRate = 50;
+        [SerializeField] private float levelTime = 120f;
         [SerializeField] private SkillsCounter skillsCounter = new SkillsCounter();
 
         public MapSettings()
@@ -27,6 +28,7 @@
             minimumSpawnRate = other.minimumSpawnRate;
             maximumSpawnRate = other.maximumSpawnRate;
             startSpawnRate = other.startSpawnRate;
+            levelTime = other.levelTime;
         }
 
         public int LemmingsCount
@@ -101,6 +103,19 @@
             set
             {
                 startSpawnRate = value;
+            }
+        }
+
+        public float LevelTime
+        {
+            get
+            {
+                return levelTime;
+            }
+
+            set
+            {
+                levelTime = value;
             }
         }
     }
