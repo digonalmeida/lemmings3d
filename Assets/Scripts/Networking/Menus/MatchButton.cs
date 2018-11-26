@@ -28,5 +28,6 @@ public class MatchButton : MonoBehaviour
     public void connect()
     {
         networkManager.matchMaker.JoinMatch(networkDataMatch.networkId, "", "", "", 0, 0, networkManager.OnMatchJoined);
+        FindObjectOfType<PanelFlow>().changePanel(5);
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class HostGameButton : MonoBehaviour
 {
     //References
+    public PanelFlow panelFlowScriptRef;
     private string roomName;
 
     //Update Room Name
@@ -23,6 +24,7 @@ public class HostGameButton : MonoBehaviour
         {
             LNetworkLobbyManager networkManager = LNetworkLobbyManager.singleton.GetComponent<LNetworkLobbyManager>();
             networkManager.matchMaker.CreateMatch(roomName, 2, true, "", "", "", 0, 0, networkManager.OnMatchCreate);
+            panelFlowScriptRef.changePanel(5);
         }
     }
 }
