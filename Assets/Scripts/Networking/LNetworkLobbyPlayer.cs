@@ -28,7 +28,8 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
         //Set Initial References
         if (isServer)
         {
-            LobbyPanelManager.Instance.setPlayerButtons(playerNum);
+            LobbyPanelManager.Instance.setColorChangeButtons(Player.Player1, true);
+            LobbyPanelManager.Instance.setColorChangeButtons(Player.Player2, false);
             playerClothMaterialRef = LobbyPanelManager.Instance.player1Lemming.GetComponentInChildren<SkinnedMeshRenderer>().materials[1];
             playerHairMaterialRef = LobbyPanelManager.Instance.player1Lemming.GetComponentInChildren<SkinnedMeshRenderer>().materials[2];
             opponentClothMaterialRef = LobbyPanelManager.Instance.player2Lemming.GetComponentInChildren<SkinnedMeshRenderer>().materials[1];
@@ -36,7 +37,8 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
         }
         else
         {
-            LobbyPanelManager.Instance.setPlayerButtons(playerNum);
+            LobbyPanelManager.Instance.setColorChangeButtons(Player.Player2, true);
+            LobbyPanelManager.Instance.setColorChangeButtons(Player.Player1, false);
             playerClothMaterialRef = LobbyPanelManager.Instance.player2Lemming.GetComponentInChildren<SkinnedMeshRenderer>().materials[1];
             playerHairMaterialRef = LobbyPanelManager.Instance.player2Lemming.GetComponentInChildren<SkinnedMeshRenderer>().materials[2];
             opponentClothMaterialRef = LobbyPanelManager.Instance.player1Lemming.GetComponentInChildren<SkinnedMeshRenderer>().materials[1];
@@ -47,6 +49,12 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
         CmdRequestNextHairColor();
         CmdRequestNextClothColor();
         CmdInformPlayerName(UserData.name, playerNum);
+    }
+
+    //Get Player Num
+    public Player getPlayerNum()
+    {
+        return playerNum;
     }
 
     //Get Local Lobby Player

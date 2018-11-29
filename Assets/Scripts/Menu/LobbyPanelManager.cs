@@ -51,28 +51,28 @@ public class LobbyPanelManager : NetworkBehaviour
     }
 
     //Set Player
-    public void setPlayerButtons(Player playerNum)
+    public void setColorChangeButtons(Player playerNum, bool activate)
     {
         if(playerNum == Player.Player1)
         {
-            for (int i = 0; i < previousColorPanelPlayer2.transform.childCount; i++)
-            {
-                previousColorPanelPlayer2.transform.GetChild(i).gameObject.SetActive(false);
-            }
-            for (int i = 0; i < nextColorPanelPlayer2.transform.childCount; i++)
-            {
-                nextColorPanelPlayer2.transform.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-        else
-        {
             for (int i = 0; i < previousColorPanelPlayer1.transform.childCount; i++)
             {
-                previousColorPanelPlayer1.transform.GetChild(i).gameObject.SetActive(false);
+                previousColorPanelPlayer1.transform.GetChild(i).gameObject.SetActive(activate);
             }
             for (int i = 0; i < nextColorPanelPlayer1.transform.childCount; i++)
             {
-                nextColorPanelPlayer1.transform.GetChild(i).gameObject.SetActive(false);
+                nextColorPanelPlayer1.transform.GetChild(i).gameObject.SetActive(activate);
+            }
+        }
+        else if (playerNum == Player.Player2)
+        {
+            for (int i = 0; i < previousColorPanelPlayer2.transform.childCount; i++)
+            {
+                previousColorPanelPlayer2.transform.GetChild(i).gameObject.SetActive(activate);
+            }
+            for (int i = 0; i < nextColorPanelPlayer2.transform.childCount; i++)
+            {
+                nextColorPanelPlayer2.transform.GetChild(i).gameObject.SetActive(activate);
             }
         }
     }
@@ -114,12 +114,22 @@ public class LobbyPanelManager : NetworkBehaviour
         if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
         if (player != null)
         {
-            //Update CheckBox Sprite
-            if (readyToBegin) readyButtonCheckbox.sprite = readySprite;
-            else readyButtonCheckbox.sprite = unreadySprite;
+            //Get Player Num
+            Player playerNum = player.getPlayerNum();
 
-            //Update Lobby Player
-            player.readyToBegin = readyToBegin;
+            //Update Everything & Inform the Server
+            if (readyToBegin)
+            {
+                readyButtonCheckbox.sprite = readySprite;
+                setColorChangeButtons(playerNum, false);
+                player.SendReadyToBeginMessage();
+            }
+            else
+            {
+                readyButtonCheckbox.sprite = unreadySprite;
+                setColorChangeButtons(playerNum, true);
+                player.SendNotReadyToBeginMessage();
+            }
         }
     }
 }
