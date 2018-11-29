@@ -2,30 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PanelFlow : MonoBehaviour
 {
-    //Variables
-    public GameObject[] panels;
-    private int activePanel;
+    //Panel References
+    public GameObject loginPanel;
+    public GameObject gameModePanel;
+    public GameObject hostGamePanel;
+    public GameObject lobbyPanel;
+    public GameObject multiplayerPanel;
 
-    //References
+    //Elements References
     public InputField nameInputField;
     public Text changeNameButtonText;
+    public InputField roomNameInputField;
 
+    //Network
+    LNetworkLobbyManager networkManager;
+    LNetworkLobbyPlayer lobbyPlayer;
+    
     //Start
     private void Start()
     {
-        activePanel = 0;
-    }
-
-    //Change Panel Method
-    public void changePanel(int nextPanel)
-    {
-        panels[activePanel].SetActive(false);
-        panels[nextPanel].SetActive(true);
-        activePanel = nextPanel;
+        networkManager = LNetworkLobbyManager.singleton.GetComponent<LNetworkLobbyManager>();
     }
 
     //Check Name
@@ -37,12 +36,39 @@ public class PanelFlow : MonoBehaviour
     //Attempt to Register Name & Move to Main Menu
     public void registerName()
     {
-        if(checkName(nameInputField.text))
+        if (checkName(nameInputField.text))
         {
             UserData.name = nameInputField.text;
             changeNameButtonText.text = "Logged as: " + nameInputField.text;
-            changePanel(1);
+            loginPanel.SetActive(false);
+            gameModePanel.SetActive(true);
         }
+        else nameInputField.placeholder.GetComponent<Text>().text = "Invalid Name";
+    }
+
+    //Create Match
+    public void CreateMatch()
+    {
+        if (!string.IsNullOrEmpty(roomNameInputField.text))
+        {
+            networkManager.matchMaker.CreateMatch(roomNameInputField.text, 2, true, "", "", "", 0, 0, networkManager.OnMatchCreate);
+            loadLobby();
+        }
+        else roomNameInputField.placeholder.GetComponent<Text>().text = "Invalid Name";
+    }
+
+    //Load Lobby
+    public void loadLobby()
+    {
+        multiplayerPanel.SetActive(false);
+        hostGamePanel.SetActive(false);
+        lobbyPanel.SetActive(true);
+    }
+
+    //Leave Match
+    public void LeaveMatch()
+    {
+        networkManager.StopClient();
     }
 
     //Quit Game
