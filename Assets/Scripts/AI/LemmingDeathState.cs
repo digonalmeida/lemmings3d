@@ -15,7 +15,7 @@ public class LemmingDeathState : LemmingState
     public override void Update()
     {
         base.Update();
-        if (Agent.AnimationController.isEndOfAnimation("death"))
+        if (Agent.AnimationController.isEndOfAnimation("Fall_Death"))
         {
             Agent.LemmingActions.KillLemming();
         }
