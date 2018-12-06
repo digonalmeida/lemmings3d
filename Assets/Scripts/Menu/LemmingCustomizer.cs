@@ -19,20 +19,6 @@ public class LemmingCustomizer : NetworkBehaviour
     private Dictionary<Color, bool> clothColorAvailability;
     private Dictionary<Color, bool> hairColorAvailability;
 
-    //SyncVar Variables
-    [SyncVar]
-    public string player1Name = "";
-    [SyncVar]
-    public string player2Name = "";
-    [SyncVar]
-    public Color player1HairColor = Color.gray;
-    [SyncVar]
-    public Color player2HairColor = Color.gray;
-    [SyncVar]
-    public Color player1ClothColor = Color.gray;
-    [SyncVar]
-    public Color player2ClothColor = Color.gray;
-
     //Singleton
     private static LemmingCustomizer instance;
     public static LemmingCustomizer Instance
@@ -60,9 +46,6 @@ public class LemmingCustomizer : NetworkBehaviour
     //Start
     private void Start()
     {
-        //Dont Destroy on Chance Scene
-        DontDestroyOnLoad(this.gameObject);
-
         //Create Lists
         clothColorList = new LinkedList<Color>();
         hairColorList = new LinkedList<Color>();
@@ -102,13 +85,8 @@ public class LemmingCustomizer : NetworkBehaviour
     }
 
     //Request Next Cloth Color
-    public void requestNextClothColor(Player playerNum)
+    public Color requestNextClothColor(Player playerNum, Color currentColor)
     {
-        //Get Current Color by Player
-        Color currentColor;
-        if (playerNum == Player.Player1) currentColor = player1ClothColor;
-        else currentColor = player2ClothColor;
-
         //Start Variables
         LinkedListNode<Color> node = clothColorList.Find(currentColor);
         if (node != null) node = node.Next;
@@ -127,22 +105,15 @@ public class LemmingCustomizer : NetworkBehaviour
                 clothColorAvailability[currentColor] = true;
 
                 //Update Sync Var
-                if (playerNum == Player.Player1) player1ClothColor = node.Value;
-                else player2ClothColor = node.Value;
-                return;
+                return node.Value;
             }
             else node = node.Next;
         }
     }
 
     //Request Next Hair Color
-    public void requestNextHairColor(Player playerNum)
+    public Color requestNextHairColor(Player playerNum, Color currentColor)
     {
-        //Get Current Color by Player
-        Color currentColor;
-        if (playerNum == Player.Player1) currentColor = player1HairColor;
-        else currentColor = player2HairColor;
-
         //Start Variables
         LinkedListNode<Color> node = hairColorList.Find(currentColor);
         if (node != null) node = node.Next;
@@ -161,22 +132,15 @@ public class LemmingCustomizer : NetworkBehaviour
                 hairColorAvailability[currentColor] = true;
 
                 //Update Sync Var
-                if (playerNum == Player.Player1) player1HairColor = node.Value;
-                else player2HairColor = node.Value;
-                return;
+                return node.Value;
             }
             else node = node.Next;
         }
     }
 
     //Request Previous Hair Color
-    public void requestPreviousClothColor(Player playerNum)
+    public Color requestPreviousClothColor(Player playerNum, Color currentColor)
     {
-        //Get Current Color by Player
-        Color currentColor;
-        if (playerNum == Player.Player1) currentColor = player1ClothColor;
-        else currentColor = player2ClothColor;
-
         //Start Variables
         LinkedListNode<Color> node = clothColorList.Find(currentColor);
         if (node != null) node = node.Previous;
@@ -195,22 +159,15 @@ public class LemmingCustomizer : NetworkBehaviour
                 clothColorAvailability[currentColor] = true;
 
                 //Update Sync Var
-                if (playerNum == Player.Player1) player1ClothColor = node.Value;
-                else player2ClothColor = node.Value;
-                return;
+                return node.Value;
             }
             else node = node.Previous;
         }
     }
 
     //Request Previous Cloth Color
-    public void requestPreviousHairColor(Player playerNum)
+    public Color requestPreviousHairColor(Player playerNum, Color currentColor)
     {
-        //Get Current Color by Player
-        Color currentColor;
-        if (playerNum == Player.Player1) currentColor = player1HairColor;
-        else currentColor = player2HairColor;
-
         //Start Variables
         LinkedListNode<Color> node = hairColorList.Find(currentColor);
         if (node != null) node = node.Previous;
@@ -229,9 +186,7 @@ public class LemmingCustomizer : NetworkBehaviour
                 hairColorAvailability[currentColor] = true;
 
                 //Update Sync Var
-                if (playerNum == Player.Player1) player1HairColor = node.Value;
-                else player2HairColor = node.Value;
-                return;
+                return node.Value;
             }
             else node = node.Previous;
         }

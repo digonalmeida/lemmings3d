@@ -8,12 +8,14 @@ public class LemmingStateController : MonoBehaviour
     private bool floater;
     private bool climber;
     private bool forceExplode;
+    private Player team;
 
     //Queue Skills
     private Queue<Skill> queuedSkills;
 
     //Control Variables
     private GameObject actionObject;
+    public GameObject lemmingModel;
 
     public Direction BlockingDirection
     {
@@ -95,6 +97,27 @@ public class LemmingStateController : MonoBehaviour
     public void setLemmingActionTrigger(bool value)
     {
         this.transform.GetChild(0).gameObject.SetActive(value);
+    }
+
+    //Set Team
+    public void setTeam(Player team)
+    {
+        this.team = team;
+        LNetworkLobbyPlayer localPlayer = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+        if(localPlayer != null && localPlayer.playerNum == team)
+        {
+            lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = localPlayer.playerClothColor;
+            lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = localPlayer.playerHairColor;
+        }
+        else
+        {
+            localPlayer = LNetworkLobbyPlayer.getOpponentLobbyPlayer();
+            if(localPlayer != null && localPlayer.playerNum == team)
+            {
+                lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = localPlayer.playerClothColor;
+                lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = localPlayer.playerHairColor;
+            }
+        }
     }
 
     public void setForceExplode(bool _forceExplode){

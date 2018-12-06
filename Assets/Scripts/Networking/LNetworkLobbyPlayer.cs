@@ -6,14 +6,22 @@ using UnityEngine.Networking;
 
 public class LNetworkLobbyPlayer : NetworkLobbyPlayer
 {
-    //Control Variables
-    public Player playerNum;
-
     //References
     private Material playerClothMaterialRef;
     private Material playerHairMaterialRef;
     private Material opponentClothMaterialRef;
     private Material opponentHairMaterialRef;
+    private LNetworkLobbyPlayer opponentLobbyPlayer;
+
+    //SyncVar Variables
+    [SyncVar]
+    public Player playerNum;
+    [SyncVar]
+    public string playerName;
+    [SyncVar]
+    public Color playerClothColor = Color.grey;
+    [SyncVar]
+    public Color playerHairColor = Color.grey;
 
     //On Start Authority
     public override void OnStartAuthority()
@@ -79,60 +87,107 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
         return null;
     }
 
+    //Get Opponent Lobby Player (by Saved Reference)
+    private LNetworkLobbyPlayer getOpponentLobbyPlayerReference()
+    {
+        if (opponentLobbyPlayer == null) opponentLobbyPlayer = getOpponentLobbyPlayer();
+        return opponentLobbyPlayer;
+    }
+
     //Inform Name
     [Command]
     public void CmdInformPlayerName(string playerName, Player playerNum)
     {
-        if (playerNum == Player.Player1) LemmingCustomizer.Instance.player1Name = playerName;
-        else if (playerNum == Player.Player2) LemmingCustomizer.Instance.player2Name = playerName;
+        this.playerName = playerName;
+        this.playerNum = playerNum;
+        RpcUpdatePlayerName(playerName, playerNum);
     }
 
     //Request Color Changes
     [Command]
     public void CmdRequestPreviousHairColor()
     {
-        LemmingCustomizer.Instance.requestPreviousHairColor(playerNum);
+        playerHairColor = LemmingCustomizer.Instance.requestPreviousHairColor(playerNum, playerHairColor);
+        RpcUpdateHairColor(playerHairColor);
     }
 
     [Command]
     public void CmdRequestNextHairColor()
     {
-        LemmingCustomizer.Instance.requestNextHairColor(playerNum);
+        playerHairColor = LemmingCustomizer.Instance.requestNextHairColor(playerNum, playerHairColor);
+        RpcUpdateHairColor(playerHairColor);
     }
 
     [Command]
     public void CmdRequestPreviousClothColor()
     {
-        LemmingCustomizer.Instance.requestPreviousClothColor(playerNum);
+        playerClothColor = LemmingCustomizer.Instance.requestPreviousClothColor(playerNum, playerClothColor);
+        RpcUpdateClothColor(playerClothColor);
     }
 
     [Command]
     public void CmdRequestNextClothColor()
     {
-        LemmingCustomizer.Instance.requestNextClothColor(playerNum);
+        playerClothColor = LemmingCustomizer.Instance.requestNextClothColor(playerNum, playerClothColor);
+        RpcUpdateClothColor(playerClothColor);
+    }
+
+    [Command]
+    public void CmdSetReadyOrUnready(bool ready)
+    {
+        RpcSetReadyOrUnready(playerNum, ready);
+    }
+
+    //Update Cloth Color
+    [ClientRpc]
+    public void RpcUpdateClothColor(Color newColor)
+    {
+        playerClothColor = newColor;
+    }
+
+    //Update Hair Color
+    [ClientRpc]
+    public void RpcUpdateHairColor(Color newColor)
+    {
+        playerHairColor = newColor;
+    }
+
+    //Update Player Name
+    [ClientRpc]
+    public void RpcUpdatePlayerName(string newName, Player setPlayerNum)
+    {
+        playerName = newName;
+        playerNum = setPlayerNum;
+    }
+
+    [ClientRpc]
+    public void RpcSetReadyOrUnready(Player playerNum, bool ready)
+    {
+        LobbyPanelManager.Instance.setPlayerReady(playerNum, ready);
     }
 
     //Update
-    private void FixedUpdate()
+    public void Update()
     {
-        //Update Names
-        if (LemmingCustomizer.Instance.player1Name != "" && !LobbyPanelManager.Instance.player1Text.text.Equals(LemmingCustomizer.Instance.player1Name)) LobbyPanelManager.Instance.player1Text.text = LemmingCustomizer.Instance.player1Name;
-        if(LemmingCustomizer.Instance.player2Name != "" && !LobbyPanelManager.Instance.player2Text.text.Equals(LemmingCustomizer.Instance.player2Name)) LobbyPanelManager.Instance.player2Text.text = LemmingCustomizer.Instance.player2Name;
+        if(hasAuthority)
+        {
+            //Update Names
+            if (playerNum == Player.Player1)
+            {
+                if (!playerName.Equals(LobbyPanelManager.Instance.player1Text.text)) LobbyPanelManager.Instance.player1Text.text = playerName;
+                if (getOpponentLobbyPlayerReference() != null && !getOpponentLobbyPlayerReference().playerName.Equals(LobbyPanelManager.Instance.player2Text.text)) LobbyPanelManager.Instance.player2Text.text = getOpponentLobbyPlayerReference().playerName;
+            }
+            else if (playerNum == Player.Player2)
+            {
+                if (!playerName.Equals(LobbyPanelManager.Instance.player2Text.text)) LobbyPanelManager.Instance.player2Text.text = playerName;
+                if (getOpponentLobbyPlayerReference() != null && !getOpponentLobbyPlayerReference().playerName.Equals(LobbyPanelManager.Instance.player1Text.text)) LobbyPanelManager.Instance.player1Text.text = getOpponentLobbyPlayerReference().playerName;
+            }
 
-        //Update Materials
-        if (playerNum == Player.Player1)
-        {
-            if(playerClothMaterialRef.color != LemmingCustomizer.Instance.player1ClothColor) playerClothMaterialRef.color = LemmingCustomizer.Instance.player1ClothColor;
-            if (playerHairMaterialRef.color != LemmingCustomizer.Instance.player1HairColor) playerHairMaterialRef.color = LemmingCustomizer.Instance.player1HairColor;
-            if (opponentClothMaterialRef.color != LemmingCustomizer.Instance.player2ClothColor) opponentClothMaterialRef.color = LemmingCustomizer.Instance.player2ClothColor;
-            if (opponentHairMaterialRef.color != LemmingCustomizer.Instance.player2HairColor) opponentHairMaterialRef.color = LemmingCustomizer.Instance.player2HairColor;
-        }
-        else if (playerNum == Player.Player2)
-        {
-            if (playerClothMaterialRef.color != LemmingCustomizer.Instance.player2ClothColor) playerClothMaterialRef.color = LemmingCustomizer.Instance.player2ClothColor;
-            if (playerHairMaterialRef.color != LemmingCustomizer.Instance.player2HairColor) playerHairMaterialRef.color = LemmingCustomizer.Instance.player2HairColor;
-            if (opponentClothMaterialRef.color != LemmingCustomizer.Instance.player1ClothColor) opponentClothMaterialRef.color = LemmingCustomizer.Instance.player1ClothColor;
-            if (opponentHairMaterialRef.color != LemmingCustomizer.Instance.player1HairColor) opponentHairMaterialRef.color = LemmingCustomizer.Instance.player1HairColor;
+            //Update Colors
+            if (playerClothMaterialRef.color != playerClothColor) playerClothMaterialRef.color = playerClothColor;
+            if (playerHairMaterialRef.color != playerHairColor) playerHairMaterialRef.color = playerHairColor;
+            if (getOpponentLobbyPlayerReference() != null && opponentClothMaterialRef.color != getOpponentLobbyPlayerReference().playerClothColor) opponentClothMaterialRef.color = getOpponentLobbyPlayerReference().playerClothColor;
+            if (getOpponentLobbyPlayerReference() != null && opponentHairMaterialRef.color != getOpponentLobbyPlayerReference().playerHairColor) opponentHairMaterialRef.color = getOpponentLobbyPlayerReference().playerHairColor;
         }
     }
 }

@@ -1352,6 +1352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a65f94d161296cf4f88da10406e08417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lemmingModel: {fileID: 0}
 --- !u!114 &114428478647582866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1384,7 +1385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeHighlighted: 1
-  center: {fileID: 4951872872034994}
+  center: {fileID: 4057334807345498}
 --- !u!114 &114752841814382906
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -111,6 +111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4951872872034994}
   - component: {fileID: 95657931434555872}
+  - component: {fileID: 114519433747683782}
   m_Layer: 10
   m_Name: LobbyLemming
   m_TagString: Untagged
@@ -1066,7 +1067,7 @@ Animator:
   m_GameObject: {fileID: 1194431158754718}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 60bd7cbd0fc73564b93707a4c8d14049, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1edc897034afd0246a32eae3e24d93b3, type: 2}
+  m_Controller: {fileID: 9100000, guid: 93a969c2b77b72e44aa4e33ffb76008e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1075,6 +1076,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114519433747683782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1194431158754718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ab41eb786cd2e4f9f14d6c1de946ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeAnimationInterval: 6
+  playerNum: 0
 --- !u!137 &137266852944057086
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

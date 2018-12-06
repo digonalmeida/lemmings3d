@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class LobbyPanelManager : NetworkBehaviour
 {
-    //Variables
-    private bool readyToBegin = false;
-
     //Network
     private LNetworkLobbyPlayer player;
     private LNetworkLobbyPlayer opponent;
@@ -24,7 +21,9 @@ public class LobbyPanelManager : NetworkBehaviour
     public GameObject nextColorPanelPlayer2;
     public Sprite readySprite;
     public Sprite unreadySprite;
-    public Image readyButtonCheckbox;
+    public Text readyButtonText;
+    public Image readyPlayer1Checkbox;
+    public Image readyPlayer2Checkbox;
 
     //Singleton
     private static LobbyPanelManager instance;
@@ -105,31 +104,42 @@ public class LobbyPanelManager : NetworkBehaviour
         player.CmdRequestNextClothColor();
     }
 
-    //Set Ready
-    public void setReady()
+    //Request Set Ready of Local Player
+    public void requestSetReady()
     {
-        //Update Ready Variable
-        readyToBegin = !readyToBegin;
-
         if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
-        if (player != null)
-        {
-            //Get Player Num
-            Player playerNum = player.getPlayerNum();
+        if (player != null) player.CmdSetReadyOrUnready(!player.readyToBegin);
+    }
 
-            //Update Everything & Inform the Server
-            if (readyToBegin)
+    //Set Ready
+    public void setPlayerReady(Player playerNum, bool ready)
+    {
+        //Update Everything & Inform the Server
+        if (ready)
+        {
+            if(playerNum == Player.Player1) readyPlayer1Checkbox.sprite = readySprite;
+            else if(playerNum == Player.Player2) readyPlayer2Checkbox.sprite = readySprite;
+
+            if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+            if (player != null && player.playerNum == playerNum)
             {
-                readyButtonCheckbox.sprite = readySprite;
-                setColorChangeButtons(playerNum, false);
+                readyButtonText.text = "Unready";
                 player.SendReadyToBeginMessage();
-            }
-            else
+                setColorChangeButtons(playerNum, false);
+            }  
+        }
+        else
+        {
+            if (playerNum == Player.Player1) readyPlayer1Checkbox.sprite = unreadySprite;
+            else if (playerNum == Player.Player2) readyPlayer2Checkbox.sprite = unreadySprite;
+
+            if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+            if (player != null && player.playerNum == playerNum)
             {
-                readyButtonCheckbox.sprite = unreadySprite;
-                setColorChangeButtons(playerNum, true);
+                readyButtonText.text = "Ready";
                 player.SendNotReadyToBeginMessage();
-            }
+                setColorChangeButtons(playerNum, true);
+            } 
         }
     }
 }

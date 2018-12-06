@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
     public int count = 1;
     public float interval = 1f;
     public Direction startingMovementDirection;
+    public Player team;
 
     //Internal Variables
     private Stack<GameObject> lemmingsPool;
@@ -64,11 +65,16 @@ public class Spawner : MonoBehaviour
     private GameObject createLemming()
     {
         GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
-        var movController = obj.GetComponent<LemmingMovementController>();
+        LemmingMovementController movController = obj.GetComponent<LemmingMovementController>();
         if(movController != null)
         {
             movController.SetDirection(startingMovementDirection);
             movController.SetForwardDirection(startingMovementDirection);
+        }
+        LemmingStateController stateController = obj.GetComponent<LemmingStateController>();
+        if(stateController != null)
+        {
+            stateController.setTeam(team);
         }
         return obj;
     }
