@@ -65,12 +65,6 @@ public class PanelFlow : MonoBehaviour
         lobbyPanel.SetActive(true);
     }
 
-    //Leave Match
-    public void LeaveMatch()
-    {
-        networkManager.StopClient();
-    }
-
     //Quit Game
     public void quitGame()
     {

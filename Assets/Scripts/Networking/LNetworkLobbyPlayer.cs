@@ -59,6 +59,12 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
         CmdInformPlayerName(UserData.name, playerNum);
     }
 
+    //Start
+    private void Start()
+    {
+        if(isLocalPlayer) CmdVerifyOpponentReady();
+    }
+
     //Get Player Num
     public Player getPlayerNum()
     {
@@ -92,6 +98,19 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
     {
         if (opponentLobbyPlayer == null) opponentLobbyPlayer = getOpponentLobbyPlayer();
         return opponentLobbyPlayer;
+    }
+
+    //Verify Other Player Ready
+    [Command]
+    public void CmdVerifyOpponentReady()
+    {
+        Debug.LogError("Called");
+        LNetworkLobbyPlayer opponent = LNetworkLobbyPlayer.getOpponentLobbyPlayer();
+        if (opponent != null)
+        {
+            Debug.LogError("Request RPC");
+            opponent.RpcSetReadyOrUnready(opponent.playerNum, opponent.readyToBegin);
+        }
     }
 
     //Inform Name
@@ -163,6 +182,7 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
     [ClientRpc]
     public void RpcSetReadyOrUnready(Player playerNum, bool ready)
     {
+        Debug.LogError(ready);
         LobbyPanelManager.Instance.setPlayerReady(playerNum, ready);
     }
 

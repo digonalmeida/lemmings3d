@@ -20,8 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4209254314826488}
   - component: {fileID: 114567957354545862}
+  - component: {fileID: 114089668007932714}
   m_Layer: 0
-  m_Name: LemmingCustomizer
+  m_Name: LemmingCustomizerNetworkController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,13 +34,24 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1732898247761662}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.41153756, y: 0.87587005, z: 90.00781}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114089668007932714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1732898247761662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09767e87cc0f04c439d222ba6108e587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114567957354545862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,5 +82,5 @@ MonoBehaviour:
     i13: 125
     i14: 170
     i15: 104
-  m_ServerOnly: 0
+  m_ServerOnly: 1
   m_LocalPlayerAuthority: 0

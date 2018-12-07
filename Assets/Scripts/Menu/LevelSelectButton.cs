@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using LevelMap;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class LevelSelectButton : MonoBehaviour
 {
     //Variables
     private Image imageReference;
+    private MapAsset levelAsset;
 
     //Start
     private void Start()
@@ -15,8 +17,25 @@ public class LevelSelectButton : MonoBehaviour
     }
 
     //Update Image with level screenshot
-    public void updateImage(Sprite image)
+    public void setMapAsset(MapAsset level)
     {
-        if(image != null) imageReference.sprite = image;
+        if (level != null)
+        {
+            levelAsset = level;
+            if(level.mapScrenshot != null) imageReference.sprite = level.mapScrenshot;
+        }
     }
+
+    //Get Map Asset
+    public MapAsset getMapAsset()
+    {
+        return levelAsset;
+    }
+
+    //Select Level
+    public void selectLevel()
+    {
+        if(GetComponent<Toggle>().isOn) LNetworkPlayer.getLocalPlayer().CmdSelectLevel(this.gameObject);
+    }
+
 }

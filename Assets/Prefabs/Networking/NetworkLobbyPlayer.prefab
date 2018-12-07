@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114118406883297192}
   - component: {fileID: 114647239852354454}
   m_Layer: 0
-  m_Name: LobbyPlayer
+  m_Name: NetworkLobbyPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,3 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowLobbyGUI: 0
+  playerNum: 0
+  playerName: 
+  playerClothColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  playerHairColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

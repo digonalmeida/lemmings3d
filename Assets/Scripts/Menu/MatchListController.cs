@@ -22,13 +22,24 @@ public class MatchListController : MonoBehaviour
     {
         //Variables
         matches = new List<GameObject>();
-        updateTimer = 0f;
+        updateTimer = DiscoveryUpdatePeriod;
 		refreshingMatches = false;
 
         //Network
         networkManager = LNetworkLobbyManager.singleton.GetComponent<LNetworkLobbyManager>();
         if (networkManager.matchMaker == null) networkManager.StartMatchMaker();
         requestRefresh();
+    }
+
+    //Update
+    private void Update()
+    {
+        updateTimer -= Time.deltaTime;
+        if(updateTimer <= 0f)
+        {
+            updateTimer = DiscoveryUpdatePeriod;
+            requestRefresh();
+        }
     }
 
     //Request Refresh
