@@ -311,15 +311,20 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 652248394}
-    - target: {fileID: 114532141867914644, guid: d7558856af04d5b47b1aa73c9fc59a1e,
+    - target: {fileID: 224745749997040382, guid: d7558856af04d5b47b1aa73c9fc59a1e,
         type: 2}
-      propertyPath: m_CellSize.x
-      value: 160
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114532141867914644, guid: d7558856af04d5b47b1aa73c9fc59a1e,
+    - target: {fileID: 224745749997040382, guid: d7558856af04d5b47b1aa73c9fc59a1e,
         type: 2}
-      propertyPath: m_CellSize.y
-      value: 160
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224745749997040382, guid: d7558856af04d5b47b1aa73c9fc59a1e,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7558856af04d5b47b1aa73c9fc59a1e, type: 2}
@@ -494,12 +499,12 @@ Prefab:
     - target: {fileID: 224615274812300654, guid: a1496994c531c47498372712c063e97a,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224615274812300654, guid: a1496994c531c47498372712c063e97a,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224615274812300654, guid: a1496994c531c47498372712c063e97a,
         type: 2}
@@ -509,17 +514,17 @@ Prefab:
     - target: {fileID: 224615274812300654, guid: a1496994c531c47498372712c063e97a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224691900705989514, guid: a1496994c531c47498372712c063e97a,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224691900705989514, guid: a1496994c531c47498372712c063e97a,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224691900705989514, guid: a1496994c531c47498372712c063e97a,
         type: 2}
@@ -529,7 +534,7 @@ Prefab:
     - target: {fileID: 224691900705989514, guid: a1496994c531c47498372712c063e97a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224937190667988882, guid: a1496994c531c47498372712c063e97a,
         type: 2}
@@ -2503,36 +2508,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c0a828e1b6513f419093078189486b3, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1776043700 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1131509161348596, guid: d7558856af04d5b47b1aa73c9fc59a1e,
-    type: 2}
-  m_PrefabInternal: {fileID: 55563444}
---- !u!114 &1776043702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1776043700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ba68b2e0648824ea44609a3e7484e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelSelectButtonPrefab: {fileID: 1940034374305112, guid: c3a3b280615165942929a547f90fd9cb,
-    type: 2}
---- !u!114 &1776043705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1776043700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1184210157, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AllowSwitchOff: 0
 --- !u!1001 &1938955241
 Prefab:
   m_ObjectHideFlags: 0

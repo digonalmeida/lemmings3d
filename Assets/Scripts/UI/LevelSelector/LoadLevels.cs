@@ -20,5 +20,8 @@ public class LoadLevels : MonoBehaviour
             LevelSelectButton button = obj.GetComponent<LevelSelectButton>();
             button.updateImage(mapAssets[i].mapScrenshot);
         }
+
+        //Update Size
+        this.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 170 *  Mathf.CeilToInt(mapAssets.Count / 4f));
     }
 }
