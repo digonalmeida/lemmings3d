@@ -114,6 +114,8 @@ public class LobbyPanelManager : NetworkBehaviour
     //Set Ready
     public void setPlayerReady(Player playerNum, bool ready)
     {
+        Debug.LogError("Panel Flow: " + ready);
+
         //Update Everything & Inform the Server
         if (ready)
         {
