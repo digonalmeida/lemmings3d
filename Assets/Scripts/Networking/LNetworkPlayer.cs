@@ -39,8 +39,14 @@ public class LNetworkPlayer : NetworkBehaviour
     }
 
     [Command]
-    public void CmdSelectLevel(GameObject level)
+    public void CmdSelectLevel(int indexButton)
     {
-        LevelSelector.Instance.selectLevel(level, playerNum);
+        LevelSelectorNetworkController.Instance.selectLevel(indexButton, playerNum);
+    }
+
+    [ClientRpc]
+    public void RpcSelectLevel(int indexButtonPlayer1, int indexButtonPlayer2)
+    {
+        LevelSelectorLocalController.Instance.updateToggle(indexButtonPlayer1, indexButtonPlayer2, playerNum);
     }
 }

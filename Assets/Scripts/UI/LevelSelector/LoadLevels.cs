@@ -18,7 +18,7 @@ public class LoadLevels : MonoBehaviour
             GameObject obj = Instantiate(levelSelectButtonPrefab, this.transform);
             obj.GetComponent<Toggle>().group = this.GetComponent<ToggleGroup>();
             LevelSelectButton button = obj.GetComponent<LevelSelectButton>();
-            button.setMapAsset(mapAssets[i]);
+            button.setMapAsset(mapAssets[i], i);
         }
 
         //Update Size

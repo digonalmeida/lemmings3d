@@ -114,8 +114,6 @@ public class LobbyPanelManager : NetworkBehaviour
     //Set Ready
     public void setPlayerReady(Player playerNum, bool ready)
     {
-        Debug.LogError("Panel Flow: " + ready);
-
         //Update Everything & Inform the Server
         if (ready)
         {
@@ -126,6 +124,7 @@ public class LobbyPanelManager : NetworkBehaviour
             if (player != null && player.playerNum == playerNum)
             {
                 readyButtonText.text = "Unready";
+                player.playerReady = ready;
                 player.SendReadyToBeginMessage();
                 setColorChangeButtons(playerNum, false);
             }  
@@ -139,6 +138,7 @@ public class LobbyPanelManager : NetworkBehaviour
             if (player != null && player.playerNum == playerNum)
             {
                 readyButtonText.text = "Ready";
+                player.playerReady = ready;
                 player.SendNotReadyToBeginMessage();
                 setColorChangeButtons(playerNum, true);
             } 
