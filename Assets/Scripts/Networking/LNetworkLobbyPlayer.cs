@@ -22,6 +22,8 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
     public Color playerClothColor = Color.grey;
     [SyncVar]
     public Color playerHairColor = Color.grey;
+    [SyncVar]
+    public bool playerReady = false;
 
     //On Start Authority
     public override void OnStartAuthority()
@@ -57,6 +59,12 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
         CmdRequestNextHairColor();
         CmdRequestNextClothColor();
         CmdInformPlayerName(UserData.name, playerNum);
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        LobbyPanelManager.Instance.setPlayerReady(playerNum, playerReady);
     }
 
     //Get Player Num

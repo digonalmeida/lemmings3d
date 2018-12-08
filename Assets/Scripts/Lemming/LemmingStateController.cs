@@ -96,7 +96,7 @@ public class LemmingStateController : MonoBehaviour
     //Activate Lemming Action Trigger
     public void setLemmingActionTrigger(bool value)
     {
-        this.transform.GetChild(0).gameObject.SetActive(value);
+        actionObject.SetActive(value);
     }
 
     //Set Team

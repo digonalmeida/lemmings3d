@@ -124,6 +124,7 @@ public class LobbyPanelManager : NetworkBehaviour
             if (player != null && player.playerNum == playerNum)
             {
                 readyButtonText.text = "Unready";
+                player.playerReady = ready;
                 player.SendReadyToBeginMessage();
                 setColorChangeButtons(playerNum, false);
             }  
@@ -137,6 +138,7 @@ public class LobbyPanelManager : NetworkBehaviour
             if (player != null && player.playerNum == playerNum)
             {
                 readyButtonText.text = "Ready";
+                player.playerReady = ready;
                 player.SendNotReadyToBeginMessage();
                 setColorChangeButtons(playerNum, true);
             } 

@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4836006335309026}
   - component: {fileID: 20725367678386624}
   - component: {fileID: 81244326107695634}
-  - component: {fileID: 114977562458641528}
-  - component: {fileID: 114501850411193590}
   - component: {fileID: 114280231599974910}
   m_Layer: 0
   m_Name: Main Camera
@@ -99,35 +97,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivotObject: {fileID: 0}
-  followSelectedLemming: 1
   speed: 50
   turningRate: 360
   zoomSpeed: 1000
   pivotPosition: {x: 0, y: 0, z: 0}
   distance: 20
   eulerRotation: {x: 60, y: 45, z: 0}
---- !u!114 &114501850411193590
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1609597471042662}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a310131a46e3bb348b3d3727a95b1261, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 50
-  turningRate: 7000
-  zoomSpeed: 1000
---- !u!114 &114977562458641528
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1609597471042662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3f7bc7aea466f34da6cc960cc9d42a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

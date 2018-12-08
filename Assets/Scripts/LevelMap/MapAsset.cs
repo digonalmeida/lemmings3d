@@ -13,6 +13,9 @@
 #pragma warning restore 414
 
         [SerializeField]
+        public Sprite mapScrenshot;
+
+        [SerializeField]
         private MapSettings settings = new MapSettings();
 
         [SerializeField]
