@@ -16,12 +16,17 @@ public class Spawner : MonoBehaviour
     private Stack<GameObject> lemmingsPool;
     private float currentTimer;
 
-    public void Init()
+    private void Start(){
+        Setup();
+    }
+
+    public void Setup()
     {
         var block = GetComponent<LevelMap.MapBlockController>();
-        if(block != null)
+        if (block != null)
         {
             startingMovementDirection = block.Block.Direction;
+            team = block.Block.Team;
         }
 
         currentTimer = 0f;
@@ -32,7 +37,10 @@ public class Spawner : MonoBehaviour
             obj.SetActive(false);
             lemmingsPool.Push(obj);
         }
+    }
 
+    public void Init()
+    {
         ChangeInterval();
         StartCoroutine(SpawnRoutine());
     }
@@ -66,19 +74,19 @@ public class Spawner : MonoBehaviour
     {
         GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
         LemmingMovementController movController = obj.GetComponent<LemmingMovementController>();
-        if(movController != null)
+        if (movController != null)
         {
             movController.SetDirection(startingMovementDirection);
             movController.SetForwardDirection(startingMovementDirection);
         }
         LemmingStateController stateController = obj.GetComponent<LemmingStateController>();
-        if(stateController != null)
+        if (stateController != null)
         {
             stateController.setTeam(team);
         }
         return obj;
     }
-    
+
     private IEnumerator SpawnRoutine()
     {
         while (true)
@@ -114,7 +122,7 @@ public class Spawner : MonoBehaviour
             obj = createLemming();
             lemmingsPool.Push(obj);
         }
-        LemmingAI lemmingAIScript = obj.GetComponent<LemmingAI>();
+        LemmingStateController lemmingAIScript = obj.GetComponent<LemmingStateController>();
         GameEvents.Lemmings.LemmingSpawned.SafeInvoke(lemmingAIScript);
     }
 

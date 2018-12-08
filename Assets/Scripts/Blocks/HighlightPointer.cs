@@ -11,6 +11,8 @@ public class HighlightPointer : MonoBehaviour
     public float radius;
     public bool isHighlighting { get; private set; }
     public HighlightableObject highlightedObject { get; private set; }
+    public Player playerTeam {get{return LevelController.Instance.team;}}
+    private LNetworkPlayer networkPlayer;
 
     void Update()
     {
@@ -37,6 +39,15 @@ public class HighlightPointer : MonoBehaviour
             HighlightableObject highlightScript = col.gameObject.GetComponentInParent<HighlightableObject>();
             if (highlightScript != null && highlightScript.canBeHighlighted)
             {
+                LemmingStateController lemming = highlightScript.GetComponent<LemmingStateController>();
+                if (lemming != null)
+                {
+                    if (lemming.team != playerTeam)
+                    {
+                        continue;
+                    }
+                }
+
                 float angle = Vector3.Angle(ray.direction, (col.bounds.center - Camera.main.transform.position));
                 float dist = Mathf.Sin(Mathf.Deg2Rad * angle) * Vector3.Distance(col.bounds.center, Camera.main.transform.position);
                 if (dist < distanceFromRay)

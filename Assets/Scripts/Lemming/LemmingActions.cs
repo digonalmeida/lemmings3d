@@ -6,12 +6,12 @@ public class LemmingActions : MonoBehaviour {
 
     public float timeToDetroyAfterEnterExitPoint = 2f;
     private HighlightableObject highlightableScript;
-    private LemmingAI lemmingAIScript;
+    private LemmingStateController lemmingAIScript;
 
     private void Awake()
     {
         highlightableScript = GetComponent<HighlightableObject>();
-        lemmingAIScript = GetComponent<LemmingAI>();
+        lemmingAIScript = GetComponent<LemmingStateController>();
     }
 
     public void EnterExitPoint()

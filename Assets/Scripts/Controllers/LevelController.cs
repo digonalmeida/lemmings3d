@@ -9,8 +9,9 @@ public class LevelController : Singleton<LevelController>
     // lemmings control
     public int lemmingsSpawned { get; private set; }
     public int lemmingsEnteredExit { get; private set; }
-    public List<LemmingAI> lemmingsOnScene = new List<LemmingAI>();
+    public List<LemmingStateController> lemmingsOnScene = new List<LemmingStateController>();
     public int currentSpawnRate { get; private set; }
+    public Player team;
 
     // timer
     public float remainingTime { get; private set; }
@@ -47,6 +48,10 @@ public class LevelController : Singleton<LevelController>
     {
         base.Awake();
         ResetVariables();
+
+        // load player team
+        LNetworkLobbyPlayer netPlayer = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+        if (netPlayer != null) team = netPlayer.playerNum;
     }
 
     private void Start()
@@ -70,16 +75,20 @@ public class LevelController : Singleton<LevelController>
         }
     }
 
-    public void LemmingExit(LemmingAI lemming)
+    public void LemmingExit(LemmingStateController lemming)
     {
         lemmingsOnScene.Remove(lemming);
-        lemmingsEnteredExit++;
+
+        if (lemming.team == team)
+            lemmingsEnteredExit++;
     }
 
-    public void LemmingEnter(LemmingAI lemming)
+    public void LemmingEnter(LemmingStateController lemming)
     {
         lemmingsOnScene.Add(lemming);
-        lemmingsSpawned++;
+        
+        if (lemming.team == team)
+            lemmingsSpawned++;
     }
 
     public void LoadLevelSettings()

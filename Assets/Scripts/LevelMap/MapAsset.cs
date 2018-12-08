@@ -32,7 +32,7 @@
             {
                 level = new MapData(value);
 
-//                UnityEditor.EditorUtility.SetDirty(this);
+                UnityEditor.EditorUtility.SetDirty(this);
             }
         }
 

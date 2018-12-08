@@ -25,7 +25,7 @@ public class UIDockInfo_InOut : UIDockInfo
     }
 
 
-    private void UpdateInfo(LemmingAI lemming)
+    private void UpdateInfo(LemmingStateController lemming)
     {
         outCount = LevelController.Instance.lemmingsSpawned;
         inCount = LevelController.Instance.lemmingsEnteredExit;
