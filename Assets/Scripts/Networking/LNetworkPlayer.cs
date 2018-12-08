@@ -6,14 +6,23 @@ using UnityEngine.Networking;
 public class LNetworkPlayer : NetworkBehaviour 
 {
     //Variables
+    [SyncVar]
     public Player playerNum;
+    [SyncVar]
+    public bool levelSelectReady = false;
 
     //Start
-    private void Start()
+    public override void OnStartAuthority()
     {
+        //Base Method
+        base.OnStartAuthority();
+
         //Set Player
-        if (NetworkServer.active) playerNum = Player.Player1;
+        if (isServer) playerNum = Player.Player1;
         else playerNum = Player.Player2;
+
+        //Inform Player Num
+        CmdInformPlayerNum(playerNum);
     }
 
     //Get Local Lobby Player
@@ -39,14 +48,26 @@ public class LNetworkPlayer : NetworkBehaviour
     }
 
     [Command]
+    public void CmdInformReadyStatus(bool ready)
+    {
+        levelSelectReady = ready;
+    }
+
+    [Command]
+    public void CmdInformPlayerNum(Player playerNum)
+    {
+        this.playerNum = playerNum;
+    }
+
+    [Command]
     public void CmdSelectLevel(int indexButton)
     {
         LevelSelectorNetworkController.Instance.selectLevel(indexButton, playerNum);
     }
 
     [ClientRpc]
-    public void RpcSelectLevel(int indexButtonPlayer1, int indexButtonPlayer2)
+    public void RpcSelectLevel(int indexSelection, Player playerNum)
     {
-        LevelSelectorLocalController.Instance.updateToggle(indexButtonPlayer1, indexButtonPlayer2, playerNum);
+        LevelSelectorPanelController.Instance.selectLevel(indexSelection, playerNum);
     }
 }

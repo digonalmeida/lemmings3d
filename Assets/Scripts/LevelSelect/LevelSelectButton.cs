@@ -40,7 +40,7 @@ public class LevelSelectButton : MonoBehaviour
         if (GetComponent<Toggle>().isOn)
         {
             LNetworkPlayer player = LNetworkPlayer.getLocalPlayer();
-            player.CmdSelectLevel(indexButton);
+            if(player != null) player.CmdSelectLevel(indexButton);
         }
     }
 

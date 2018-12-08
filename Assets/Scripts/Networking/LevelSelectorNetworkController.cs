@@ -9,7 +9,6 @@ public class LevelSelectorNetworkController : MonoBehaviour
     //Variables
     private int selectedLevelPlayer1;
     private int selectedLevelPlayer2;
-    public GameObject levelSelectorContentPanel;
 
     //Singleton
     private static LevelSelectorNetworkController instance;
@@ -38,19 +37,19 @@ public class LevelSelectorNetworkController : MonoBehaviour
     //Define & Return Level to Load
     public MapAsset getLevelToLoad()
     {
-        if (selectedLevelPlayer1 == selectedLevelPlayer2) return levelSelectorContentPanel.transform.GetChild(selectedLevelPlayer1).GetComponent<LevelSelectButton>().getMapAsset();
+        if (selectedLevelPlayer1 == selectedLevelPlayer2) return LevelSelectorPanelController.Instance.getMapAssetByIndex(selectedLevelPlayer1);
         else
         {
-            if(Random.value >= 0.5f) return levelSelectorContentPanel.transform.GetChild(selectedLevelPlayer1).GetComponent<LevelSelectButton>().getMapAsset();
-            else return levelSelectorContentPanel.transform.GetChild(selectedLevelPlayer2).GetComponent<LevelSelectButton>().getMapAsset();
+            if(Random.value >= 0.5f) return LevelSelectorPanelController.Instance.getMapAssetByIndex(selectedLevelPlayer1);
+            else return LevelSelectorPanelController.Instance.getMapAssetByIndex(selectedLevelPlayer2);
         }
     }
 
     //Select Level by Player
-    public void selectLevel(int indexButton, Player playerNum)
+    public void selectLevel(int indexSelection, Player playerNum)
     {
-        if(playerNum == Player.Player1) selectedLevelPlayer1 = indexButton;
-        else if (playerNum == Player.Player2) selectedLevelPlayer2 = indexButton;
-        LNetworkPlayer.getLocalPlayer().RpcSelectLevel(selectedLevelPlayer1, selectedLevelPlayer2);
+        if(playerNum == Player.Player1) selectedLevelPlayer1 = indexSelection;
+        else if (playerNum == Player.Player2) selectedLevelPlayer2 = indexSelection;
+        LNetworkPlayer.getLocalPlayer().RpcSelectLevel(indexSelection, playerNum);
     }
 }
