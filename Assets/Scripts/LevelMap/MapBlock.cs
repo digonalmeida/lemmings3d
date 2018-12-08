@@ -18,11 +18,15 @@
         [SerializeField]
         private Direction direction = Direction.West;
 
+        [SerializeField]
+        private Player team;
+
         public MapBlock(MapBlock block)
         {
             position = block.position;
             direction = block.direction;
             type = block.type;
+            team = block.team;
         }
 
         public MapBlock()
@@ -74,6 +78,19 @@
             set
             {
                 position = value;
+            }
+        }
+
+        public Player Team
+        {
+            get
+            {
+                return team;
+            }
+
+            set
+            {
+                team = value;
             }
         }
 

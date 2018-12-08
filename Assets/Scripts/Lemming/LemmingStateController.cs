@@ -8,7 +8,7 @@ public class LemmingStateController : MonoBehaviour
     private bool floater;
     private bool climber;
     private bool forceExplode;
-    private Player team;
+    public Player team {get; private set;}
 
     //Queue Skills
     private Queue<Skill> queuedSkills;

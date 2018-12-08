@@ -12,136 +12,185 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier: 
   mapName: Second Turn
+  mapScrenshot: {fileID: 0}
   settings:
     lemmingsCount: 10
     minimumVictoryCount: 3
+    minimumSpawnRate: 30
+    maximumSpawnRate: 70
+    startSpawnRate: 50
+    levelTime: 120
     skillsCounter:
       bashers: 0
-      blockers: 99
+      blockers: 0
       builders: 0
       climbers: 0
       diggers: 0
       exploders: 0
-      floaters: 1
+      floaters: 0
   level:
     serializedLevelBlocks:
     - position: {x: 3, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 1, z: -2}
       type: 3
       direction: 3
+      team: 1
     - position: {x: 3, y: 1, z: 0}
       type: 4
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: 3}
       type: 1
-      direction: 0
+      direction: 2
+      team: 0
     - position: {x: -2, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 1, z: 1}
       type: 4
       direction: 0
+      team: 0
     - position: {x: 3, y: 1, z: 2}
       type: 4
       direction: 0
+      team: 0
+    - position: {x: -2, y: 1, z: 3}
+      type: 3
+      direction: 2
+      team: 2

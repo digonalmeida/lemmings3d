@@ -24,8 +24,8 @@ public static class GameEvents
     {
         public delegate void SpawnRateAction(int newRate);
 
-        public static Action<LemmingAI> LemmingReachedExit;
-        public static Action<LemmingAI> LemmingSpawned;
+        public static Action<LemmingStateController> LemmingReachedExit;
+        public static Action<LemmingStateController> LemmingSpawned;
         public static Action LemmingUsedSkill;
         public static Action LemmingDied;
         public static Action ChangedSpawnRate;

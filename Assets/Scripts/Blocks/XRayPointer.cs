@@ -30,7 +30,6 @@ public class XRayPointer : MonoBehaviour {
 
     }
 
-
     void RaycastForWalls()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
