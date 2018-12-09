@@ -9,7 +9,7 @@ public class LevelController : Singleton<LevelController>
     // lemmings control
 
     public int currentSpawnRate { get; private set; }
-    public Player team;
+    public Player team = Player.Player1;
 
     // timer
     public float remainingTime { get { return gameStateManager.RemainingTime; } }

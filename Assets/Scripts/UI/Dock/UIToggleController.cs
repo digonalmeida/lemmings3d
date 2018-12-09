@@ -17,7 +17,7 @@ public class UIToggleController : MonoBehaviour
     //Change Color of Panel
     public void ChangeColor(bool active)
     {
-        if (active) togglePanelRef.color = Color.red;
-        else togglePanelRef.color = Color.white;
+        if (active) togglePanelRef.enabled = true;
+        else togglePanelRef.enabled = false;
     }
 }
