@@ -27,8 +27,10 @@ public class UIDockInfo_InOut : UIDockInfo
 
     private void UpdateInfo(LemmingStateController lemming)
     {
-        outCount = LevelController.Instance.lemmingsSpawned;
-        inCount = LevelController.Instance.lemmingsEnteredExit;
+        if (LevelController.Instance.gameStateManager == null) return;
+        
+        outCount = LevelController.Instance.gameStateManager.lemmingsSpawned[LevelController.Instance.team];
+        inCount = LevelController.Instance.gameStateManager.lemmingsEnteredExit[LevelController.Instance.team];
 
         outText.text = outCount.ToString();
         inText.text = outCount == 0 ? "0%" : (((int)(((float)inCount / (float)outCount) * 100)).ToString() + "%");

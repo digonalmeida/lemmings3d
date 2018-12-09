@@ -120,9 +120,10 @@ public class SkillsController : Singleton<SkillsController>
 
     public void explodeAll()
     {
+        if(LevelController.Instance.gameStateManager == null) return;
 
         // explode every lemming
-        foreach (var lemming in LevelController.Instance.lemmingsOnScene)
+        foreach (var lemming in LevelController.Instance.gameStateManager.lemmingsOnScene[LevelController.Instance.team])
         {
             lemming.GetComponent<LemmingStateController>().setForceExplode(true);
 

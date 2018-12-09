@@ -27,7 +27,7 @@ public class LemmingActions : MonoBehaviour {
     //Goodbye Cruel World
     public void KillLemming()
     {
-        GameEvents.Lemmings.LemmingDied.SafeInvoke();
+        GameEvents.Lemmings.LemmingDied.SafeInvoke(lemmingAIScript);
         EliminateLemming();
     }
 

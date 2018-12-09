@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4492907965725310}
   - component: {fileID: 114693482319684742}
   - component: {fileID: 114989836503517396}
-  - component: {fileID: 114856437820219672}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -74,18 +73,6 @@ MonoBehaviour:
     i15: 101
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114856437820219672
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1781326602169008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7656e6e984124745822754b31b47807, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  win: 0
 --- !u!114 &114989836503517396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,3 +85,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
+  levelSelectReady: 0
