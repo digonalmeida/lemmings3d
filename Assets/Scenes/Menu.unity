@@ -7644,7 +7644,6 @@ MonoBehaviour:
     type: 2}
   viewPort: {fileID: 1491035441}
   DiscoveryUpdatePeriod: 3
-  refreshingMatches: 0
 --- !u!222 &1441977727
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8531,6 +8530,12 @@ Prefab:
       propertyPath: m_CustomConfig
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114331307417081480, guid: f5b222637a5424946b805ab270f91a06,
+        type: 2}
+      propertyPath: disconnectedPanel
+      value: 
+      objectReference: {fileID: 1699394055500312, guid: 176764d31020bc847a7b057b239483d0,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f5b222637a5424946b805ab270f91a06, type: 2}
   m_IsPrefabParent: 0

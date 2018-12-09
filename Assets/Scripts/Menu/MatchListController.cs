@@ -17,16 +17,12 @@ public class MatchListController : MonoBehaviour
     private float updateTimer;
 
     //Start
-    private void Start()
+    private void Awake()
     {
-        //Variables
-        matches = new List<GameObject>();
-        updateTimer = DiscoveryUpdatePeriod;
-
         //Network
+        matches = new List<GameObject>();
         networkManager = LNetworkLobbyManager.singleton.GetComponent<LNetworkLobbyManager>();
         if (networkManager.matchMaker == null) networkManager.StartMatchMaker();
-        requestRefresh();
     }
 
     //When the Panel Becomes Active
