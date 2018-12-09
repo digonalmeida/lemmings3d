@@ -51,7 +51,6 @@ public class NetworkMapController : NetworkBehaviour
         Debug.Log(map.Blocks.Count + " blocks");
         var jsonMap = JsonUtility.ToJson(map);
         RpcUpdateMap(jsonMap);
-
     }
 
     public void OnAddBlock(Vector3Int position, MapBlock b)
