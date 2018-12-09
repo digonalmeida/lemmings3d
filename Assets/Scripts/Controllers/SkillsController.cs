@@ -45,6 +45,7 @@ public class SkillsController : Singleton<SkillsController>
     {
         MapSettings settings = MapManager.Instance.SelectedMapAsset.Settings;
         skillsCounter = new SkillsCounter(settings.SkillsCounter);
+        GameEvents.UI.OnSkillsLoaded.SafeInvoke();
         //LevelController.TriggerLemmingUsedSkill();
     }
 
