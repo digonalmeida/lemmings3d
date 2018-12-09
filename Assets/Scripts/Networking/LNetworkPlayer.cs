@@ -14,6 +14,7 @@ public class LNetworkPlayer : NetworkBehaviour
     public static LNetworkPlayer LocalInstance { get; private set; }
     public static LNetworkPlayer Player1Instance { get; private set; }
     public static LNetworkPlayer Player2Instance { get; private set; }
+
     public void Start()
     {
         if(isLocalPlayer)
@@ -33,6 +34,7 @@ public class LNetworkPlayer : NetworkBehaviour
             Player2Instance = this;
         }
     }
+
     //Start
     public override void OnStartAuthority()
     {
@@ -46,7 +48,6 @@ public class LNetworkPlayer : NetworkBehaviour
         //Inform Player Num
         CmdInformPlayerNum(playerNum);
     }
-
 
     //Get Local Lobby Player
     public static LNetworkPlayer getLocalPlayer()
@@ -114,8 +115,6 @@ public class LNetworkPlayer : NetworkBehaviour
 
         GiveSkill(lemming, skill);
     }
-
-
 
     [Command]
     public void CmdInformReadyStatus(bool ready)

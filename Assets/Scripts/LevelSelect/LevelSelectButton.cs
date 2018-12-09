@@ -8,8 +8,7 @@ public class LevelSelectButton : MonoBehaviour
 {
     //Variables
     private Image imageReference;
-    private MapAsset levelAsset;
-    private int indexButton;
+    private int indexMapAsset;
 
     //Start
     private void Start()
@@ -18,20 +17,16 @@ public class LevelSelectButton : MonoBehaviour
     }
 
     //Update Image with level screenshot
-    public void setMapAsset(MapAsset level, int index)
+    public void setMapAsset(Sprite levelScreenshot, int index)
     {
-        if (level != null)
-        {
-            levelAsset = level;
-            if(level.mapScrenshot != null) imageReference.sprite = level.mapScrenshot;
-            indexButton = index;
-        }
+        if(levelScreenshot != null) imageReference.sprite = levelScreenshot;
+        indexMapAsset = index;
     }
 
     //Get Map Asset
-    public MapAsset getMapAsset()
+    public int getIndexMapAsset()
     {
-        return levelAsset;
+        return indexMapAsset;
     }
 
     //Select Level
@@ -40,7 +35,7 @@ public class LevelSelectButton : MonoBehaviour
         if (GetComponent<Toggle>().isOn)
         {
             LNetworkPlayer player = LNetworkPlayer.getLocalPlayer();
-            if(player != null) player.CmdSelectLevel(indexButton);
+            if(player != null) player.CmdSelectLevel(indexMapAsset);
         }
     }
 

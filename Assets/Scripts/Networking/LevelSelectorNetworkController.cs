@@ -35,13 +35,13 @@ public class LevelSelectorNetworkController : MonoBehaviour
     }
 
     //Define & Return Level to Load
-    public MapAsset getLevelToLoad()
+    public int getIndexMapAssetToLoad()
     {
-        if (selectedLevelPlayer1 == selectedLevelPlayer2) return LevelSelectorPanelController.Instance.getMapAssetByIndex(selectedLevelPlayer1);
+        if (selectedLevelPlayer1 == selectedLevelPlayer2) return selectedLevelPlayer1;
         else
         {
-            if(Random.value >= 0.5f) return LevelSelectorPanelController.Instance.getMapAssetByIndex(selectedLevelPlayer1);
-            else return LevelSelectorPanelController.Instance.getMapAssetByIndex(selectedLevelPlayer2);
+            if(Random.value >= 0.5f) return selectedLevelPlayer1;
+            else return selectedLevelPlayer2;
         }
     }
 

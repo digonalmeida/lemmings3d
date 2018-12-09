@@ -53,18 +53,12 @@ public class LevelSelectorPanelController : MonoBehaviour
             GameObject obj = Instantiate(levelSelectButtonPrefab, this.transform);
             obj.GetComponent<Toggle>().group = this.GetComponent<ToggleGroup>();
             LevelSelectButton button = obj.GetComponent<LevelSelectButton>();
-            button.setMapAsset(mapAssets[i], i);
+            button.setMapAsset(mapAssets[i].mapScrenshot, i);
             levels.Add(obj);
         }
 
         //Update Size
         this.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 170 * Mathf.CeilToInt(mapAssets.Count / 4f));
-    }
-
-    //Get Map Asset
-    public MapAsset getMapAssetByIndex(int index)
-    {
-        return this.transform.GetChild(index).GetComponent<LevelSelectButton>().getMapAsset();
     }
 
     //Set Player Ready
