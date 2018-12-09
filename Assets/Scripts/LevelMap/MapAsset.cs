@@ -31,8 +31,9 @@
             set
             {
                 level = new MapData(value);
-
+#if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(this);
+#endif
             }
         }
 

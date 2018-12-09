@@ -75,6 +75,7 @@ public class SkillsController : Singleton<SkillsController>
     //Assign Skills
     public bool assignSkill(LemmingStateController lemming)
     {
+
         if (skillsCounter[selectedSkill] <= 0)
         {
             return false;
@@ -87,10 +88,17 @@ public class SkillsController : Singleton<SkillsController>
             return false;
         }
 
-        if (!lemming.giveSkill(selectedSkill))
+        var localNetworkPlayer = LNetworkPlayer.LocalInstance;
+        if(localNetworkPlayer == null)
         {
+            Debug.LogError("no netowrk player");
             return false;
         }
+
+        localNetworkPlayer.GiveSkill(lemming, selectedSkill);
+        /* todo: give skill used to return false when trying to give skills and failed.
+                With networked game, we need to change it to create skill given and skill failed events.
+        */
 
         skillsCounter[selectedSkill]--;
         selectedSkill = Skill.None;

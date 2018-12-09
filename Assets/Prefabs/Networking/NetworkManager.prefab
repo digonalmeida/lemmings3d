@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764564461830310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.51432, y: 0.7697458, z: 0.10655594}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -69,6 +69,8 @@ MonoBehaviour:
   m_SpawnPrefabs:
   - {fileID: 1732898247761662, guid: 2bdef9adbd9e0044d9d19bbc987daa68, type: 2}
   - {fileID: 1732898247761662, guid: a61928fcf39ede44dac01521bba58a9a, type: 2}
+  - {fileID: 1241836947888144, guid: 13d7c184027081041b4ea3d6e05dd914, type: 2}
+  - {fileID: 1032212559227834, guid: 89d7a7df70f007a4f91226d9ef9b1fd8, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -111,7 +113,7 @@ MonoBehaviour:
     m_MaxTimerTimeout: 12000
     m_MinNetSimulatorTimeout: 1
     m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 
+  m_Channels: 0500000000000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1
@@ -135,6 +137,8 @@ MonoBehaviour:
   m_LobbyScene: Menu
   m_PlayScene: DefaultLevel
   lobbySlots: []
+  disconnectedPanel: {fileID: 1699394055500312, guid: 176764d31020bc847a7b057b239483d0,
+    type: 2}
 --- !u!114 &114574006168526150
 MonoBehaviour:
   m_ObjectHideFlags: 1

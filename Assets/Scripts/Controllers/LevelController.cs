@@ -51,8 +51,17 @@ public class LevelController : Singleton<LevelController>
 
         // load player team
         LNetworkLobbyPlayer netPlayer = LNetworkLobbyPlayer.getLocalLobbyPlayer();
-        if (netPlayer != null) team = netPlayer.playerNum;
+        if (netPlayer != null)
+        {
+            team = netPlayer.playerNum;
+        }
+        else
+        {
+            team = Player.Player1;
+        }
     }
+
+
 
     private void Start()
     {
@@ -79,7 +88,7 @@ public class LevelController : Singleton<LevelController>
     {
         lemmingsOnScene.Remove(lemming);
 
-        if (lemming.team == team)
+        if (lemming.Team == team)
             lemmingsEnteredExit++;
     }
 
@@ -87,7 +96,7 @@ public class LevelController : Singleton<LevelController>
     {
         lemmingsOnScene.Add(lemming);
         
-        if (lemming.team == team)
+        if (lemming.Team == team)
             lemmingsSpawned++;
     }
 
@@ -138,8 +147,6 @@ public class LevelController : Singleton<LevelController>
         Debug.Log("End Game");
         levelFinished = true;
     }
-
-
 
     public void LoadGame()
     {

@@ -16,6 +16,8 @@ public class Spawner : MonoBehaviour
     private Stack<GameObject> lemmingsPool;
     private float currentTimer;
 
+    private LemmingSpawnInfo lemmingSpawnInfo = new LemmingSpawnInfo();
+
     private void Start(){
         Setup();
     }
@@ -27,15 +29,6 @@ public class Spawner : MonoBehaviour
         {
             startingMovementDirection = block.Block.Direction;
             team = block.Block.Team;
-        }
-
-        currentTimer = 0f;
-        lemmingsPool = new Stack<GameObject>();
-        for (int i = 0; i < count; i++)
-        {
-            GameObject obj = createLemming();
-            obj.SetActive(false);
-            lemmingsPool.Push(obj);
         }
     }
 
@@ -69,24 +62,6 @@ public class Spawner : MonoBehaviour
         GameEvents.GameState.OnEndGame -= Stop;
     }
 
-    //Create Lemming
-    private GameObject createLemming()
-    {
-        GameObject obj = Instantiate(spawnable, this.transform.position, this.transform.rotation);
-        LemmingMovementController movController = obj.GetComponent<LemmingMovementController>();
-        if (movController != null)
-        {
-            movController.SetDirection(startingMovementDirection);
-            movController.SetForwardDirection(startingMovementDirection);
-        }
-        LemmingStateController stateController = obj.GetComponent<LemmingStateController>();
-        if (stateController != null)
-        {
-            stateController.setTeam(team);
-        }
-        return obj;
-    }
-
     private IEnumerator SpawnRoutine()
     {
         while (true)
@@ -111,19 +86,10 @@ public class Spawner : MonoBehaviour
     //Spawn New Lemming
     private void spawnLemming()
     {
-        GameObject obj;
-        if (lemmingsPool.Count > 0)
-        {
-            obj = lemmingsPool.Pop();
-            obj.SetActive(true);
-        }
-        else
-        {
-            obj = createLemming();
-            lemmingsPool.Push(obj);
-        }
-        LemmingStateController lemmingAIScript = obj.GetComponent<LemmingStateController>();
-        GameEvents.Lemmings.LemmingSpawned.SafeInvoke(lemmingAIScript);
+        lemmingSpawnInfo.position = transform.position;
+        lemmingSpawnInfo.startingMovementDirection = startingMovementDirection;
+        lemmingSpawnInfo.team = team;
+        GameEvents.Lemmings.OnSpawnRequest.SafeInvoke(lemmingSpawnInfo);
     }
 
     private void ChangeInterval()

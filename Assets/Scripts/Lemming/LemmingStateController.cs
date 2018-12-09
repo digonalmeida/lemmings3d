@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine;
 
-public class LemmingStateController : MonoBehaviour
+public class LemmingStateController : NetworkBehaviour
 {
     //Permanent Skills
     private bool floater;
     private bool climber;
     private bool forceExplode;
-    public Player team {get; private set;}
+    [SyncVar]
+    private Player team = Player.None;
 
+   
     //Queue Skills
     private Queue<Skill> queuedSkills;
 
@@ -44,6 +47,18 @@ public class LemmingStateController : MonoBehaviour
         }
     }
 
+    public Player Team
+    {
+        get
+        {
+            return team;
+        }
+        set
+        {
+            team = value;
+        }
+    }
+
     //Start Method
     private void Start()
     {
@@ -53,6 +68,8 @@ public class LemmingStateController : MonoBehaviour
         forceExplode = false;
         queuedSkills = new Queue<Skill>();
         actionObject = this.transform.GetChild(0).gameObject;
+
+        setTeam(team);
     }
 
     //Set a certain skill for Lemming
@@ -102,7 +119,7 @@ public class LemmingStateController : MonoBehaviour
     //Set Team
     public void setTeam(Player team)
     {
-        this.team = team;
+        this.Team = team;
         LNetworkLobbyPlayer localPlayer = LNetworkLobbyPlayer.getLocalLobbyPlayer();
         if(localPlayer != null && localPlayer.playerNum == team)
         {

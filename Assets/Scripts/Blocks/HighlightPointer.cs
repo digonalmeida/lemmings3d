@@ -42,7 +42,7 @@ public class HighlightPointer : MonoBehaviour
                 LemmingStateController lemming = highlightScript.GetComponent<LemmingStateController>();
                 if (lemming != null)
                 {
-                    if (lemming.team != playerTeam)
+                    if (lemming.Team != playerTeam)
                     {
                         continue;
                     }

@@ -29,6 +29,7 @@ public static class GameEvents
         public static Action LemmingUsedSkill;
         public static Action LemmingDied;
         public static Action ChangedSpawnRate;
+        public static Action<LemmingSpawnInfo> OnSpawnRequest;
     }
 
     public static class Map
@@ -37,5 +38,4 @@ public static class GameEvents
         public static Action<Vector3Int, MapBlock> OnAddBlock;
         public static Action<Vector3Int> OnRemoveBlock;
     }
-
 }

@@ -56,6 +56,10 @@ public class NetworkMapController : NetworkBehaviour
 
     public void OnAddBlock(Vector3Int position, MapBlock b)
     {
+        if (!isServer)
+        {
+            return;
+        }
         b.Position = position;
         Debug.Log("sending add block");
         RpcAddBlock(position.x, position.y, position.z, b.Type, b.Direction);
@@ -63,6 +67,10 @@ public class NetworkMapController : NetworkBehaviour
 
     public void OnRemoveBlock(Vector3Int position)
     {
+        if(!isServer)
+        {
+            return;
+        }
         Debug.Log("sending remove block");
         RpcRemoveBlock(position.x, position.y, position.z);
     }

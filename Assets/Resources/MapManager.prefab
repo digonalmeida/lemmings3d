@@ -33,7 +33,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1449061941127090}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.765625, y: 2.4414062, z: -0.26367188}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -54,9 +54,9 @@ MonoBehaviour:
   blockPrefabs:
   - {fileID: 114494957267869400, guid: b83fc160b2b6c7a43b4bc8fe42ae87df, type: 2}
   - {fileID: 114924898166004006, guid: 15e72a618864c974cb14d293d558d933, type: 2}
-  - {fileID: 114741391480063778, guid: 26f8d0a5a8035ce45adfbad5c6668985, type: 2}
+  - {fileID: 114523663278630092, guid: 13d7c184027081041b4ea3d6e05dd914, type: 2}
   - {fileID: 114920141891270828, guid: c647c1b942ff7114486434232b68c4d3, type: 2}
-  selectedMapAsset: {fileID: 11400000, guid: 2f1c4bedf26136b4c89a467bdc4619e2, type: 2}
+  selectedMapAsset: {fileID: 11400000, guid: 3b2f5ae26f8bc7f4b8d391165cc516bb, type: 2}
   mapAssets:
   - {fileID: 11400000, guid: 2f1c4bedf26136b4c89a467bdc4619e2, type: 2}
   - {fileID: 11400000, guid: 0d884d3cef7a4954e93a6324feac65f4, type: 2}
@@ -66,3 +66,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dd940189062311f4a8e39e5ca6add72a, type: 2}
   - {fileID: 11400000, guid: 2f4ef35e0784d1b40b26aa9b8454ea24, type: 2}
   - {fileID: 11400000, guid: b1302b5e6f4e59f429f5cff3ad2683e9, type: 2}
+  - {fileID: 11400000, guid: 81603e83372a6404e825301105f68e51, type: 2}
+  - {fileID: 11400000, guid: bcd6e2a8e7e792f4aa1fc49181842157, type: 2}
+  - {fileID: 11400000, guid: a8045139cc97ced4a8a619662717a365, type: 2}
+  - {fileID: 11400000, guid: 710333cc33055c14ebcda2ac06ae1036, type: 2}
+  - {fileID: 11400000, guid: c751d79fb657fee4f90cb6cdca7bfba9, type: 2}
+  - {fileID: 11400000, guid: a967232cde2ea8844b8d9613ca1d89a8, type: 2}

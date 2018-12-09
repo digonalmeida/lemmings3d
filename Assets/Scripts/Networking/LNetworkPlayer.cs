@@ -11,6 +11,28 @@ public class LNetworkPlayer : NetworkBehaviour
     [SyncVar]
     public bool levelSelectReady = false;
 
+    public static LNetworkPlayer LocalInstance { get; private set; }
+    public static LNetworkPlayer Player1Instance { get; private set; }
+    public static LNetworkPlayer Player2Instance { get; private set; }
+    public void Start()
+    {
+        if(isLocalPlayer)
+        {
+            LocalInstance = this;
+            if(isServer)
+            {
+                Player1Instance = this;
+            }
+            else
+            {
+                Player2Instance = this;
+            }
+        }
+        else
+        {
+            Player2Instance = this;
+        }
+    }
     //Start
     public override void OnStartAuthority()
     {
@@ -24,6 +46,7 @@ public class LNetworkPlayer : NetworkBehaviour
         //Inform Player Num
         CmdInformPlayerNum(playerNum);
     }
+
 
     //Get Local Lobby Player
     public static LNetworkPlayer getLocalPlayer()
@@ -46,6 +69,53 @@ public class LNetworkPlayer : NetworkBehaviour
         }
         return null;
     }
+
+    public void GiveSkill(LemmingStateController lemming, Skill skill)
+    {
+        if (!isServer && isLocalPlayer)
+        {
+            var netIdComponent = lemming.GetComponent<NetworkIdentity>();
+            if(netIdComponent == null)
+            {
+                Debug.LogError("Can't give skill. lemming has no network identity");
+                return;
+            }
+
+            var netId = netIdComponent.netId;
+            CmdGiveSkill(netId, skill);
+        }
+
+        if(isServer)
+        {
+            lemming.giveSkill(skill);
+        }
+    }
+
+    [Command]
+    public void CmdGiveSkill(NetworkInstanceId lemmingNetId, Skill skill)
+    {
+        if (!isServer)
+        {
+            return;
+        }
+
+        var lemmingObject = NetworkServer.FindLocalObject(lemmingNetId);
+        if(lemmingObject == null)
+        {
+            Debug.LogError("Local lemming object not found for id " + lemmingNetId.Value.ToString());
+        }
+
+        var lemming = lemmingObject.GetComponent<LemmingStateController>();
+        if(lemming == null)
+        {
+            Debug.LogError("Trying to give skill on a non lemming object");
+            return;
+        }
+
+        GiveSkill(lemming, skill);
+    }
+
+
 
     [Command]
     public void CmdInformReadyStatus(bool ready)

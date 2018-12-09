@@ -37,7 +37,7 @@ public class InputsController : MonoBehaviour
                 {
                     if (highlightPointerRef.isHighlighting)
                     {
-                        LemmingStateController lemming = highlightPointerRef.highlightedObject.center.GetComponent<LemmingStateController>();
+                        LemmingStateController lemming = highlightPointerRef.highlightedObject.GetComponent<LemmingStateController>();
                         SkillsController.Instance.assignSkill(lemming);
                     }
                 }
