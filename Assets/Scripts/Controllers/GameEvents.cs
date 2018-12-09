@@ -20,6 +20,7 @@ public static class GameEvents
         public static Action IncreasedSpawnRate;
         public static Action DecreasedSpawnRate;
         public static Action ToggleMapEditor;
+        public static Action OnSkillsLoaded;
     }
 
     public static class Lemmings

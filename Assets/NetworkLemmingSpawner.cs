@@ -13,7 +13,6 @@ public class NetworkLemmingSpawner : NetworkBehaviour
 {
     [SerializeField]
     private GameObject spawnable = null;
-    private Player team = Player.None;
 
     public void Awake()
     {

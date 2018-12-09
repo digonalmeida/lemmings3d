@@ -16,13 +16,13 @@ public class UIDockInfo_Skill : UIDockInfo
     private void OnEnable()
     {
         GameEvents.Lemmings.LemmingUsedSkill += UpdateInfo;
-        GameEvents.GameState.OnLoadGame += UpdateInfo;
+        GameEvents.UI.OnSkillsLoaded += UpdateInfo;
     }
 
     private void OnDisable()
     {
         GameEvents.Lemmings.LemmingUsedSkill -= UpdateInfo;
-        GameEvents.GameState.OnLoadGame -= UpdateInfo;
+        GameEvents.UI.OnSkillsLoaded -= UpdateInfo;
     }
 
     //Start Method

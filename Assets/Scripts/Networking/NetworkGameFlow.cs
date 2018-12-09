@@ -17,6 +17,7 @@ public class NetworkGameFlow : NetworkBehaviour
     public GameObject UICanvasRef;
     public GameObject pointerObjectRef;
     public GameObject levelSelectorPanelRef;
+    public GameObject scorePanelRef;
 
     //Network Player
     private LNetworkPlayer player1Ref;
@@ -55,6 +56,13 @@ public class NetworkGameFlow : NetworkBehaviour
         currentGameState = GameFlowState.LevelSelect;
     }
 	
+    //End Game
+    public void requestEndGame()
+    {
+        currentGameState = GameFlowState.ScorePanel;
+        RpcEndGame();
+    }
+
     //Load Level
     [ClientRpc]
     public void RpcLoadLevel(int indexMapAsset)
@@ -73,8 +81,16 @@ public class NetworkGameFlow : NetworkBehaviour
         LevelController.Instance.StartGame();
     }
 
-	// Update is called once per frame
-	void Update ()
+    //Stop Game
+    [ClientRpc]
+    public void RpcEndGame()
+    {
+        LevelController.Instance.EndGame();
+        scorePanelRef.SetActive(true);
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         if(isServer)
         {
