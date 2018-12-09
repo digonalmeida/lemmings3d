@@ -25,7 +25,7 @@ public class AudioManager : Singleton<AudioManager> {
     private void PlaySFX_SelectSkill() {sfxAudioSource.PlayOneShot(selectSkill);}
     private void PlaySFX_DeselectSkill() {sfxAudioSource.PlayOneShot(deselectSkill);}
     private void PlaySFX_GiveSkill() {sfxAudioSource.PlayOneShot(giveSkill);}
-    private void PlaySFX_LemmingDie() {sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());}
+    private void PlaySFX_LemmingDie(LemmingStateController lemming) {sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());}
 
 
     private void OnEnable()

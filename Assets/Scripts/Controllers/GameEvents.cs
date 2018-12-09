@@ -9,6 +9,8 @@ public static class GameEvents
         public static Action OnStartGame;
         public static Action OnEndGame;
         public static Action OnLoadGame;
+        public static Action<Player> OnPlayerWin;
+        public static Action OnBothPlayersLose;
     }
 
     public static class UI
@@ -27,7 +29,7 @@ public static class GameEvents
         public static Action<LemmingStateController> LemmingReachedExit;
         public static Action<LemmingStateController> LemmingSpawned;
         public static Action LemmingUsedSkill;
-        public static Action LemmingDied;
+        public static Action<LemmingStateController> LemmingDied;
         public static Action ChangedSpawnRate;
         public static Action<LemmingSpawnInfo> OnSpawnRequest;
     }
