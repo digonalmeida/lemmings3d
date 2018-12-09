@@ -10,6 +10,7 @@ public static class GameEvents
         public static Action OnEndGame;
         public static Action OnLoadGame;
         public static Action<Player> OnPlayerWin;
+        public static Action<Player> OnBothPlayersWin;
         public static Action OnBothPlayersLose;
     }
 
