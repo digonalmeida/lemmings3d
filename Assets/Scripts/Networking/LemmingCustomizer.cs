@@ -84,6 +84,13 @@ public class LemmingCustomizer : NetworkBehaviour
         hairColorAvailability.Add(Color.yellow, true);
     }
 
+    //Reset Color Availability (Player Disconnect)
+    public void resetColorsAvailability(Color clothColor, Color hairColor)
+    {
+        clothColorAvailability[clothColor] = true;
+        hairColorAvailability[hairColor] = true;
+    }
+
     //Request Next Cloth Color
     public Color requestNextClothColor(Player playerNum, Color currentColor)
     {

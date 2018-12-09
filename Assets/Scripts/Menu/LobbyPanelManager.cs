@@ -144,4 +144,15 @@ public class LobbyPanelManager : NetworkBehaviour
             } 
         }
     }
+
+    //Network Integrity Functions
+    public void resetPlayer2()
+    {
+        player2Text.text = "Waiting for Player";
+        readyPlayer2Checkbox.sprite = unreadySprite;
+        SkinnedMeshRenderer meshRenderer = player2Lemming.GetComponentInChildren<SkinnedMeshRenderer>();
+        LemmingCustomizer.Instance.resetColorsAvailability(meshRenderer.materials[1].color, meshRenderer.materials[2].color);
+        meshRenderer.materials[1].color = Color.gray;
+        meshRenderer.materials[2].color = Color.gray;
+    }
 }

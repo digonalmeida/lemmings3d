@@ -6,6 +6,6 @@ public class LeaveMatchButton : MonoBehaviour
 {
     public void leaveMatch()
     {
-        LNetworkLobbyManager.singleton.GetComponent<LNetworkLobbyManager>().StopClient();
+        LNetworkLobbyManager.singleton.StopClient();
     }
 }

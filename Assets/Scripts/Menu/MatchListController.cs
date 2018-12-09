@@ -15,7 +15,6 @@ public class MatchListController : MonoBehaviour
     public float DiscoveryUpdatePeriod = 3f;
     List<GameObject> matches;
     private float updateTimer;
-	public bool refreshingMatches;
 
     //Start
     private void Start()
@@ -23,11 +22,18 @@ public class MatchListController : MonoBehaviour
         //Variables
         matches = new List<GameObject>();
         updateTimer = DiscoveryUpdatePeriod;
-		refreshingMatches = false;
 
         //Network
         networkManager = LNetworkLobbyManager.singleton.GetComponent<LNetworkLobbyManager>();
         if (networkManager.matchMaker == null) networkManager.StartMatchMaker();
+        requestRefresh();
+    }
+
+    //When the Panel Becomes Active
+    private void OnEnable()
+    {
+        //Refesh Matches
+        updateTimer = DiscoveryUpdatePeriod;
         requestRefresh();
     }
 
@@ -45,9 +51,8 @@ public class MatchListController : MonoBehaviour
     //Request Refresh
     public void requestRefresh()
     {
-		refreshingMatches = true;
-        networkManager.matchMaker.ListMatches(0, 20, "", true, 0, 0, RefreshMatches);
-		refreshingMatches = false;
+        if (networkManager.matchMaker == null) networkManager.StartMatchMaker();
+        if (networkManager.matchMaker != null) networkManager.matchMaker.ListMatches(0, 20, "", true, 0, 0, RefreshMatches);
     }
 
     //Refresh Matches
