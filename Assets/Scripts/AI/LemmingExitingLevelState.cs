@@ -6,6 +6,7 @@ public class LemmingExitingLevelState : LemmingState
 {
     public override void Enter()
     {
+        Debug.Log("Lemming entered state exxiting level");
         base.Enter();
         Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
         Agent.AnimationController.setBool("Walking", false);

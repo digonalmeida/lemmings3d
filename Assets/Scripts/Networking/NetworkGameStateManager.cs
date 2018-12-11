@@ -28,6 +28,7 @@ public class NetworkGameStateManager : NetworkBehaviour
     {
         GameEvents.Lemmings.LemmingReachedExit += LemmingExit;
         GameEvents.Lemmings.LemmingSpawned += LemmingEnter;
+        GameEvents.Lemmings.LemmingDied += LemmingDie;
         GameEvents.GameState.OnStartGame += OnStartGame;
         GameEvents.GameState.OnEndGame += OnEndGame;
         GameEvents.GameState.OnLoadGame += OnLoadGame;
@@ -37,6 +38,7 @@ public class NetworkGameStateManager : NetworkBehaviour
     {
         GameEvents.Lemmings.LemmingReachedExit -= LemmingExit;
         GameEvents.Lemmings.LemmingSpawned -= LemmingEnter;
+        GameEvents.Lemmings.LemmingDied -= LemmingDie;
         GameEvents.GameState.OnStartGame -= OnStartGame;
         GameEvents.GameState.OnEndGame -= OnEndGame;
         GameEvents.GameState.OnLoadGame -= OnLoadGame;
@@ -213,21 +215,53 @@ public class NetworkGameStateManager : NetworkBehaviour
 
     private void LemmingExit(LemmingStateController lemming)
     {
-        if (!lemmingsOnScene.ContainsKey(lemming.Team)) lemmingsOnScene.Add(lemming.Team, new List<LemmingStateController>());
-
-        lemmingsOnScene[lemming.Team].Remove(lemming);
-
-        lemmingsEnteredExit[lemming.Team]++;
-
+        Debug.Log("triggered local lemming exit");
+        if (isServer)
+        {
+            Debug.Log("server triggered local lemming exit");
+            RpcLemmingExit(lemming.GetComponent<NetworkIdentity>());
+        }
     }
 
     private void LemmingEnter(LemmingStateController lemming)
     {
-        lemmingsOnScene[lemming.Team].Add(lemming);
-
-        lemmingsSpawned[lemming.Team]++;
+        if (isServer) RpcLemmingEnter(lemming.GetComponent<NetworkIdentity>());
     }
 
+
+    private void LemmingDie(LemmingStateController lemming)
+    {
+        if (isServer) RpcLemmingDie(lemming.GetComponent<NetworkIdentity>());
+    }
+
+    [ClientRpc]
+    private void RpcLemmingExit(NetworkIdentity lemmingID)
+    {
+        Debug.Log("rpc received lemming exit");
+        LemmingStateController lemming_ = lemmingID.GetComponent<LemmingStateController>();
+        if (!lemmingsOnScene.ContainsKey(lemming_.Team)) lemmingsOnScene.Add(lemming_.Team, new List<LemmingStateController>());
+        lemmingsOnScene[lemming_.Team].Remove(lemming_);
+        lemmingsEnteredExit[lemming_.Team]++;
+        GameEvents.NetworkLemmings.LemmingReachedExit.SafeInvoke(lemming_);
+    }
+
+    [ClientRpc]
+    private void RpcLemmingEnter(NetworkIdentity lemmingID)
+    {
+        LemmingStateController lemming_ = lemmingID.GetComponent<LemmingStateController>();
+        lemmingsOnScene[lemming_.Team].Add(lemming_);
+        lemmingsSpawned[lemming_.Team]++;
+        GameEvents.NetworkLemmings.LemmingSpawned.SafeInvoke(lemming_);
+    }
+
+    [ClientRpc]
+    private void RpcLemmingDie(NetworkIdentity lemmingID)
+    {
+        LemmingStateController lemming_ = lemmingID.GetComponent<LemmingStateController>();
+        lemmingsOnScene[lemming_.Team].Remove(lemming_);
+        lemmingsDied[lemming_.Team]++;
+        GameEvents.NetworkLemmings.LemmingDied.SafeInvoke(lemming_);
+    }
 
 
     [ClientRpc]

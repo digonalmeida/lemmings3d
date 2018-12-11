@@ -8,20 +8,22 @@ using UnityEngine.UI;
 public class UIDock : MonoBehaviour
 {
     public ToggleGroup toggleGroup;
-    public UnityEvent pause;
+    public Animator animator;
 
-    void OnEnable(){
-        GameEvents.UI.DeselectedSkill += SwitchAllOff;
-    }
-
-    void OnDisable(){
-        GameEvents.UI.DeselectedSkill -= SwitchAllOff;
-    }
-
-    public void PauseButton()
+    void OnEnable()
     {
-        pause.Invoke();
+        GameEvents.UI.DeselectedSkill += SwitchAllOff;
+        GameEvents.UI.OpenInGameUI += Open;
+        GameEvents.UI.CloseInGameUI += Close;
     }
+
+    void OnDisable()
+    {
+        GameEvents.UI.DeselectedSkill -= SwitchAllOff;
+        GameEvents.UI.OpenInGameUI -= Open;
+        GameEvents.UI.CloseInGameUI -= Close;
+    }
+
 
     public void ExplodeAllButton()
     {
@@ -38,4 +40,13 @@ public class UIDock : MonoBehaviour
         toggleGroup.SetAllTogglesOff();
     }
 
+    void Open()
+    {
+        animator.SetBool("opened", true);
+    }
+
+    void Close()
+    {
+        animator.SetBool("opened", false);
+    }
 }

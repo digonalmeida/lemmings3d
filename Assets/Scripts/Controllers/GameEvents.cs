@@ -22,6 +22,8 @@ public static class GameEvents
         public static Action DecreasedSpawnRate;
         public static Action ToggleMapEditor;
         public static Action OnSkillsLoaded;
+        public static Action OpenInGameUI;
+        public static Action CloseInGameUI;
     }
 
     public static class Lemmings
@@ -34,6 +36,13 @@ public static class GameEvents
         public static Action<LemmingStateController> LemmingDied;
         public static Action ChangedSpawnRate;
         public static Action<LemmingSpawnInfo> OnSpawnRequest;
+    }
+
+    public static class NetworkLemmings
+    {
+        public static Action<LemmingStateController> LemmingReachedExit;
+        public static Action<LemmingStateController> LemmingSpawned;
+        public static Action<LemmingStateController> LemmingDied;
     }
 
     public static class Map
