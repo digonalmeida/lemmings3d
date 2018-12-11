@@ -40,7 +40,7 @@ public class LevelController : Singleton<LevelController>
         base.Awake();
 
         // load player team
-        LNetworkLobbyPlayer netPlayer = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+        LNetworkLobbyPlayer netPlayer = LNetworkLobbyPlayer.LocalInstance;
         if (netPlayer != null)
         {
             team = netPlayer.playerNum;

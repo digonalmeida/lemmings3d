@@ -34,6 +34,7 @@ public class NetworkLemmingSpawner : NetworkBehaviour
         NetworkServer.Spawn(lemming);
         var stateController = lemming.GetComponent<LemmingStateController>();
         GameEvents.Lemmings.LemmingSpawned.SafeInvoke(stateController);
+        stateController.RpcInformTeam();
     }
 
     //Create Lemming
@@ -48,11 +49,7 @@ public class NetworkLemmingSpawner : NetworkBehaviour
             movController.SetForwardDirection(info.startingMovementDirection);
         }
         LemmingStateController stateController = obj.GetComponent<LemmingStateController>();
-        if (stateController != null)
-        {
-            stateController.Team = info.team;
-            stateController.RpcInformTeam(info.team);
-        }
+        if (stateController != null) stateController.Team = info.team;
         return obj;
     }
 }

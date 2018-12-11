@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class LevelSelectorNetworkController : MonoBehaviour
 {
     //Variables
-    private int selectedLevelPlayer1;
-    private int selectedLevelPlayer2;
+    private int selectedLevelPlayer1 = -1;
+    private int selectedLevelPlayer2 = -1;
 
     //Singleton
     private static LevelSelectorNetworkController instance;
@@ -37,10 +37,13 @@ public class LevelSelectorNetworkController : MonoBehaviour
     //Define & Return Level to Load
     public int getIndexMapAssetToLoad()
     {
-        if (selectedLevelPlayer1 == selectedLevelPlayer2) return selectedLevelPlayer1;
+        if (selectedLevelPlayer1 == -1 && selectedLevelPlayer2 == -1) return Random.Range(0, MapManager.Instance.MapAssets.Count);
+        else if (selectedLevelPlayer1 == selectedLevelPlayer2) return selectedLevelPlayer1;
+        else if (selectedLevelPlayer1 == -1) return selectedLevelPlayer2;
+        else if (selectedLevelPlayer2 == -1) return selectedLevelPlayer1;
         else
         {
-            if(Random.value >= 0.5f) return selectedLevelPlayer1;
+            if (Random.value >= 0.5f) return selectedLevelPlayer1;
             else return selectedLevelPlayer2;
         }
     }
@@ -50,6 +53,6 @@ public class LevelSelectorNetworkController : MonoBehaviour
     {
         if(playerNum == Player.Player1) selectedLevelPlayer1 = indexSelection;
         else if (playerNum == Player.Player2) selectedLevelPlayer2 = indexSelection;
-        LNetworkPlayer.getLocalPlayer().RpcSelectLevel(indexSelection, playerNum);
+        LNetworkPlayer.LocalInstance.RpcSelectLevel(indexSelection, playerNum);
     }
 }

@@ -17,7 +17,6 @@ public class LevelSelectorPanelController : MonoBehaviour
     public Sprite player2SelectSprite;
     public Sprite bothSelectSprite;
     public GameObject readyButton;
-    private LNetworkPlayer player;
 
     //Singleton
     private static LevelSelectorPanelController instance;
@@ -64,18 +63,17 @@ public class LevelSelectorPanelController : MonoBehaviour
     //Set Player Ready
     public void setPlayerReadyOrUnready()
     {
-        if (player == null) player = LNetworkPlayer.getLocalPlayer();
-        if (player != null)
+        if (LNetworkPlayer.LocalInstance != null)
         {
-            if (player.levelSelectReady)
+            if (LNetworkPlayer.LocalInstance.levelSelectReady)
             {
-                player.CmdInformReadyStatus(false);
+                LNetworkPlayer.LocalInstance.CmdInformReadyStatus(false);
                 readyButton.GetComponent<Image>().color = Color.green;
                 readyButton.transform.GetChild(0).GetComponent<Text>().text = "Ready";
             }
             else
             {
-                player.CmdInformReadyStatus(true);
+                LNetworkPlayer.LocalInstance.CmdInformReadyStatus(true);
                 readyButton.GetComponent<Image>().color = Color.yellow;
                 readyButton.transform.GetChild(0).GetComponent<Text>().text = "Unready";
             }

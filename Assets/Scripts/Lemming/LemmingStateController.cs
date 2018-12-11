@@ -9,9 +9,10 @@ public class LemmingStateController : NetworkBehaviour
     private bool floater;
     private bool climber;
     private bool forceExplode;
-    [SyncVar]
-    private Player team = Player.None;
 
+    //Synced Variables
+    [SyncVar, SerializeField]
+    private Player team = Player.None;
    
     //Queue Skills
     private Queue<Skill> queuedSkills;
@@ -68,8 +69,6 @@ public class LemmingStateController : NetworkBehaviour
         forceExplode = false;
         queuedSkills = new Queue<Skill>();
         actionObject = this.transform.GetChild(0).gameObject;
-
-        setTeam(team);
     }
 
     //Set a certain skill for Lemming
@@ -117,7 +116,7 @@ public class LemmingStateController : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcInformTeam(Player team)
+    public void RpcInformTeam()
     {
         setTeam(team);
     }
@@ -126,24 +125,20 @@ public class LemmingStateController : NetworkBehaviour
     private void setTeam(Player team)
     {
         this.team = team;
-        LNetworkLobbyPlayer localPlayer = LNetworkLobbyPlayer.getLocalLobbyPlayer();
-        if(localPlayer != null && localPlayer.playerNum == team)
+        if(team == Player.Player1 && LNetworkLobbyPlayer.Player1Instance != null)
         {
-            lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = localPlayer.playerClothColor;
-            lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = localPlayer.playerHairColor;
+            lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = LNetworkLobbyPlayer.Player1Instance.playerClothColor;
+            lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = LNetworkLobbyPlayer.Player1Instance.playerHairColor;
         }
-        else
+        else if (team == Player.Player2 && LNetworkLobbyPlayer.Player2Instance != null)
         {
-            localPlayer = LNetworkLobbyPlayer.getOpponentLobbyPlayer();
-            if(localPlayer != null && localPlayer.playerNum == team)
-            {
-                lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = localPlayer.playerClothColor;
-                lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = localPlayer.playerHairColor;
-            }
+            lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = LNetworkLobbyPlayer.Player2Instance.playerClothColor;
+            lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = LNetworkLobbyPlayer.Player2Instance.playerHairColor;
         }
     }
 
-    public void setForceExplode(bool _forceExplode){
+    public void setForceExplode(bool _forceExplode)
+    {
         forceExplode = _forceExplode;
     }
 

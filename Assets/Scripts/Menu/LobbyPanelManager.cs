@@ -79,35 +79,35 @@ public class LobbyPanelManager : NetworkBehaviour
     //Request Previous Hair
     public void requestPreviousHair()
     {
-        if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+        if (player == null) player = LNetworkLobbyPlayer.LocalInstance;
         player.CmdRequestPreviousHairColor();
     }
 
     //Request Next Hair
     public void requestNextHair()
     {
-        if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+        if (player == null) player = LNetworkLobbyPlayer.LocalInstance;
         player.CmdRequestNextHairColor();
     }
 
     //Request Previous Cloth
     public void requestPreviousCloth()
     {
-        if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+        if (player == null) player = LNetworkLobbyPlayer.LocalInstance;
         player.CmdRequestPreviousClothColor();
     }
 
     //Request Next Cloth
     public void requestNextCloth()
     {
-        if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+        if (player == null) player = LNetworkLobbyPlayer.LocalInstance;
         player.CmdRequestNextClothColor();
     }
 
     //Request Set Ready of Local Player
     public void requestSetReady()
     {
-        if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+        if (player == null) player = LNetworkLobbyPlayer.LocalInstance;
         if (player != null) player.CmdSetReadyOrUnready(!player.readyToBegin);
     }
 
@@ -120,7 +120,7 @@ public class LobbyPanelManager : NetworkBehaviour
             if(playerNum == Player.Player1) readyPlayer1Checkbox.sprite = readySprite;
             else if(playerNum == Player.Player2) readyPlayer2Checkbox.sprite = readySprite;
 
-            if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+            if (player == null) player = LNetworkLobbyPlayer.LocalInstance;
             if (player != null && player.playerNum == playerNum)
             {
                 readyButtonText.text = "Unready";
@@ -134,7 +134,7 @@ public class LobbyPanelManager : NetworkBehaviour
             if (playerNum == Player.Player1) readyPlayer1Checkbox.sprite = unreadySprite;
             else if (playerNum == Player.Player2) readyPlayer2Checkbox.sprite = unreadySprite;
 
-            if (player == null) player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
+            if (player == null) player = LNetworkLobbyPlayer.LocalInstance;
             if (player != null && player.playerNum == playerNum)
             {
                 readyButtonText.text = "Ready";

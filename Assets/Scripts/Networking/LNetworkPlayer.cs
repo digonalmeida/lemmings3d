@@ -27,23 +27,36 @@ public class LNetworkPlayer : NetworkBehaviour
         GameEvents.Map.OnMapLoaded -= OnMapLoaded;
     }
 
-    public void Start()
+    //Start
+    private void Start()
     {
-        if(isLocalPlayer)
+        if (isServer)
         {
-            LocalInstance = this;
-            if(isServer)
+            if (isLocalPlayer)
             {
+                LocalInstance = this;
                 Player1Instance = this;
+                this.name = name + "_Player1";
             }
             else
             {
                 Player2Instance = this;
+                this.name = name + "_Player2";
             }
         }
         else
         {
-            Player2Instance = this;
+            if (isLocalPlayer)
+            {
+                LocalInstance = this;
+                Player2Instance = this;
+                this.name = name + "_Player2";
+            }
+            else
+            {
+                Player1Instance = this;
+                this.name = name + "_Player1";
+            }
         }
     }
 
@@ -59,28 +72,6 @@ public class LNetworkPlayer : NetworkBehaviour
 
         //Inform Player Num
         CmdInformPlayerNum(playerNum);
-    }
-
-    //Get Local Lobby Player
-    public static LNetworkPlayer getLocalPlayer()
-    {
-        LNetworkPlayer[] list = FindObjectsOfType<LNetworkPlayer>();
-        for (int i = 0; i < list.Length; i++)
-        {
-            if (list[i].hasAuthority) return list[i];
-        }
-        return null;
-    }
-
-    //Get Opponent Lobby Player
-    public static LNetworkPlayer getOpponentPlayer()
-    {
-        LNetworkPlayer[] list = FindObjectsOfType<LNetworkPlayer>();
-        for (int i = 0; i < list.Length; i++)
-        {
-            if (!list[i].hasAuthority) return list[i];
-        }
-        return null;
     }
 
     public void GiveSkill(LemmingStateController lemming, Skill skill)
@@ -154,7 +145,7 @@ public class LNetworkPlayer : NetworkBehaviour
 
     public void OnMapLoaded()
     {
-        CmdSetMapLoaded();
+        if(hasAuthority) CmdSetMapLoaded();
     }
 
     [Command]

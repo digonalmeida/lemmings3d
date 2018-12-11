@@ -37,13 +37,8 @@ public class LobbyLemmingAnimationController : MonoBehaviour
         //Verify if there is a player connected
         if(lobbyPlayer == null)
         {
-            LNetworkLobbyPlayer player = LNetworkLobbyPlayer.getLocalLobbyPlayer();
-            if (player != null && player.playerNum == playerNum) lobbyPlayer = player;
-            else
-            {
-                player = LNetworkLobbyPlayer.getOpponentLobbyPlayer();
-                if (player != null && player.playerNum == playerNum) lobbyPlayer = player;
-            }
+            if (playerNum == Player.Player1 && LNetworkLobbyPlayer.Player1Instance != null) lobbyPlayer = LNetworkLobbyPlayer.Player1Instance;
+            else if (playerNum == Player.Player2 && LNetworkLobbyPlayer.Player2Instance != null) lobbyPlayer = LNetworkLobbyPlayer.Player2Instance;
         }
 
         //If there is a player & animation has ended => change animation

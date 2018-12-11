@@ -11,7 +11,10 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
     private Material playerHairMaterialRef;
     private Material opponentClothMaterialRef;
     private Material opponentHairMaterialRef;
-    private LNetworkLobbyPlayer opponentLobbyPlayer;
+
+    public static LNetworkLobbyPlayer LocalInstance { get; private set; }
+    public static LNetworkLobbyPlayer Player1Instance { get; private set; }
+    public static LNetworkLobbyPlayer Player2Instance { get; private set; }
 
     //SyncVar Variables
     [SyncVar]
@@ -61,6 +64,41 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
         CmdInformPlayerName(UserData.name, playerNum);
     }
 
+    //Start
+    private void Start()
+    {
+        DontDestroyOnLoad(this.gameObject); //If this line is removed all network ceases to work
+        if (isServer)
+        {
+            if (isLocalPlayer)
+            {
+                LocalInstance = this;
+                Player1Instance = this;
+                this.name = name + "_Player1";
+            }
+            else
+            {
+                Player2Instance = this;
+                this.name = name + "_Player2";
+            }
+        }
+        else
+        {
+            if (isLocalPlayer)
+            {
+                LocalInstance = this;
+                Player2Instance = this;
+                this.name = name + "_Player2";
+            }
+            else
+            {
+                Player1Instance = this;
+                this.name = name + "_Player1";
+            }
+        }
+    }
+
+    //Update Ready Checkbox on Start
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -71,35 +109,6 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
     public Player getPlayerNum()
     {
         return playerNum;
-    }
-
-    //Get Local Lobby Player
-    public static LNetworkLobbyPlayer getLocalLobbyPlayer()
-    {
-        LNetworkLobbyPlayer[] list = FindObjectsOfType<LNetworkLobbyPlayer>();
-        for (int i = 0; i < list.Length; i++)
-        {
-            if (list[i].hasAuthority) return list[i];
-        }
-        return null;
-    }
-
-    //Get Opponent Lobby Player
-    public static LNetworkLobbyPlayer getOpponentLobbyPlayer()
-    {
-        LNetworkLobbyPlayer[] list = FindObjectsOfType<LNetworkLobbyPlayer>();
-        for (int i = 0; i < list.Length; i++)
-        {
-            if (!list[i].hasAuthority) return list[i];
-        }
-        return null;
-    }
-
-    //Get Opponent Lobby Player (by Saved Reference)
-    private LNetworkLobbyPlayer getOpponentLobbyPlayerReference()
-    {
-        if (opponentLobbyPlayer == null) opponentLobbyPlayer = getOpponentLobbyPlayer();
-        return opponentLobbyPlayer;
     }
 
     //Inform Name
@@ -179,23 +188,24 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
     {
         if(hasAuthority)
         {
-            //Update Names
             if (playerNum == Player.Player1)
             {
-                if (!playerName.Equals(LobbyPanelManager.Instance.player1Text.text)) LobbyPanelManager.Instance.player1Text.text = playerName;
-                if (getOpponentLobbyPlayerReference() != null && !getOpponentLobbyPlayerReference().playerName.Equals(LobbyPanelManager.Instance.player2Text.text)) LobbyPanelManager.Instance.player2Text.text = getOpponentLobbyPlayerReference().playerName;
+                if (Player1Instance != null && !playerName.Equals(LobbyPanelManager.Instance.player1Text.text)) LobbyPanelManager.Instance.player1Text.text = playerName;
+                if (Player2Instance != null && !Player2Instance.playerName.Equals(LobbyPanelManager.Instance.player2Text.text)) LobbyPanelManager.Instance.player2Text.text = Player2Instance.playerName;
+                if (playerClothMaterialRef.color != playerClothColor) playerClothMaterialRef.color = playerClothColor;
+                if (playerHairMaterialRef.color != playerHairColor) playerHairMaterialRef.color = playerHairColor;
+                if (Player2Instance != null && opponentClothMaterialRef.color != Player2Instance.playerClothColor) opponentClothMaterialRef.color = Player2Instance.playerClothColor;
+                if (Player2Instance != null && opponentHairMaterialRef.color != Player2Instance.playerHairColor) opponentHairMaterialRef.color = Player2Instance.playerHairColor;
             }
             else if (playerNum == Player.Player2)
             {
-                if (!playerName.Equals(LobbyPanelManager.Instance.player2Text.text)) LobbyPanelManager.Instance.player2Text.text = playerName;
-                if (getOpponentLobbyPlayerReference() != null && !getOpponentLobbyPlayerReference().playerName.Equals(LobbyPanelManager.Instance.player1Text.text)) LobbyPanelManager.Instance.player1Text.text = getOpponentLobbyPlayerReference().playerName;
+                if (Player2Instance != null && !playerName.Equals(LobbyPanelManager.Instance.player2Text.text)) LobbyPanelManager.Instance.player2Text.text = playerName;
+                if (Player1Instance != null && !Player1Instance.playerName.Equals(LobbyPanelManager.Instance.player1Text.text)) LobbyPanelManager.Instance.player1Text.text = Player1Instance.playerName;
+                if (playerClothMaterialRef.color != playerClothColor) playerClothMaterialRef.color = playerClothColor;
+                if (playerHairMaterialRef.color != playerHairColor) playerHairMaterialRef.color = playerHairColor;
+                if (Player1Instance != null && opponentClothMaterialRef.color != Player1Instance.playerClothColor) opponentClothMaterialRef.color = Player1Instance.playerClothColor;
+                if (Player1Instance != null && opponentHairMaterialRef.color != Player1Instance.playerHairColor) opponentHairMaterialRef.color = Player1Instance.playerHairColor;
             }
-
-            //Update Colors
-            if (playerClothMaterialRef.color != playerClothColor) playerClothMaterialRef.color = playerClothColor;
-            if (playerHairMaterialRef.color != playerHairColor) playerHairMaterialRef.color = playerHairColor;
-            if (getOpponentLobbyPlayerReference() != null && opponentClothMaterialRef.color != getOpponentLobbyPlayerReference().playerClothColor) opponentClothMaterialRef.color = getOpponentLobbyPlayerReference().playerClothColor;
-            if (getOpponentLobbyPlayerReference() != null && opponentHairMaterialRef.color != getOpponentLobbyPlayerReference().playerHairColor) opponentHairMaterialRef.color = getOpponentLobbyPlayerReference().playerHairColor;
         }
     }
 }
