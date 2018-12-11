@@ -50,7 +50,8 @@ public class NetworkLemmingSpawner : NetworkBehaviour
         LemmingStateController stateController = obj.GetComponent<LemmingStateController>();
         if (stateController != null)
         {
-            stateController.setTeam(info.team);
+            stateController.Team = info.team;
+            stateController.RpcInformTeam(info.team);
         }
         return obj;
     }
