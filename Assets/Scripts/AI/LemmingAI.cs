@@ -117,12 +117,12 @@ public class LemmingAI : MonoBehaviour
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.checkSkill(Skill.Exploder), explodingState);
         walkingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.checkSkill(Skill.Builder), buildingState);
 
-        fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => this.transform.position.y <= -50, deathState);
+        fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => this.transform.position.y <= movementController.borderFallKillThreshold, deathState);
         fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor() && movementController.checkFallDeath(), deathState);
         fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), landingState);
         fallingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.isFloater(), floatingState);
 
-        floatingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => this.transform.position.y <= -50, deathState);
+        floatingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => this.transform.position.y <= movementController.borderFallKillThreshold, deathState);
         floatingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), landingState);
 
         landingState.AddTransition((int)Trigger.FinishedTask, () => true, walkingState);
