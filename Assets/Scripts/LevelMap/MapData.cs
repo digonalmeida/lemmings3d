@@ -54,6 +54,16 @@
             block.Rotate();
         }
 
+        public void ChangeTeam(Vector3Int position)
+        {
+            MapBlock block = blocks[position];
+            if (block == null)
+            {
+                return;
+            }
+
+            block.ChangeTeam();
+        }
         public MapBlock Get(Vector3Int position)
         {
             if (!blocks.ContainsKey(position))

@@ -133,6 +133,11 @@
             BuildMapScene();
         }
 
+        public void ChangeTeam(Vector3Int position)
+        {
+            map.ChangeTeam(position);
+            BuildMapScene();
+        }
         public void SpawnProps()
         {
             var props = GameObject.FindObjectsOfType<RandomPropSpawner>();

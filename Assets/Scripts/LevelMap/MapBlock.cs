@@ -98,5 +98,10 @@
         {
             direction = (Direction)(((int)direction + 1) % 4);
         }
+
+        public void ChangeTeam()
+        {
+            team = (Player)(((int)team + 1) % 3);
+        }
     }
 }

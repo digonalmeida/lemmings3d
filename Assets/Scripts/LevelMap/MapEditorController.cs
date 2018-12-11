@@ -114,7 +114,12 @@
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                RotateBrush();
+                RotateBrush();                        
+            }
+
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                ChangeBrushTeam();
             }
 
             for (int i = 0; i < numkeyNames.Count; i++)
@@ -137,6 +142,11 @@
             cursor.SetCursorBlock(blockBrush);
         }
 
+        private void ChangeBrushTeam()
+        {
+            blockBrush.ChangeTeam();
+            cursor.SetCursorBlock(blockBrush);
+        }
         private void SetBrushId(int id)
         {
             blockBrush.Type = (MapBlock.BlockType)(id % 5);

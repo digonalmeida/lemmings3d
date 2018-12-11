@@ -29,7 +29,35 @@ public class Spawner : MonoBehaviour
         {
             startingMovementDirection = block.Block.Direction;
             team = block.Block.Team;
+            UpdateTeamColor();
         }
+    }
+
+    public void UpdateTeamColor()
+    {
+        var renderer = GetComponent<Renderer>();
+        if (renderer == null)
+        {
+            return;
+        }
+        
+        switch (team)
+        {
+            case Player.None:
+                renderer.material.color = Color.gray;
+                break;
+            case Player.Player1:
+                renderer.material.color = Color.yellow;
+                break;
+            case Player.Player2:
+                renderer.material.color = Color.magenta;
+                break;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        UpdateTeamColor();
     }
 
     public void Init()
