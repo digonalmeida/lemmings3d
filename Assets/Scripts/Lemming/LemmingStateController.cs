@@ -116,10 +116,16 @@ public class LemmingStateController : NetworkBehaviour
         actionObject.SetActive(value);
     }
 
-    //Set Team
-    public void setTeam(Player team)
+    [ClientRpc]
+    public void RpcInformTeam(Player team)
     {
-        this.Team = team;
+        setTeam(team);
+    }
+
+    //Set Team
+    private void setTeam(Player team)
+    {
+        this.team = team;
         LNetworkLobbyPlayer localPlayer = LNetworkLobbyPlayer.getLocalLobbyPlayer();
         if(localPlayer != null && localPlayer.playerNum == team)
         {

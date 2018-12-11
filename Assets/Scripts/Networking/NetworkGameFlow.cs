@@ -10,7 +10,8 @@ public class NetworkGameFlow : NetworkBehaviour
     {
         LevelSelect,
         inGame,
-        ScorePanel
+        ScorePanel,
+        LoadingLevel
     };
 
     //References
@@ -48,6 +49,13 @@ public class NetworkGameFlow : NetworkBehaviour
         {
             instance = this;
         }
+
+        GameEvents.GameState.OnLoadGame += OnLoadGame;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.GameState.OnLoadGame -= OnLoadGame;
     }
 
     //Start
@@ -63,22 +71,21 @@ public class NetworkGameFlow : NetworkBehaviour
         RpcEndGame();
     }
 
-    //Load Level
-    [ClientRpc]
-    public void RpcLoadLevel(int indexMapAsset)
+    public void OnLoadGame()
     {
         levelSelectorPanelRef.SetActive(false);
         UICanvasRef.SetActive(true);
         pointerObjectRef.SetActive(true);
-        MapManager.Instance.SelectedMapAsset = MapManager.Instance.MapAssets[indexMapAsset];
-        LevelController.Instance.LoadGame();
+        currentGameState = GameFlowState.LoadingLevel;
     }
 
-    //Start Game
-    [ClientRpc]
-    public void RpcStartGame()
+    public void OnLevelLoaded()
     {
-        LevelController.Instance.StartGame();
+        if(!isServer)
+        {
+            return;
+        }
+        GameEvents.GameState.OnStartGame();
     }
 
     //Stop Game
@@ -92,20 +99,80 @@ public class NetworkGameFlow : NetworkBehaviour
     // Update is called once per frame
     void Update ()
     {
-        if(isServer)
+        if (!isServer)
         {
-            if (currentGameState == GameFlowState.LevelSelect)
+            return;
+        }
+
+
+
+        if (currentGameState == GameFlowState.LevelSelect)
+        {
+            if(CheckLevelSelected())
             {
-                if (LNetworkPlayer.Player1Instance != null && LNetworkPlayer.Player1Instance.levelSelectReady)
-                {
-                    if (LNetworkPlayer.Player2Instance != null && LNetworkPlayer.Player2Instance.levelSelectReady)
-                    {
-                        RpcLoadLevel(LevelSelectorNetworkController.Instance.getIndexMapAssetToLoad());
-                        RpcStartGame();
-                        currentGameState = GameFlowState.inGame;
-                    }
-                }
+                LoadSelectedLevel();
+            }
+        }
+
+        if(currentGameState == GameFlowState.LoadingLevel)
+        {
+            if(CheckLevelLoaded())
+            {
+                StartGame();
             }
         }
 	}
+
+    bool CheckLevelLoaded()
+    {
+        var player1 = LNetworkPlayer.Player1Instance;
+        if(player1 == null)
+        {
+            return false;
+        }
+
+        var player2 = LNetworkPlayer.Player2Instance;
+        if(player2 == null)
+        {
+            return false;
+        }
+
+        return player1.levelLoadReady && player2.levelLoadReady;
+    }
+
+    bool CheckLevelSelected()
+    {
+        var player1 = LNetworkPlayer.Player1Instance;
+        if (player1 == null)
+        {
+            return false;
+        }
+
+        var player2 = LNetworkPlayer.Player2Instance;
+        if (player2 == null)
+        {
+            return false;
+        }
+
+        return player1.levelSelectReady && player2.levelSelectReady;
+    }
+
+    void LoadSelectedLevel()
+    {
+        int mapId = LevelSelectorNetworkController.Instance.getIndexMapAssetToLoad();
+        if (!MapManager.Instance.TrySelectMapById(mapId))
+        {
+            Debug.LogErrorFormat("Couldn't select map with Id {0}", mapId);
+            return;
+        }
+
+        currentGameState = GameFlowState.LoadingLevel;
+        GameEvents.GameState.OnLoadGame.SafeInvoke();
+    }
+
+    public void StartGame()
+    {
+        GameEvents.GameState.OnStartGame.SafeInvoke();
+        currentGameState = GameFlowState.inGame;
+    }
 }

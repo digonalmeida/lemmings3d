@@ -139,6 +139,7 @@ public class LemmingAI : MonoBehaviour
         buildingState.AddTransition((int)Trigger.FinishedTask, () => true, walkingState);
         buildingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.checkForceExplode(), explodingState);
 
+        blockingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => !movementController.CheckFloor(), fallingState);
         blockingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.checkForceExplode(), explodingState);
 
         stateMachine.SetState(idleState);
@@ -152,6 +153,10 @@ public class LemmingAI : MonoBehaviour
 
     private bool CheckIsBlocker()
     {
+        if(MovementController.CheckChangeDirectionOrders() != Direction.None)
+        {
+            return false;
+        }
         return stateController.checkIsBlocker();
     }
 
