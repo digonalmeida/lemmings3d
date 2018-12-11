@@ -153,6 +153,10 @@ public class LemmingAI : MonoBehaviour
 
     private bool CheckIsBlocker()
     {
+        if(MovementController.CheckChangeDirectionOrders() != Direction.None)
+        {
+            return false;
+        }
         return stateController.checkIsBlocker();
     }
 

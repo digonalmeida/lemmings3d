@@ -32,6 +32,8 @@ public class LemmingWalkingState : LemmingState
             return;
         }
 
+
+
         Agent.MovementController.SetDirectionForward();
     }
 

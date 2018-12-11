@@ -10,10 +10,22 @@ public class LNetworkPlayer : NetworkBehaviour
     public Player playerNum;
     [SyncVar]
     public bool levelSelectReady = false;
+    [SyncVar]
+    public bool levelLoadReady = false;
 
     public static LNetworkPlayer LocalInstance { get; private set; }
     public static LNetworkPlayer Player1Instance { get; private set; }
     public static LNetworkPlayer Player2Instance { get; private set; }
+
+    private void Awake()
+    {
+        GameEvents.Map.OnMapLoaded += OnMapLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.Map.OnMapLoaded -= OnMapLoaded;
+    }
 
     public void Start()
     {
@@ -138,5 +150,16 @@ public class LNetworkPlayer : NetworkBehaviour
     public void RpcSelectLevel(int indexSelection, Player playerNum)
     {
         LevelSelectorPanelController.Instance.selectLevel(indexSelection, playerNum);
+    }
+
+    public void OnMapLoaded()
+    {
+        CmdSetMapLoaded();
+    }
+
+    [Command]
+    private void CmdSetMapLoaded()
+    {
+        levelLoadReady = true;
     }
 }

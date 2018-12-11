@@ -10,14 +10,12 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
     {
         GameEvents.GameState.OnLoadGame += OnLoadGame;
         GameEvents.GameState.OnStartGame += OnStartGame;
-        GameEvents.GameState.OnEndGame += OnEndGame;
     }
 
     private void OnDestroy()
     {
         GameEvents.GameState.OnLoadGame -= OnLoadGame;
         GameEvents.GameState.OnStartGame -= OnStartGame;
-        GameEvents.GameState.OnEndGame -= OnEndGame;
     }
 
     private void OnLoadGame()
@@ -47,16 +45,6 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
         RpcStartGame();
     }
 
-    private void OnEndGame()
-    {
-        if (!isServer)
-        {
-            return;
-        }
-
-        RpcEndGame();
-    }
-
     [ClientRpc]
     private void RpcLoadGame(int mapIndex)
     {
@@ -84,15 +72,4 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
 
         GameEvents.GameState.OnStartGame.SafeInvoke();
     }
-
-    [ClientRpc]
-    private void RpcEndGame()
-    {
-        if (isServer)
-        {
-            return;
-        }
-        GameEvents.GameState.OnEndGame.SafeInvoke();
-    }
-
 }
