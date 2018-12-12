@@ -240,7 +240,6 @@ public class NetworkGameStateManager : NetworkBehaviour
     [ClientRpc]
     private void RpcLemmingExit(NetworkIdentity lemmingID)
     {
-        Debug.Log("rpc received lemming exit");
         LemmingStateController lemming_ = lemmingID.GetComponent<LemmingStateController>();
         if (!lemmingsOnScene.ContainsKey(lemming_.Team)) lemmingsOnScene.Add(lemming_.Team, new List<LemmingStateController>());
         lemmingsOnScene[lemming_.Team].Remove(lemming_);
