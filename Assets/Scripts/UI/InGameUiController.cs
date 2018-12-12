@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class InGameUiController : MonoBehaviour
 {
-    private void Awake()
+    private void OnEnable()
     {
         GameEvents.GameState.OnLoadGame += TriggerOpenIngameUI;
         GameEvents.GameState.OnEndGame += TriggerCloseIngameUI;
-        this.gameObject.SetActive(false);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         GameEvents.GameState.OnLoadGame -= TriggerOpenIngameUI;
         GameEvents.GameState.OnEndGame -= TriggerCloseIngameUI;
@@ -20,12 +19,10 @@ public class InGameUiController : MonoBehaviour
     void TriggerOpenIngameUI()
     {
         GameEvents.UI.OpenInGameUI.SafeInvoke();
-        this.gameObject.SetActive(true);
     }
 
     void TriggerCloseIngameUI()
     {
         GameEvents.UI.CloseInGameUI.SafeInvoke();
-        this.gameObject.SetActive(true);
     }
 }
