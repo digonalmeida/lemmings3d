@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class InGameUiController : MonoBehaviour
 {
-
-    void OnEnable()
+    private void Awake()
     {
         GameEvents.GameState.OnLoadGame += TriggerOpenIngameUI;
-		GameEvents.GameState.OnEndGame += TriggerCloseIngameUI;
+        GameEvents.GameState.OnEndGame += TriggerCloseIngameUI;
+        this.gameObject.SetActive(false);
     }
-    void OnDisable()
+
+    private void OnDestroy()
     {
         GameEvents.GameState.OnLoadGame -= TriggerOpenIngameUI;
-		GameEvents.GameState.OnEndGame -= TriggerCloseIngameUI;
+        GameEvents.GameState.OnEndGame -= TriggerCloseIngameUI;
     }
 
     void TriggerOpenIngameUI()
     {
         GameEvents.UI.OpenInGameUI.SafeInvoke();
+        this.gameObject.SetActive(true);
     }
 
     void TriggerCloseIngameUI()
     {
         GameEvents.UI.CloseInGameUI.SafeInvoke();
+        this.gameObject.SetActive(true);
     }
 }

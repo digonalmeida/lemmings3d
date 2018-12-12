@@ -9,9 +9,9 @@ public class NetworkGameFlow : NetworkBehaviour
     private enum GameFlowState
     {
         LevelSelect,
+        LoadingLevel,
         inGame,
-        ScorePanel,
-        LoadingLevel
+        ScorePanel
     };
 
     //References
@@ -96,43 +96,16 @@ public class NetworkGameFlow : NetworkBehaviour
         scorePanelRef.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update ()
-    {
-        if (!isServer)
-        {
-            return;
-        }
-
-
-
-        if (currentGameState == GameFlowState.LevelSelect)
-        {
-            if(CheckLevelSelected())
-            {
-                LoadSelectedLevel();
-            }
-        }
-
-        if(currentGameState == GameFlowState.LoadingLevel)
-        {
-            if(CheckLevelLoaded())
-            {
-                StartGame();
-            }
-        }
-	}
-
     bool CheckLevelLoaded()
     {
         var player1 = LNetworkPlayer.Player1Instance;
-        if(player1 == null)
+        if (player1 == null)
         {
             return false;
         }
 
         var player2 = LNetworkPlayer.Player2Instance;
-        if(player2 == null)
+        if (player2 == null)
         {
             return false;
         }
@@ -175,4 +148,29 @@ public class NetworkGameFlow : NetworkBehaviour
         GameEvents.GameState.OnStartGame.SafeInvoke();
         currentGameState = GameFlowState.inGame;
     }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        if (!isServer)
+        {
+            return;
+        }
+
+        if (currentGameState == GameFlowState.LevelSelect)
+        {
+            if(CheckLevelSelected())
+            {
+                LoadSelectedLevel();
+            }
+        }
+
+        if(currentGameState == GameFlowState.LoadingLevel)
+        {
+            if(CheckLevelLoaded())
+            {
+                StartGame();
+            }
+        }
+	}
 }
