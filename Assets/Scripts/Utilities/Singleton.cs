@@ -17,7 +17,6 @@ public class Singleton<T> : MonoBehaviour where T : Component
         else
         {
             Instance = this as T;
-            DontDestroyOnLoad(this);
         }
     }
 }

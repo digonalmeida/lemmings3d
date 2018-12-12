@@ -25,6 +25,7 @@ public class NetworkGameFlow : NetworkBehaviour
     private LNetworkPlayer player2Ref;
 
     //Control Variables
+    [SerializeField]
     private GameFlowState currentGameState;
 
     //Singleton
@@ -51,24 +52,19 @@ public class NetworkGameFlow : NetworkBehaviour
         }
 
         GameEvents.GameState.OnLoadGame += OnLoadGame;
+        GameEvents.GameState.OnEndGame += OnGameEnded;
     }
 
     private void OnDestroy()
     {
         GameEvents.GameState.OnLoadGame -= OnLoadGame;
+        GameEvents.GameState.OnEndGame -= OnGameEnded;
     }
 
     //Start
     private void Start()
     {
         currentGameState = GameFlowState.LevelSelect;
-    }
-	
-    //End Game
-    public void requestEndGame()
-    {
-        currentGameState = GameFlowState.ScorePanel;
-        RpcEndGame();
     }
 
     public void OnLoadGame()
@@ -86,6 +82,11 @@ public class NetworkGameFlow : NetworkBehaviour
             return;
         }
         GameEvents.GameState.OnStartGame();
+    }
+
+    public void OnGameEnded()
+    {
+        currentGameState = GameFlowState.ScorePanel;
     }
 
     //Stop Game
@@ -194,6 +195,7 @@ public class NetworkGameFlow : NetworkBehaviour
         {
             if (CheckRematch())
             {
+                Debug.LogError("Called");
                 LNetworkLobbyManager.singleton.ServerChangeScene("DefaultLevel");
             }
         }

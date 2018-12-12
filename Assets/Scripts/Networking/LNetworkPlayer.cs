@@ -32,6 +32,7 @@ public class LNetworkPlayer : NetworkBehaviour
     //Start
     private void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         if (isServer)
         {
             if (isLocalPlayer)

@@ -138,6 +138,7 @@
             map.ChangeTeam(position);
             BuildMapScene();
         }
+
         public void SpawnProps()
         {
             var props = GameObject.FindObjectsOfType<RandomPropSpawner>();
@@ -151,11 +152,13 @@
         {
             base.Awake();
             GameEvents.GameState.OnLoadGame += LoadGameMap;
+            GameEvents.GameState.OnEndGame += ClearLevelBlocks;
         }
 
         private void OnDestroy()
         {
             GameEvents.GameState.OnLoadGame -= LoadGameMap;
+            GameEvents.GameState.OnEndGame -= ClearLevelBlocks;
         }
 
         public void LoadGameMap()
@@ -170,17 +173,6 @@
             {
                 SpawnSceneBlock(pair.Key, pair.Value);
             }
-        }
-
-        private void Start()
-        {
-            if (!GameManager.Instance.LoadAssetsOnLoad)
-            {
-                LoadFromScene();
-                BuildMapScene();
-            }
-
-            SpawnProps();
         }
 
         private void SpawnSceneBlock(Vector3Int position, MapBlock levelBlock)

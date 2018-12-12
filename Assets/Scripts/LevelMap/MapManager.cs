@@ -157,7 +157,6 @@
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
             var mapManagers = FindObjectsOfType<MapManager>();
             bool thereAreOthers = false;
             foreach (var mapManager in mapManagers)

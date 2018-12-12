@@ -52,18 +52,6 @@ public class LevelController : Singleton<LevelController>
         }
     }
 
-
-
-    private void Start()
-    {
-        if (GameManager.Instance.LoadAssetsOnLoad)
-        {
-            LoadGame();
-        }
-    }
-
-
-
     public void LoadLevelSettings()
     {
         var settings = MapManager.Instance.SelectedMapAsset.Settings;

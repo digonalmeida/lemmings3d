@@ -77,11 +77,11 @@ public class FinalScoreProgressBar : MonoBehaviour
             }
             else if (currentFill == targetFill)
             {
-                currentFill++;
-                if(localProgressBar.fill >= opponentProgressBar.fill)
+                if(currentFill >= minimum && currentFill >= opponentProgressBar.fill)
                 {
                     displayMedal.displayMedal();
                 }
+                currentFill++;
             }
         }
     }
