@@ -13,7 +13,7 @@ public class InGameCameraController : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEvents.GameState.OnStartGame += TriggerStartCamera;
+        GameEvents.GameState.OnStartGame -= TriggerStartCamera;
         GameEvents.GameState.OnEndGame -= TriggerStopCamera;
     }
 
