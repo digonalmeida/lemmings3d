@@ -73,7 +73,7 @@ public class PlayerProgressBar : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            if(!units[units.Count - i].on){
+            if(!units[units.Count - i - 1].on){
                 UpdateFill(count);
             }
         }

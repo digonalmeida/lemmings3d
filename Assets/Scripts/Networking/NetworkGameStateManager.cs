@@ -21,6 +21,7 @@ public class NetworkGameStateManager : NetworkBehaviour
     public Dictionary<Player, int> lemmingsDied { get; private set; }
     public Dictionary<Player, int> lemmingsEnteredExit { get; private set; }
     public Dictionary<Player, List<LemmingStateController>> lemmingsOnScene;
+    private LNetworkLobbyPlayer lobbyPlayer;
 
 
 
@@ -76,6 +77,7 @@ public class NetworkGameStateManager : NetworkBehaviour
         lemmingsDied = new Dictionary<Player, int>();
         lemmingsEnteredExit = new Dictionary<Player, int>();
         lemmingsOnScene = new Dictionary<Player, List<LemmingStateController>>();
+        lobbyPlayer = GetComponent<LNetworkLobbyPlayer>();
     }
 
     private void Update()
@@ -240,6 +242,9 @@ public class NetworkGameStateManager : NetworkBehaviour
     [ClientRpc]
     private void RpcLemmingExit(NetworkIdentity lemmingID)
     {
+        if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
+
+        Debug.Log("RPC receied lemming exit");
         LemmingStateController lemming_ = lemmingID.GetComponent<LemmingStateController>();
         if (!lemmingsOnScene.ContainsKey(lemming_.Team)) lemmingsOnScene.Add(lemming_.Team, new List<LemmingStateController>());
         lemmingsOnScene[lemming_.Team].Remove(lemming_);
@@ -247,49 +252,61 @@ public class NetworkGameStateManager : NetworkBehaviour
         GameEvents.NetworkLemmings.LemmingReachedExit.SafeInvoke(lemming_);
     }
 
+
     [ClientRpc]
     private void RpcLemmingEnter(NetworkIdentity lemmingID)
     {
+        if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
         LemmingStateController lemming_ = lemmingID.GetComponent<LemmingStateController>();
         lemmingsOnScene[lemming_.Team].Add(lemming_);
         lemmingsSpawned[lemming_.Team]++;
         GameEvents.NetworkLemmings.LemmingSpawned.SafeInvoke(lemming_);
+
     }
 
     [ClientRpc]
     private void RpcLemmingDie(NetworkIdentity lemmingID)
     {
+        if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
         LemmingStateController lemming_ = lemmingID.GetComponent<LemmingStateController>();
         lemmingsOnScene[lemming_.Team].Remove(lemming_);
         lemmingsDied[lemming_.Team]++;
         GameEvents.NetworkLemmings.LemmingDied.SafeInvoke(lemming_);
         lemmingID.GetComponent<LemmingActions>().EliminateLemming();
+
     }
 
     [ClientRpc]
     private void RpcPlayerWin(Player player)
     {
+        if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
         GameEvents.GameState.OnEndGame.SafeInvoke();
         GameEvents.GameState.OnPlayerWin.SafeInvoke(player);
+
     }
 
     [ClientRpc]
     private void RpcBothPlayersLose()
     {
+        if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
         GameEvents.GameState.OnEndGame.SafeInvoke();
         GameEvents.GameState.OnBothPlayersLose.SafeInvoke();
+
     }
 
     [ClientRpc]
     private void RpcTimeEnded()
     {
+        if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
         GameEvents.GameState.OnEndGame.SafeInvoke();
         GameEvents.GameState.OnBothPlayersLose.SafeInvoke();
+
     }
 
     [ClientRpc]
     private void RpcEndLevel(bool p1ReachedMinimum, bool p2ReachedMinimum, Player winPlayer)
     {
+        if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
         GameEvents.GameState.OnEndGame.SafeInvoke();
 
         if (p1ReachedMinimum && p2ReachedMinimum)
@@ -308,7 +325,8 @@ public class NetworkGameStateManager : NetworkBehaviour
         {
             GameEvents.GameState.OnBothPlayersLose.SafeInvoke();
         }
+
     }
 
-
 }
+

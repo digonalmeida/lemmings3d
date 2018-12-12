@@ -16,6 +16,8 @@ public class LemmingActions : MonoBehaviour {
 
     public void EnterExitPoint()
     {
+        Debug.Log("Action Entered exit point");
+
         // turn off highlightable  object
         highlightableScript.canBeHighlighted = false;
 
