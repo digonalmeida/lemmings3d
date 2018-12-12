@@ -113,6 +113,23 @@ public class NetworkGameFlow : NetworkBehaviour
         return player1.levelLoadReady && player2.levelLoadReady;
     }
 
+    bool CheckRematch()
+    {
+        var player1 = LNetworkPlayer.Player1Instance;
+        if (player1 == null)
+        {
+            return false;
+        }
+
+        var player2 = LNetworkPlayer.Player2Instance;
+        if (player2 == null)
+        {
+            return false;
+        }
+
+        return player1.rematchReady && player2.rematchReady;
+    }
+
     bool CheckLevelSelected()
     {
         var player1 = LNetworkPlayer.Player1Instance;
@@ -172,5 +189,13 @@ public class NetworkGameFlow : NetworkBehaviour
                 StartGame();
             }
         }
-	}
+
+        if (currentGameState == GameFlowState.ScorePanel)
+        {
+            if (CheckRematch())
+            {
+                LNetworkLobbyManager.singleton.ServerChangeScene("DefaultLevel");
+            }
+        }
+    }
 }

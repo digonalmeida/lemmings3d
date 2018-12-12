@@ -12,6 +12,8 @@ public class LNetworkPlayer : NetworkBehaviour
     public bool levelSelectReady = false;
     [SyncVar]
     public bool levelLoadReady = false;
+    [SyncVar]
+    public bool rematchReady = false;
 
     public static LNetworkPlayer LocalInstance { get; private set; }
     public static LNetworkPlayer Player1Instance { get; private set; }
@@ -126,6 +128,19 @@ public class LNetworkPlayer : NetworkBehaviour
     }
 
     [Command]
+    public void CmdInformRematchReady(bool ready)
+    {
+        rematchReady = ready;
+    }
+
+    //Reset Rematch Ready
+    [Command]
+    public void CmdResetRematchReady()
+    {
+        rematchReady = false;
+    }
+
+    [Command]
     public void CmdInformPlayerNum(Player playerNum)
     {
         this.playerNum = playerNum;
@@ -145,7 +160,11 @@ public class LNetworkPlayer : NetworkBehaviour
 
     public void OnMapLoaded()
     {
-        if(hasAuthority) CmdSetMapLoaded();
+        if (hasAuthority)
+        {
+            CmdResetRematchReady();
+            CmdSetMapLoaded();
+        }
     }
 
     [Command]

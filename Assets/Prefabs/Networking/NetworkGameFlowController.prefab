@@ -55,6 +55,7 @@ MonoBehaviour:
   UICanvasRef: {fileID: 0}
   pointerObjectRef: {fileID: 0}
   levelSelectorPanelRef: {fileID: 0}
+  scorePanelRef: {fileID: 0}
 --- !u!114 &114759652506306060
 MonoBehaviour:
   m_ObjectHideFlags: 1
