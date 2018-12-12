@@ -261,6 +261,14 @@ public class NetworkGameStateManager : NetworkBehaviour
         lemmingsOnScene[lemming_.Team].Remove(lemming_);
         lemmingsDied[lemming_.Team]++;
         GameEvents.NetworkLemmings.LemmingDied.SafeInvoke(lemming_);
+        CmdEliminateLemming(lemmingID);
+        lemmingID.GetComponent<LemmingActions>().EliminateLemming();
+    }
+
+    [Command]
+    public void CmdEliminateLemming(NetworkIdentity lemmingID)
+    {
+        lemmingID.GetComponent<LemmingActions>().EliminateLemming();
     }
 
 

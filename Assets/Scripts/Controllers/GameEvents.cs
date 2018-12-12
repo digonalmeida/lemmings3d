@@ -24,7 +24,6 @@ public static class GameEvents
         public static Action OnSkillsLoaded;
         public static Action OpenInGameUI;
         public static Action CloseInGameUI;
-        public static Action OpenScorePanel;
     }
 
     public static class Lemmings

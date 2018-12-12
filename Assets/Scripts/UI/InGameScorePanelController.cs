@@ -6,13 +6,13 @@ public class InGameScorePanelController : MonoBehaviour
 {
     private void Awake()
     {
-        GameEvents.UI.OpenScorePanel += TriggerOpenScorePanel;
+        GameEvents.GameState.OnEndGame += TriggerOpenScorePanel;
         this.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        GameEvents.UI.OpenScorePanel -= TriggerOpenScorePanel;
+        GameEvents.GameState.OnEndGame -= TriggerOpenScorePanel;
     }
 
     void TriggerOpenScorePanel()
