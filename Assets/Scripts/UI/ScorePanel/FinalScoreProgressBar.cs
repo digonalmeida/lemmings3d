@@ -11,11 +11,13 @@ public class FinalScoreProgressBar : MonoBehaviour
     public DisplayMedal displayMedal;
     public PlayerProgressBar localProgressBar;
     public PlayerProgressBar opponentProgressBar;
+    public DisplayVictoryText displayVictoryTextScriptRef;
 
     //Control Variables
     private PlayerProgressTarget target;
     private List<PlayerProgressUnit> units = new List<PlayerProgressUnit>();
-    private int minimum, maximum;
+    private int minimum;
+    private int maximum;
     private int targetFill;
     private int currentFill = 0;
     private float currentTimer;
@@ -55,7 +57,7 @@ public class FinalScoreProgressBar : MonoBehaviour
     {
         if (newFill > 0)
         {
-            units[units.Count - newFill].TurnOn(newFill / maximum);
+            units[newFill - 1].TurnOn(newFill / maximum);
         }
 
         if (newFill == minimum)
@@ -70,16 +72,17 @@ public class FinalScoreProgressBar : MonoBehaviour
         if(currentTimer <= 0f)
         {
             currentTimer = updateTimer;
-            if (currentFill < targetFill)
+            if (currentFill <= targetFill)
             {
-                currentFill++;
                 UpdateFill(currentFill);
+                currentFill++;
             }
-            else if (currentFill == targetFill)
+            else if (currentFill == targetFill + 1)
             {
                 if(currentFill >= minimum && currentFill >= opponentProgressBar.fill)
                 {
                     displayMedal.displayMedal();
+                    displayVictoryTextScriptRef.displayText(localProgressBar.team == LNetworkPlayer.LocalInstance.playerNum);
                 }
                 currentFill++;
             }
