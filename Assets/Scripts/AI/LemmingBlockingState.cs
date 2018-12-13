@@ -17,12 +17,14 @@ public class LemmingBlockingState : LemmingState
     {
         Agent.MovementController.OnArrivedAndRotated -= activateLemmingAction;
         Agent.SetBlockActionActive(true);
+        Agent.SetBlockerIndicatorActive(true);
     }
 
     public override void Exit()
     {
         Agent.AnimationController.setBool("Blocking", false);
         Agent.SetBlockActionActive(false);
+        Agent.SetBlockerIndicatorActive(false);
         base.Exit();
     }
 }
