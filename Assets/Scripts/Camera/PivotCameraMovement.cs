@@ -32,6 +32,14 @@ public class PivotCameraMovement : MonoBehaviour
 
 	private void Update()
     {
+        if(movementLock)
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                movementLock = false;
+            }
+        }
+
         if(!movementLock)
         {
             if (Input.GetMouseButton(1))
