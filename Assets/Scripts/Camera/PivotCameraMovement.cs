@@ -25,6 +25,11 @@ public class PivotCameraMovement : MonoBehaviour
     [SerializeField]
     private Vector3 eulerRotation = new Vector3();
     
+    public void unlockMouse()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
 	private void Update()
     {
         if(!movementLock)

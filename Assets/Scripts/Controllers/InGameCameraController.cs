@@ -25,6 +25,7 @@ public class InGameCameraController : MonoBehaviour
     void TriggerStopCamera()
     {
         this.GetComponent<PivotCameraMovement>().movementLock = true;
+        this.GetComponent<PivotCameraMovement>().unlockMouse();
         this.GetComponent<Camera>().transform.rotation = Quaternion.identity;
     }
 }
