@@ -22,7 +22,16 @@ public class PlayerProgressUnit : MonoBehaviour
 
     public void Reset()
     {
+        if(background == null)
+        {
+            return;
+        }
         background.SetActive(true);
+
+        if(foreground == null)
+        {
+            return;
+        }
         foreground.SetActive(false);
         on = false;
     }
