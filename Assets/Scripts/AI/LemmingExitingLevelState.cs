@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class LemmingExitingLevelState : LemmingState
 {
-    private bool performedAction;
-
     public override void Enter()
     {
         Debug.Log("Lemming entered state exxiting level");
@@ -14,7 +12,7 @@ public class LemmingExitingLevelState : LemmingState
         Agent.AnimationController.setBool("Walking", false);
         Agent.MovementController.SetDirection(Direction.None);
         Agent.LemmingActions.EnterExitPoint();
-        performedAction = false;
+        Agent.MovementController.OnArrivedAndRotated += dispatchLemming;
     }
 
     public override void OnGetNextWaypoint()
@@ -23,13 +21,9 @@ public class LemmingExitingLevelState : LemmingState
         Agent.MovementController.SetDirection(Direction.None);
     }
 
-    public override void Update()
+    private void dispatchLemming()
     {
-        base.Update();
-        if (!performedAction && Agent.AnimationController.isEndOfAnimation("exiting"))
-        {
-            performedAction = true;
-            Agent.LemmingActions.EliminateLemming();
-        }
+        Agent.MovementController.OnArrivedAndRotated -= dispatchLemming;
+        Agent.LemmingActions.EliminateLemming();
     }
 }
