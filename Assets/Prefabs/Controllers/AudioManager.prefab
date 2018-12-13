@@ -271,10 +271,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7e1291ff651c34dbcf0b5f2a92482d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioFadeOutFactor: 0.5
+  audioFadeOutFactor: 0.6
   bgmAudioSource: {fileID: 82096723148782742}
   sfxAudioSource: {fileID: 82462365272627436}
-  levelSelectBGM: {fileID: 8300000, guid: 47c9133443a81554b85536f5de3de35d, type: 3}
+  levelSelectBGM: {fileID: 8300000, guid: b3e1cbfc7947542438dac296bbd2d921, type: 3}
   inGameBGM: {fileID: 8300000, guid: 4908d833a4e66d641956b68d4d7c18b6, type: 3}
   scorePanelBGM: {fileID: 8300000, guid: b6acfc667dd3bd946b1cf602cad10f63, type: 3}
   selectSkill: {fileID: 8300000, guid: b96590337401366419fe5cb77e2d6f80, type: 3}

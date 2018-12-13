@@ -134,4 +134,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioFadeOutFactor: 0.25
   bgmAudioSource: {fileID: 82673513233633020}
-  menuBGM: {fileID: 8300000, guid: 458bdb0cb5e2f404196acc369bc06d5b, type: 3}
+  menuBGM: {fileID: 8300000, guid: dab6e08ab1ecd0e43b76746babb1a379, type: 3}
