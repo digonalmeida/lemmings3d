@@ -9,6 +9,7 @@ public class LemmingStateController : NetworkBehaviour
     private bool floater;
     private bool climber;
     private bool forceExplode;
+    private bool isBlocker = false;
 
     //Synced Variables
     [SyncVar, SerializeField]
@@ -25,6 +26,8 @@ public class LemmingStateController : NetworkBehaviour
     private GameObject actionObject;
     public GameObject lemmingModel;
     public Transform foot;
+    [SerializeField]
+    private GameObject blockerIndicator = null;
 
     public Direction BlockingDirection
     {
@@ -148,7 +151,7 @@ public class LemmingStateController : NetworkBehaviour
     private void setTeam(Player team)
     {
         this.team = team;
-        if(team == Player.Player1 && LNetworkLobbyPlayer.Player1Instance != null)
+        if (team == Player.Player1 && LNetworkLobbyPlayer.Player1Instance != null)
         {
             lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = LNetworkLobbyPlayer.Player1Instance.playerClothColor;
             lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = LNetworkLobbyPlayer.Player1Instance.playerHairColor;
@@ -159,7 +162,7 @@ public class LemmingStateController : NetworkBehaviour
             lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = LNetworkLobbyPlayer.Player2Instance.playerClothColor;
             lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = LNetworkLobbyPlayer.Player2Instance.playerHairColor;
             setForceExplode(LNetworkPlayer.Player2Instance.forceLemmingExplode);
-        } 
+        }
     }
 
     public void setForceExplode(bool _forceExplode)
@@ -178,7 +181,7 @@ public class LemmingStateController : NetworkBehaviour
     {
         return climber;
     }
-    
+
     public bool checkForceExplode()
     {
         return forceExplode;
@@ -219,9 +222,21 @@ public class LemmingStateController : NetworkBehaviour
     //Fixed Update
     private void FixedUpdate()
     {
-        if(!isServer)
+        if (!isServer)
         {
             if (CheckExitPoint()) HighlightPointer.Instance.clearHighlight(this.GetComponent<HighlightableObject>());
+
         }
+
     }
+
+    public void SetBlockerIndicatorActive(bool blockerActive)
+    {
+        if (blockerIndicator == null)
+        {
+            return;
+        }
+        blockerIndicator.SetActive(blockerActive);
+    }
+
 }

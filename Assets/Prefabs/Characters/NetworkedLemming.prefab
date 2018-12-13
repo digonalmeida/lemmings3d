@@ -788,7 +788,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1189885344288022}
-  m_LocalRotation: {x: -0.578298, y: 0.072986856, z: 0.8061921, w: -0.101481885}
+  m_LocalRotation: {x: -0.57829803, y: 0.07298686, z: 0.8061922, w: -0.1014819}
   m_LocalPosition: {x: -0.1256113, y: -0.13156524, z: -0.1003919}
   m_LocalScale: {x: 0.99999994, y: 1, z: 1}
   m_Children:
@@ -1488,6 +1488,7 @@ MonoBehaviour:
   team: 0
   lemmingModel: {fileID: 1623478891103432}
   foot: {fileID: 4005381020584684}
+  blockerIndicator: {fileID: 1242130362203090}
 --- !u!114 &114598672036785154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1501,7 +1502,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lemmingActions: {fileID: 114965594683972820}
   actionObject: {fileID: 1564747537887276}
-  blockerIndicator: {fileID: 1242130362203090}
 --- !u!114 &114702452353761256
 MonoBehaviour:
   m_ObjectHideFlags: 1

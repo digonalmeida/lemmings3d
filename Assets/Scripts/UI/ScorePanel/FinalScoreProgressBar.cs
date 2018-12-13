@@ -36,7 +36,7 @@ public class FinalScoreProgressBar : MonoBehaviour
             PlayerProgressUnit unit = Instantiate(fillUnitPrefab, holder);
             units.Add(unit);
 
-            if (i == (maximum - minimum - 1))
+            if (i == minimum - 1)
             {
                 target = Instantiate(fillTargetPrefab, holder);
             }

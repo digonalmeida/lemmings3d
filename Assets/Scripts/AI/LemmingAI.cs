@@ -15,8 +15,6 @@ public class LemmingAI : MonoBehaviour
 
     [SerializeField]
     private GameObject actionObject = null;
-    [SerializeField]
-    private GameObject blockerIndicator = null;
 
     private LemmingMovementController movementController;
     private LemmingStateController stateController;
@@ -82,15 +80,6 @@ public class LemmingAI : MonoBehaviour
             return;
         }
         actionObject.SetActive(actionActive);
-    }
-
-    public void SetBlockerIndicatorActive(bool blockerActive)
-    {
-        if (blockerIndicator == null)
-        {
-            return;
-        }
-        blockerIndicator.SetActive(blockerActive);
     }
 
     private void Awake()
