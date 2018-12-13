@@ -103,7 +103,7 @@ public class SkillsController : Singleton<SkillsController>
 
         skillsCounter[selectedSkill]--;
         selectedSkill = Skill.None;
-        GameEvents.Lemmings.LemmingUsedSkill.SafeInvoke();
+        GameEvents.Lemmings.LemmingUsedSkill.SafeInvoke(lemming);
 
         return true;
     }

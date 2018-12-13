@@ -17,16 +17,14 @@ public class RetrieveLemmingColors : MonoBehaviour
         hairMaterialRef = RendererRef.materials[2];
         clothMaterialRef = RendererRef.materials[1];
 
-        //Set Colors
-        if (team == Player.Player1)
+        var player = team == Player.Player1 ? LNetworkLobbyPlayer.Player1Instance : LNetworkLobbyPlayer.Player2Instance;
+
+        if(player == null)
         {
-            hairMaterialRef.color = LNetworkLobbyPlayer.Player1Instance.playerHairColor;
-            clothMaterialRef.color = LNetworkLobbyPlayer.Player1Instance.playerClothColor;
+            return;
         }
-        else if (team == Player.Player2)
-        {
-            hairMaterialRef.color = LNetworkLobbyPlayer.Player2Instance.playerHairColor;
-            clothMaterialRef.color = LNetworkLobbyPlayer.Player2Instance.playerClothColor;
-        }
+
+        hairMaterialRef.color = player.playerHairColor;
+        clothMaterialRef.color = player.playerClothColor;
     }
 }
