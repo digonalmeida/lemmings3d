@@ -19,7 +19,7 @@ public class LemmingStateController : NetworkBehaviour
 
     //Queue Skills
     private Queue<Skill> queuedSkills;
-    private Skill enqueuedSkill;
+    private Skill delayedEnqueuedSkill;
 
     //Control Variables
     private GameObject actionObject;
@@ -108,7 +108,7 @@ public class LemmingStateController : NetworkBehaviour
             if (checkIsBlocker() && skill == Skill.Exploder) forceExplode = true;
             else
             {
-                enqueuedSkill = skill;
+                delayedEnqueuedSkill = skill;
                 movementController.forceNewPosition(originPosition);
                 movementController.OnArrived += giveEnqueuedSkill;
             }
@@ -120,7 +120,7 @@ public class LemmingStateController : NetworkBehaviour
     public void giveEnqueuedSkill()
     {
         this.GetComponent<LemmingMovementController>().OnArrived -= giveEnqueuedSkill;
-        queuedSkills.Enqueue(enqueuedSkill);
+        queuedSkills.Enqueue(delayedEnqueuedSkill);
     }
 
     public bool checkIsBlocker()
@@ -202,5 +202,26 @@ public class LemmingStateController : NetworkBehaviour
         queuedSkills.Dequeue();
     }
 
-    
+    //Check for Exit
+    public bool CheckExitPoint()
+    {
+        var block = LevelMap.MapController.Instance.GetBlockAtPosition(Vector3Int.RoundToInt(this.transform.position));
+        if (block != null)
+        {
+            if (block.Type == LevelMap.MapBlock.BlockType.End)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Fixed Update
+    private void FixedUpdate()
+    {
+        if(!isServer)
+        {
+            if (CheckExitPoint()) HighlightPointer.Instance.clearHighlight(this.GetComponent<HighlightableObject>());
+        }
+    }
 }

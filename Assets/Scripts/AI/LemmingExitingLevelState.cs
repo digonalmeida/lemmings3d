@@ -6,13 +6,13 @@ public class LemmingExitingLevelState : LemmingState
 {
     public override void Enter()
     {
-        Debug.Log("Lemming entered state exxiting level");
         base.Enter();
-        Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
         Agent.AnimationController.setBool("Walking", false);
         Agent.MovementController.SetDirection(Direction.None);
         Agent.LemmingActions.EnterExitPoint();
         Agent.MovementController.OnArrivedAndRotated += dispatchLemming;
+        HighlightPointer.Instance.clearHighlight(Agent.GetComponent<HighlightableObject>());
+        Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
     }
 
     public override void OnGetNextWaypoint()

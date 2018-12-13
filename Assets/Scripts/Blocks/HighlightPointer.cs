@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class HighlightPointer : MonoBehaviour
+public class HighlightPointer : Singleton<HighlightPointer>
 {
+    //Variables
     public bool checkForHighlightable;
     public LayerMask highlaytableLayers;
     public float distance;
@@ -14,6 +15,11 @@ public class HighlightPointer : MonoBehaviour
     public Player playerTeam {get{return LevelController.Instance.team;}}
     private LNetworkPlayer networkPlayer;
 
+    public void clearHighlight(HighlightableObject objectRef)
+    {
+        if (objectRef == highlightedObject) HighlightOff();
+    }
+
     void Update()
     {
         RaycastForHighlightable();
@@ -21,7 +27,6 @@ public class HighlightPointer : MonoBehaviour
 
     void RaycastForHighlightable()
     {
-
         if (EventSystem.current.IsPointerOverGameObject())
         {
             HighlightOff();

@@ -24,6 +24,6 @@ public class InGamePointerController : MonoBehaviour
 
     void TriggerCloseIngameUI()
     {
-        this.gameObject.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }

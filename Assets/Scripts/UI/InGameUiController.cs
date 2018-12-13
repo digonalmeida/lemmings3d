@@ -8,6 +8,7 @@ public class InGameUiController : MonoBehaviour
     {
         GameEvents.GameState.OnLoadGame += TriggerOpenIngameUI;
         GameEvents.GameState.OnEndGame += TriggerCloseIngameUI;
+        this.GetComponent<UIHighlightObject>().enabled = false;
     }
 
     private void OnDisable()
@@ -19,10 +20,12 @@ public class InGameUiController : MonoBehaviour
     void TriggerOpenIngameUI()
     {
         GameEvents.UI.OpenInGameUI.SafeInvoke();
+        this.GetComponent<UIHighlightObject>().enabled = true;
     }
 
     void TriggerCloseIngameUI()
     {
         GameEvents.UI.CloseInGameUI.SafeInvoke();
+        this.GetComponent<UIHighlightObject>().enabled = false;
     }
 }

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class InputsController : MonoBehaviour
 {
-    //References
-    public HighlightPointer highlightPointerRef;
-
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +23,7 @@ public class InputsController : MonoBehaviour
                 }
                 else
                 {
-                    if (!highlightPointerRef.isHighlighting)
+                    if (!HighlightPointer.Instance.isHighlighting)
                     {
                         SkillsController.Instance.cancelSkill();
                         return;
@@ -35,9 +32,9 @@ public class InputsController : MonoBehaviour
 
                 if (!SkillsController.Instance.isWaitingForBlockerConfirmation)
                 {
-                    if (highlightPointerRef.isHighlighting)
+                    if (HighlightPointer.Instance.isHighlighting)
                     {
-                        LemmingStateController lemming = highlightPointerRef.highlightedObject.GetComponent<LemmingStateController>();
+                        LemmingStateController lemming = HighlightPointer.Instance.highlightedObject.GetComponent<LemmingStateController>();
                         SkillsController.Instance.assignSkill(lemming);
                     }
                 }

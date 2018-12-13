@@ -4,25 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIHighlightObject : MonoBehaviour {
-
+public class UIHighlightObject : MonoBehaviour
+{
     public Image highlightImage;
-    public HighlightPointer highlightPointerScript;
 
-	void Update () {
-
+	void Update ()
+    {
         CheckForHighlightedObject();
-
 	}
 
     private void CheckForHighlightedObject()
     {
-        if (highlightPointerScript.isHighlighting)
+        if (HighlightPointer.Instance.isHighlighting)
         {
             highlightImage.enabled = true;
             Vector2 point;
 
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(highlightImage.transform.parent.GetComponent<RectTransform>(), Camera.main.WorldToScreenPoint(highlightPointerScript.highlightedObject.center.position), null, out point))
+            if (HighlightPointer.Instance.highlightedObject != null && RectTransformUtility.ScreenPointToLocalPointInRectangle(highlightImage.transform.parent.GetComponent<RectTransform>(), Camera.main.WorldToScreenPoint(HighlightPointer.Instance.highlightedObject.center.position), null, out point))
             {
                 highlightImage.rectTransform.anchoredPosition = point;
             }

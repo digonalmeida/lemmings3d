@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HighlightableObject : MonoBehaviour {
-
+public class HighlightableObject : MonoBehaviour
+{
     public bool canBeHighlighted = true;
     public Transform center;
-
 }
