@@ -26,15 +26,6 @@ public class PlayerProgressBar : MonoBehaviour
         GameEvents.NetworkLemmings.LemmingReachedExit -= UpdateBar;
     }
 
-    void Update()
-    {
-        if (fill != lastFill)
-        {
-            UpdateFill(fill);
-        }
-        lastFill = fill;
-    }
-
     public void Initialize(int totalLemmings, int minimumLemmings)
     {
         maximum = totalLemmings;
@@ -73,11 +64,12 @@ public class PlayerProgressBar : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            if(!units[units.Count - i - 1].on){
+            if(!units[units.Count - i - 1].on)
+            {
+                fill = count;
                 UpdateFill(count);
             }
         }
-
     }
 
 
