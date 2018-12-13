@@ -13,7 +13,7 @@ public class LNetworkLobbyManager : NetworkLobbyManager
     public override void OnStopClient()
     {
         base.OnStopClient();
-        if (Network.isServer) StopServer();
+        if (NetworkServer.active) StopServer();
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)

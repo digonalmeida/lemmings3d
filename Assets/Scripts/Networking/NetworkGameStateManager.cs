@@ -89,13 +89,12 @@ public class NetworkGameStateManager : NetworkBehaviour
             {
                 remainingTime -= Time.deltaTime;
 
-                CheckFinal2();
-
+                CheckFinal();
             }
         }
     }
 
-    private void CheckFinal2()
+    private void CheckFinal()
     {
         // check timer
         if (remainingTime < 0)
@@ -110,10 +109,11 @@ public class NetworkGameStateManager : NetworkBehaviour
         {
             if (lemmingsEnteredExit[key] + lemmingsDied[key] >= LevelController.Instance.CurrentMapSettings.LemmingsCount)
             {
+                Debug.LogError("TEST");
                 teamsFinished++;
             }
-
         }
+
         if (teamsFinished >= lemmingsSpawned.Keys.Count)
         {
             Debug.Log("Call Rpc end level because all lemmings died or entered exit");
@@ -121,6 +121,7 @@ public class NetworkGameStateManager : NetworkBehaviour
         }
     }
 
+    /*
     private void CheckFinal1()
     {
         // check timer
@@ -157,6 +158,7 @@ public class NetworkGameStateManager : NetworkBehaviour
             RpcBothPlayersLose();
         }
     }
+    */
 
     private void CalculateEndLevel()
     {
