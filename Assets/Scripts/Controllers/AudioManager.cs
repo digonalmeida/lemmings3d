@@ -6,7 +6,7 @@ using UnityEngine;
 public class AudioManager : Singleton<AudioManager>
 {
     //Control Variables
-    public float audioFadeOutFactor = 0.15f;
+    public float audioFadeOutFactor = 0.5f;
     [SerializeField]
     private AudioSource bgmAudioSource;
     [SerializeField]

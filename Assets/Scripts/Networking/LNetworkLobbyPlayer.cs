@@ -183,6 +183,12 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
         LobbyPanelManager.Instance.setPlayerReady(playerNum, ready);
     }
 
+    [ClientRpc]
+    public void RpcFadeMusic()
+    {
+        if (MenuAudioManager.Instance != null) MenuAudioManager.Instance.stopMusic();
+    }
+
     //Update
     public void Update()
     {

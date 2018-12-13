@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuAudioManager : Singleton<AudioManager>
+public class MenuAudioManager : Singleton<MenuAudioManager>
 {
     //Control Variables
-    public float audioFadeOutFactor = 0.15f;
+    public float audioFadeOutFactor = 0.25f;
     [SerializeField]
     private AudioSource bgmAudioSource;
 
