@@ -107,9 +107,9 @@ public class NetworkGameStateManager : NetworkBehaviour
         int teamsFinished = 0;
         foreach (var key in lemmingsSpawned.Keys)
         {
+            Debug.LogError(key +  " - Entered" + lemmingsEnteredExit[key] + " - Left" + lemmingsDied[key] + " of " + LevelController.Instance.CurrentMapSettings.LemmingsCount);
             if (lemmingsEnteredExit[key] + lemmingsDied[key] >= LevelController.Instance.CurrentMapSettings.LemmingsCount)
             {
-                Debug.LogError("TEST");
                 teamsFinished++;
             }
         }
@@ -308,6 +308,7 @@ public class NetworkGameStateManager : NetworkBehaviour
     [ClientRpc]
     private void RpcEndLevel(bool p1ReachedMinimum, bool p2ReachedMinimum, Player winPlayer)
     {
+        Debug.LogError("Received End Game RPC");
         if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
         GameEvents.GameState.OnEndGame.SafeInvoke();
 
