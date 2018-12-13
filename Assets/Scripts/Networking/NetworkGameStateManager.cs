@@ -100,7 +100,7 @@ public class NetworkGameStateManager : NetworkBehaviour
         if (remainingTime < 0)
         {
             Debug.Log("Call Rpc end level because timer ended");
-            CalculateEndLevel();
+            RpcExplodeAllByTimer();
         }
 
         // check lemings on final
@@ -254,6 +254,11 @@ public class NetworkGameStateManager : NetworkBehaviour
         GameEvents.NetworkLemmings.LemmingReachedExit.SafeInvoke(lemming_);
     }
 
+    [ClientRpc]
+    private void RpcExplodeAllByTimer()
+    {
+        SkillsController.Instance.explodeAll();
+    }
 
     [ClientRpc]
     private void RpcLemmingEnter(NetworkIdentity lemmingID)
