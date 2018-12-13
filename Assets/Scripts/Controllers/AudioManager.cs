@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : Singleton<AudioManager> {
-
-    [SerializeField] private AudioSource bgmAudioSource;
-    [SerializeField] private AudioSource sfxAudioSource;
-
-    private Coroutine volumeTransitionCoroutine;
-    private float globalVolume = 1f;
-    private float currentVolume = 0f;
+public class AudioManager : Singleton<AudioManager>
+{
+    //Control Variables
+    public float audioFadeOutFactor = 0.15f;
+    [SerializeField]
+    private AudioSource bgmAudioSource;
+    [SerializeField]
+    private AudioSource sfxAudioSource;
 
     [Header("BGM")]
-    public AudioClip mainBGM;
+    public AudioClip levelSelectBGM;
+    public AudioClip inGameBGM;
+    public AudioClip scorePanelBGM;
 
     [Header("SFX Audios")]
     public AudioClip selectSkill;
@@ -21,93 +23,88 @@ public class AudioManager : Singleton<AudioManager> {
     public AudioClip giveSkill;
     public AudioList lemmingDie;
 
-    private void PlayBGM_Main() {StartBGM(mainBGM);}
+    //Play SFX Methods
     private void PlaySFX_SelectSkill() {sfxAudioSource.PlayOneShot(selectSkill);}
     private void PlaySFX_DeselectSkill() {sfxAudioSource.PlayOneShot(deselectSkill);}
     private void PlaySFX_GiveSkill() {sfxAudioSource.PlayOneShot(giveSkill);}
     private void PlaySFX_LemmingDie(LemmingStateController lemming) {sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());}
 
+    //Play BGM Methods
+    private void PlayBGM_inGameBGM() { playMusic(inGameBGM); }
+    private void PlayBGM_ScorePanelBGM() { playMusic(scorePanelBGM); }
 
     private void OnEnable()
     {
-        GameEvents.GameState.OnStartGame += PlayBGM_Main;
-        GameEvents.GameState.OnEndGame += StopBGM;
         GameEvents.UI.SelectedSkill += PlaySFX_SelectSkill;
         GameEvents.UI.DeselectedSkill += PlaySFX_DeselectSkill;
         GameEvents.Lemmings.LemmingUsedSkill += PlaySFX_GiveSkill;
         GameEvents.Lemmings.LemmingDied += PlaySFX_LemmingDie;
-
+        GameEvents.GameState.OnStartGame += PlayBGM_inGameBGM;
+        GameEvents.GameState.OnEndGame += PlayBGM_ScorePanelBGM;
+        playMusic(levelSelectBGM);
     }
 
     private void OnDisable()
     {
-        GameEvents.GameState.OnStartGame -= PlayBGM_Main;
-        GameEvents.GameState.OnEndGame -= StopBGM;
         GameEvents.UI.SelectedSkill -= PlaySFX_SelectSkill;
         GameEvents.UI.DeselectedSkill -= PlaySFX_DeselectSkill;
         GameEvents.Lemmings.LemmingUsedSkill -= PlaySFX_GiveSkill;
         GameEvents.Lemmings.LemmingDied -= PlaySFX_LemmingDie;
+        GameEvents.GameState.OnStartGame -= PlayBGM_inGameBGM;
+        GameEvents.GameState.OnEndGame -= PlayBGM_ScorePanelBGM;
     }
 
-    private void ChangeGlobalVolume(float newVolume, bool updateAudioSources)
+    //Play Music Main Method
+    public void playMusic(AudioClip musicClip)
     {
-        globalVolume = newVolume;
-        if(updateAudioSources) ChangeAudioSourcesVolume(globalVolume);
-    }
-
-    private void ChangeAudioSourcesVolume(float newVolume)
-    {
-        currentVolume = newVolume;
-        bgmAudioSource.volume = currentVolume;
-        sfxAudioSource.volume = currentVolume;
-    }
-
-    private void StartBGM(AudioClip bgm) {
-
-        // set bgm
-        bgmAudioSource.clip = bgm;
-        bgmAudioSource.loop = true;
-        //bgmAudioSource.Play();
-
-        // transition volume from zero to current
-        ChangeAudioSourcesVolume(0f);
-        MaxVolume(null);
-    }
-
-    private void StopBGM() {
-        Mute(()=> {
-            bgmAudioSource.clip = null;
-            bgmAudioSource.Stop();
-        });
-    }
-
-    public void Mute(Action callback)
-    {
-        if(volumeTransitionCoroutine!=null) StopCoroutine(volumeTransitionCoroutine);
-        volumeTransitionCoroutine = StartCoroutine(VolumeTransition(1f, 0f, callback));
-    }
-
-    private void MaxVolume(Action callback) {
-        if (volumeTransitionCoroutine != null) StopCoroutine(volumeTransitionCoroutine);
-        volumeTransitionCoroutine = StartCoroutine(VolumeTransition(1f, globalVolume, callback));
-    }
-
-    private IEnumerator VolumeTransition(float duration, float finalVolume, Action callback)
-    {
-        float initialValue = currentVolume;
-        float timer = 0;
-        while (timer <= duration)
+        if (bgmAudioSource.clip == null)
         {
-            ChangeAudioSourcesVolume(timer / duration * (finalVolume - initialValue) + initialValue);
-            timer += Time.deltaTime;
-            yield return null;
+            bgmAudioSource.clip = musicClip;
+            bgmAudioSource.Play();
         }
-        ChangeAudioSourcesVolume(finalVolume);
-
-        if (callback != null) callback.Invoke();
-        
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(changeMusicWithFade(musicClip));
+        }
     }
 
+    //Change Music with Fade
+    private IEnumerator changeMusicWithFade(AudioClip musicClip)
+    {
+        while (bgmAudioSource.volume > 0f)
+        {
+            bgmAudioSource.volume -= audioFadeOutFactor * Time.deltaTime;
+            yield return 0;
+        }
 
+        //Change Music
+        bgmAudioSource.Stop();
+        bgmAudioSource.clip = musicClip;
+        bgmAudioSource.Play();
 
+        while (bgmAudioSource.volume < 1f)
+        {
+            bgmAudioSource.volume += audioFadeOutFactor * Time.deltaTime;
+            yield return 0;
+        }
+    }
+
+    //Stop Music with Fade
+    public void stopMusic()
+    {
+        StopAllCoroutines();
+        StartCoroutine(fadeOutMusic());
+    }
+
+    private IEnumerator fadeOutMusic()
+    {
+        while (bgmAudioSource.volume > 0f)
+        {
+            bgmAudioSource.volume -= audioFadeOutFactor * Time.deltaTime;
+            yield return 0;
+        }
+
+        bgmAudioSource.Stop();
+    }
 }
