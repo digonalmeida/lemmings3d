@@ -50,6 +50,9 @@ public class LemmingMovementController : MonoBehaviour
 
     private Vector3 facingDirectionVector;
 
+    private Vector3 forcedPositionVector;
+    private bool forcedPosition = false;
+
     public enum Corner
     {
         Center,
@@ -76,6 +79,38 @@ public class LemmingMovementController : MonoBehaviour
         raycastHits = new RaycastHit[1];
         overlapSphereHits = new Collider[1];
         fallingBlocksCount = 0;
+    }
+
+    public void forceNewPosition(Vector3 originPosition)
+    {
+        targetPositionAddress = Vector3Int.RoundToInt(originPosition);
+        switch (movementDirection)
+        {
+            case Direction.Down:
+                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.Center);
+                currentCorner = Corner.Center;
+                break;
+            case Direction.Up:
+                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.Center);
+                currentCorner = Corner.Center;
+                break;
+            case Direction.East:
+                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.SouthEast);
+                currentCorner = Corner.SouthEast;
+                break;
+            case Direction.West:
+                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.NorthWest);
+                currentCorner = Corner.NorthWest;
+                break;
+            case Direction.North:
+                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.NorthEast);
+                currentCorner = Corner.NorthEast;
+                break;
+            case Direction.South:
+                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.SouthWest);
+                currentCorner = Corner.SouthWest;
+                break;
+        }
     }
 
     public Vector3 GetTargetPosition(Vector3Int centerPos, Corner corner)
@@ -200,6 +235,13 @@ public class LemmingMovementController : MonoBehaviour
     {
         if (!enabled)
         {
+            return;
+        }
+
+        if(forcedPosition)
+        {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, forcedPositionVector, Time.deltaTime * movementSpeed * 2);
+            if (Vector3.Distance(this.transform.position, forcedPositionVector) <= 0.1f) forcedPosition = false;
             return;
         }
         

@@ -96,7 +96,7 @@ public class SkillsController : Singleton<SkillsController>
             return false;
         }
 
-        localNetworkPlayer.CmdGiveSkill(lemming.GetComponent<NetworkIdentity>(), selectedSkill);
+        localNetworkPlayer.CmdGiveSkill(lemming.GetComponent<NetworkIdentity>(), selectedSkill, lemming.transform.position);
         /* todo: give skill used to return false when trying to give skills and failed.
                 With networked game, we need to change it to create skill given and skill failed events.
         */

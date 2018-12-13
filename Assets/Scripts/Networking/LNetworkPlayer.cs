@@ -88,7 +88,7 @@ public class LNetworkPlayer : NetworkBehaviour
     }
 
     [Command]
-    public void CmdGiveSkill(NetworkIdentity lemming, Skill skill)
+    public void CmdGiveSkill(NetworkIdentity lemming, Skill skill, Vector3 originPosition)
     {
         if (lemming == null)
         {
@@ -97,8 +97,7 @@ public class LNetworkPlayer : NetworkBehaviour
         }
         else
         {
-            LemmingStateController stateController = lemming.GetComponent<LemmingStateController>();
-            stateController.giveSkill(skill);
+            lemming.GetComponent<LemmingStateController>().giveSkill(skill, originPosition);
         }
     }
 

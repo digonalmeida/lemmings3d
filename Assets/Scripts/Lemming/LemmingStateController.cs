@@ -13,9 +13,13 @@ public class LemmingStateController : NetworkBehaviour
     //Synced Variables
     [SyncVar, SerializeField]
     private Player team = Player.None;
-   
+
+    //References
+    LemmingMovementController movementController;
+
     //Queue Skills
     private Queue<Skill> queuedSkills;
+    private Skill enqueuedSkill;
 
     //Control Variables
     private GameObject actionObject;
@@ -61,6 +65,12 @@ public class LemmingStateController : NetworkBehaviour
         }
     }
 
+    //Awake
+    private void Awake()
+    {
+        movementController = this.GetComponent<LemmingMovementController>();
+    }
+
     //Start Method
     private void Start()
     {
@@ -73,7 +83,7 @@ public class LemmingStateController : NetworkBehaviour
     }
 
     //Set a certain skill for Lemming
-    public bool giveSkill(Skill skill)
+    public bool giveSkill(Skill skill, Vector3 originPosition)
     {
         if (skill == Skill.Climber)
         {
@@ -96,10 +106,21 @@ public class LemmingStateController : NetworkBehaviour
         else
         {
             if (checkIsBlocker() && skill == Skill.Exploder) forceExplode = true;
-            else queuedSkills.Enqueue(skill);
+            else
+            {
+                enqueuedSkill = skill;
+                movementController.forceNewPosition(originPosition);
+                movementController.OnArrived += giveEnqueuedSkill;
+            }
         }
 
         return true;
+    }
+
+    public void giveEnqueuedSkill()
+    {
+        this.GetComponent<LemmingMovementController>().OnArrived -= giveEnqueuedSkill;
+        queuedSkills.Enqueue(enqueuedSkill);
     }
 
     public bool checkIsBlocker()
