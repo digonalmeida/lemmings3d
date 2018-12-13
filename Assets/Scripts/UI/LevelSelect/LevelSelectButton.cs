@@ -34,7 +34,7 @@ public class LevelSelectButton : MonoBehaviour
     {
         if (GetComponent<Toggle>().isOn)
         {
-            if(LNetworkPlayer.LocalInstance != null) LNetworkPlayer.LocalInstance.CmdSelectLevel(indexMapAsset);
+            if(LNetworkPlayer.LocalInstance != null && !LNetworkPlayer.LocalInstance.levelSelectReady) LNetworkPlayer.LocalInstance.CmdSelectLevel(indexMapAsset);
         }
     }
 
