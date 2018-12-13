@@ -42,7 +42,7 @@ public class UIDockInfo_Timer : UIDockInfo
 
         time = LevelController.Instance.remainingTime;
         minutes = ((int)time / 60);
-        seconds = (int)(time % 60);
+        seconds = Mathf.Max((int)(time % 60), 0);
         timeText.text = "";
 
         if (minutes > 0)

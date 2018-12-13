@@ -195,7 +195,8 @@ public class NetworkGameFlow : NetworkBehaviour
         {
             if (CheckRematch())
             {
-                Debug.LogError("Called");
+                LNetworkPlayer.Player1Instance.CmdResetVariables();
+                LNetworkPlayer.Player2Instance.CmdResetVariables();
                 LNetworkLobbyManager.singleton.ServerChangeScene("DefaultLevel");
             }
         }

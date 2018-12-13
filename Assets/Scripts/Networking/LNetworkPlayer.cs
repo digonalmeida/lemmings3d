@@ -149,7 +149,6 @@ public class LNetworkPlayer : NetworkBehaviour
     {
         if (hasAuthority)
         {
-            CmdResetVariables();
             CmdSetMapLoaded();
         }
     }
