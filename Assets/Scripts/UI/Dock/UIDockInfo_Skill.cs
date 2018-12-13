@@ -16,13 +16,13 @@ public class UIDockInfo_Skill : UIDockInfo
     private void OnEnable()
     {
         GameEvents.Lemmings.LemmingUsedSkill += UpdateInfo;
-        GameEvents.UI.OnSkillsLoaded += UpdateInfo;
+        GameEvents.UI.OnSkillsLoaded += OnSkillsLoaded;
     }
 
     private void OnDisable()
     {
         GameEvents.Lemmings.LemmingUsedSkill -= UpdateInfo;
-        GameEvents.UI.OnSkillsLoaded -= UpdateInfo;
+        GameEvents.UI.OnSkillsLoaded -= OnSkillsLoaded;
     }
 
     //Start Method
@@ -50,11 +50,15 @@ public class UIDockInfo_Skill : UIDockInfo
     }
 
     //Update Display Variables
-    private void UpdateInfo()
+    private void UpdateInfo(LemmingStateController lemming = null)
     {
         updateState(SkillsController.Instance.selectedSkill != Skill.None);
         int skillCount = SkillsController.Instance.getRemainingUses(skill);
         skillCountText.text = skillCount.ToString();
         toggleButton.interactable = skillCount > 0;
+    }
+
+    private void OnSkillsLoaded(){
+        UpdateInfo(null);
     }
 }
