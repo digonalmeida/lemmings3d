@@ -187,6 +187,7 @@ public class LNetworkLobbyPlayer : NetworkLobbyPlayer
     public void RpcFadeMusic()
     {
         if (MenuAudioManager.Instance != null) MenuAudioManager.Instance.stopMusic();
+        else if (AudioManager.Instance != null) AudioManager.Instance.stopMusic();
     }
 
     //Update

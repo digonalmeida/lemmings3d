@@ -11,11 +11,10 @@ public class LNetworkLobbyManager : NetworkLobbyManager
     public GameObject opponentLeftPanel;
 
     //Control Variables
-    private bool startTimer = false;
+    private bool startedTimer = false;
     private bool stoppingMusic = false;
     private float currentTimer;
     public float countTimer = 3.5f;
-
 
     public override void OnStopClient()
     {
@@ -47,13 +46,18 @@ public class LNetworkLobbyManager : NetworkLobbyManager
 
     public override void OnLobbyServerPlayersReady()
     {
-        startTimer = true;
+        startTimerLoadGame();
+    }
+
+    public void startTimerLoadGame()
+    {
+        startedTimer = true;
         currentTimer = countTimer;
     }
 
     private void Update()
     {
-        if (startTimer)
+        if (startedTimer)
         {
             if (!stoppingMusic)
             {
@@ -64,7 +68,7 @@ public class LNetworkLobbyManager : NetworkLobbyManager
             currentTimer -= Time.deltaTime;
             if(currentTimer <= 0)
             {
-                startTimer = false;
+                startedTimer = false;
                 stoppingMusic = false;
                 ServerChangeScene(playScene);
             }

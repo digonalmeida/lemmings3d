@@ -211,7 +211,7 @@ public class NetworkGameFlow : NetworkBehaviour
             {
                 LNetworkPlayer.Player1Instance.CmdResetVariables();
                 LNetworkPlayer.Player2Instance.CmdResetVariables();
-                LNetworkLobbyManager.singleton.ServerChangeScene("DefaultLevel");
+                FindObjectOfType<LNetworkLobbyManager>().startTimerLoadGame();
             }
         }
     }
