@@ -5,6 +5,7 @@ using UnityEngine;
 public class PivotCameraMovement : MonoBehaviour
 {
     public GameObject pivotObject = null;
+    public bool movementLock = false;
 
     [SerializeField]
     private float speed = 50;
@@ -26,36 +27,39 @@ public class PivotCameraMovement : MonoBehaviour
     
 	private void Update()
     {
-        if (Input.GetMouseButton(1))
+        if(!movementLock)
         {
-            var rotation = transform.rotation;
-            eulerRotation.x -= Input.GetAxis("Mouse Y") * turningRate * Time.deltaTime;
-            eulerRotation.x = Mathf.Clamp(eulerRotation.x, 0, 90);
-            eulerRotation.y += Input.GetAxis("Mouse X") * turningRate * Time.deltaTime;
-            transform.rotation = rotation;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            pivotObject = null;
-        }
+            if (Input.GetMouseButton(1))
+            {
+                var rotation = transform.rotation;
+                eulerRotation.x -= Input.GetAxis("Mouse Y") * turningRate * Time.deltaTime;
+                eulerRotation.x = Mathf.Clamp(eulerRotation.x, 0, 90);
+                eulerRotation.y += Input.GetAxis("Mouse X") * turningRate * Time.deltaTime;
+                transform.rotation = rotation;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                pivotObject = null;
+            }
 
-        distance -= Time.deltaTime * zoomSpeed * Input.GetAxis("Mouse ScrollWheel");
-        distance = Mathf.Max(distance, 1);
+            distance -= Time.deltaTime * zoomSpeed * Input.GetAxis("Mouse ScrollWheel");
+            distance = Mathf.Max(distance, 1);
 
-        var direction = Vector3.forward;
-        direction = Quaternion.Euler(eulerRotation) * direction;
-        var startPosition = pivotPosition;
-        if (pivotObject != null)
-        {
-            startPosition += pivotObject.transform.position;
+            var direction = Vector3.forward;
+            direction = Quaternion.Euler(eulerRotation) * direction;
+            var startPosition = pivotPosition;
+            if (pivotObject != null)
+            {
+                startPosition += pivotObject.transform.position;
+            }
+
+            transform.position = startPosition - (direction * distance);
+            transform.forward = direction.normalized;
         }
-
-        transform.position = startPosition - (direction * distance);
-        transform.forward = direction.normalized;
 	}
 }

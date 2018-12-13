@@ -107,7 +107,6 @@ public class NetworkGameStateManager : NetworkBehaviour
         int teamsFinished = 0;
         foreach (var key in lemmingsSpawned.Keys)
         {
-            Debug.LogError(key +  " - Entered" + lemmingsEnteredExit[key] + " - Left" + lemmingsDied[key] + " of " + LevelController.Instance.CurrentMapSettings.LemmingsCount);
             if (lemmingsEnteredExit[key] + lemmingsDied[key] >= LevelController.Instance.CurrentMapSettings.LemmingsCount)
             {
                 teamsFinished++;
@@ -246,7 +245,6 @@ public class NetworkGameStateManager : NetworkBehaviour
     {
         if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
 
-        Debug.Log("RPC receied lemming exit");
         LemmingStateController lemming_ = lemmingID.GetComponent<LemmingStateController>();
         if (!lemmingsOnScene.ContainsKey(lemming_.Team)) lemmingsOnScene.Add(lemming_.Team, new List<LemmingStateController>());
         lemmingsOnScene[lemming_.Team].Remove(lemming_);
@@ -313,8 +311,6 @@ public class NetworkGameStateManager : NetworkBehaviour
     [ClientRpc]
     private void RpcEndLevel(bool p1ReachedMinimum, bool p2ReachedMinimum, Player winPlayer)
     {
-        Debug.LogError("Received End Game RPC");
-        if (lobbyPlayer.playerNum != LevelController.Instance.team) return;
         GameEvents.GameState.OnEndGame.SafeInvoke();
 
         if (p1ReachedMinimum && p2ReachedMinimum)

@@ -14,6 +14,8 @@ public class LNetworkPlayer : NetworkBehaviour
     public bool levelLoadReady = false;
     [SyncVar]
     public bool rematchReady = false;
+    [SyncVar]
+    public bool forceLemmingExplode = false;
 
     public static LNetworkPlayer LocalInstance { get; private set; }
     public static LNetworkPlayer Player1Instance { get; private set; }
@@ -27,6 +29,14 @@ public class LNetworkPlayer : NetworkBehaviour
     private void OnDestroy()
     {
         GameEvents.Map.OnMapLoaded -= OnMapLoaded;
+    }
+
+    private void resetVariables()
+    {
+        levelSelectReady = false;
+        levelLoadReady = false;
+        rematchReady = false;
+        forceLemmingExplode = false;
     }
 
     //Start
@@ -134,11 +144,16 @@ public class LNetworkPlayer : NetworkBehaviour
         rematchReady = ready;
     }
 
-    //Reset Rematch Ready
     [Command]
-    public void CmdResetRematchReady()
+    public void CmdInformExplodeAllLemmings(bool value)
     {
-        rematchReady = false;
+        forceLemmingExplode = value;
+    }
+
+    [Command]
+    public void CmdResetVariables()
+    {
+        resetVariables();
     }
 
     [Command]
@@ -163,7 +178,7 @@ public class LNetworkPlayer : NetworkBehaviour
     {
         if (hasAuthority)
         {
-            CmdResetRematchReady();
+            CmdResetVariables();
             CmdSetMapLoaded();
         }
     }

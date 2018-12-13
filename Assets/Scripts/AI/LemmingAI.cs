@@ -149,8 +149,9 @@ public class LemmingAI : MonoBehaviour
         buildingState.AddTransition((int)Trigger.FinishedTask, () => true, walkingState);
         buildingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.checkForceExplode(), explodingState);
 
-        blockingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => !movementController.CheckFloor(), fallingState);
-        blockingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => stateController.checkForceExplode(), explodingState);
+        blockingState.AddCondition(() => !movementController.CheckFloor(), fallingState);
+        blockingState.AddCondition(() => stateController.checkForceExplode(), explodingState);
+        blockingState.AddCondition(() => stateController.checkSkill(Skill.Exploder), explodingState);
 
         stateMachine.SetState(idleState);
     }

@@ -24,7 +24,6 @@ public class UIDock : MonoBehaviour
         GameEvents.UI.CloseInGameUI -= Close;
     }
 
-
     public void ExplodeAllButton()
     {
         SkillsController.Instance.explodeAll();

@@ -8,7 +8,7 @@ public class InGameCameraController : MonoBehaviour
     {
         GameEvents.GameState.OnStartGame += TriggerStartCamera;
         GameEvents.GameState.OnEndGame += TriggerStopCamera;
-        this.GetComponent<PivotCameraMovement>().enabled = false;
+        this.GetComponent<PivotCameraMovement>().movementLock = true;
     }
 
     private void OnDestroy()
@@ -19,12 +19,12 @@ public class InGameCameraController : MonoBehaviour
 
     void TriggerStartCamera()
     {
-        this.GetComponent<PivotCameraMovement>().enabled = true;
+        this.GetComponent<PivotCameraMovement>().movementLock = false;
     }
 
     void TriggerStopCamera()
     {
-        this.GetComponent<PivotCameraMovement>().enabled = false;
+        this.GetComponent<PivotCameraMovement>().movementLock = true;
         this.GetComponent<Camera>().transform.rotation = Quaternion.identity;
     }
 }

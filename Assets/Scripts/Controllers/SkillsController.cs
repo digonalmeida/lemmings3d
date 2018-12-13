@@ -127,12 +127,9 @@ public class SkillsController : Singleton<SkillsController>
         foreach (var lemming in LevelController.Instance.gameStateManager.lemmingsOnScene[LevelController.Instance.team])
         {
             lemming.GetComponent<LemmingStateController>().setForceExplode(true);
-
         }
 
-        // end game
-        LevelController.Instance.EndGame();
-
+        LNetworkPlayer.LocalInstance.forceLemmingExplode = true;
     }
 
 }
