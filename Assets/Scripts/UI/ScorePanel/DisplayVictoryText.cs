@@ -8,8 +8,9 @@ public class DisplayVictoryText : MonoBehaviour
     public void displayText(bool victory)
     {
         Text textRef = this.GetComponent<Text>();
+        textRef.enabled = true;
 
-        if(victory)
+        if (victory)
         {
             textRef.text = "Victory!";
             textRef.color = Color.green;
