@@ -151,7 +151,6 @@ public class LemmingAI : MonoBehaviour
 
         blockingState.AddCondition(() => !movementController.CheckFloor(), fallingState);
         blockingState.AddCondition(() => stateController.checkForceExplode(), explodingState);
-        blockingState.AddCondition(() => stateController.checkSkill(Skill.Exploder), explodingState);
 
         stateMachine.SetState(idleState);
     }

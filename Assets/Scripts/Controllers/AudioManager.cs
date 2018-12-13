@@ -67,7 +67,7 @@ public class AudioManager : Singleton<AudioManager> {
         // set bgm
         bgmAudioSource.clip = bgm;
         bgmAudioSource.loop = true;
-        bgmAudioSource.Play();
+        //bgmAudioSource.Play();
 
         // transition volume from zero to current
         ChangeAudioSourcesVolume(0f);

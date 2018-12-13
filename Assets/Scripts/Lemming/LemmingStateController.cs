@@ -95,7 +95,8 @@ public class LemmingStateController : NetworkBehaviour
         }
         else
         {
-            queuedSkills.Enqueue(skill);
+            if (checkIsBlocker() && skill == Skill.Exploder) forceExplode = true;
+            else queuedSkills.Enqueue(skill);
         }
 
         return true;
