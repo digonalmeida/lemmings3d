@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Name: Level4
   m_EditorClassIdentifier: 
   mapName: Up
+  mapScrenshot: {fileID: 0}
   settings:
     lemmingsCount: 10
     minimumVictoryCount: 3
+    minimumSpawnRate: 0
+    maximumSpawnRate: 2
+    startSpawnRate: 1
+    levelTime: 120
     skillsCounter:
       bashers: 0
       blockers: 99
       builders: 0
-      climbers: 0
+      climbers: 99
       diggers: 0
       exploders: 0
       floaters: 0
@@ -28,225 +33,468 @@ MonoBehaviour:
     - position: {x: 3, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -1, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 0, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 2, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 1, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 3, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 4, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 4, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 4, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 4, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 4, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: 4, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 0, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 0, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 0, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 0, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 0, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 0, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 1, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 2, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 1, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 1, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 1, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 2, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 2, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 1, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 2, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 2, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 2, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -3, y: 1, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 1, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 2, z: 3}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 1, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 2, z: 2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 1, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 1, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 1, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 1, z: -2}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 2, z: 1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 2, z: 0}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 2, z: -1}
       type: 1
       direction: 0
+      team: 0
     - position: {x: -2, y: 2, z: -2}
       type: 1
       direction: 0
-    - position: {x: 4, y: 1, z: -2}
-      type: 3
-      direction: 3
+      team: 0
     - position: {x: -3, y: 3, z: 3}
       type: 4
       direction: 0
+      team: 0
     - position: {x: -2, y: 3, z: 3}
       type: 4
       direction: 0
+      team: 0
+    - position: {x: -4, y: 0, z: -2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -5, y: 0, z: -2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -6, y: 0, z: -2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -7, y: 0, z: -2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -8, y: 0, z: -2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -9, y: 0, z: -2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -4, y: 0, z: -1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -5, y: 0, z: -1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -6, y: 0, z: -1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -7, y: 0, z: -1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -8, y: 0, z: -1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -9, y: 0, z: -1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -4, y: 0, z: 0}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -5, y: 0, z: 0}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -6, y: 0, z: 0}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -7, y: 0, z: 0}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -8, y: 0, z: 0}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -9, y: 0, z: 0}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -4, y: 0, z: 1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -5, y: 0, z: 1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -6, y: 0, z: 1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -7, y: 0, z: 1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -8, y: 0, z: 1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -9, y: 0, z: 1}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -4, y: 0, z: 2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -5, y: 0, z: 2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -6, y: 0, z: 2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -7, y: 0, z: 2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -8, y: 0, z: 2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -9, y: 0, z: 2}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -4, y: 0, z: 3}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -5, y: 0, z: 3}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -6, y: 0, z: 3}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -7, y: 0, z: 3}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -8, y: 0, z: 3}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -9, y: 0, z: 3}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: 4, y: 1, z: -2}
+      type: 3
+      direction: 3
+      team: 1
+    - position: {x: -9, y: 1, z: -2}
+      type: 3
+      direction: 1
+      team: 2
+    - position: {x: 14, y: 0, z: 2}
+      type: 1
+      direction: 1
+      team: 2
+    - position: {x: 30, y: 0, z: 3}
+      type: 1
+      direction: 1
+      team: 2
+    - position: {x: 21, y: 0, z: 14}
+      type: 1
+      direction: 1
+      team: 2
+    - position: {x: 14, y: 1, z: 2}
+      type: 1
+      direction: 1
+      team: 2
+    - position: {x: 13, y: 1, z: 2}
+      type: 1
+      direction: 1
+      team: 2

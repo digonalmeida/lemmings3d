@@ -62,7 +62,7 @@
         {
             LoadFromScene();
             map =  MapManager.Instance.SelectedMapAsset.LevelMap;
-            
+            settings = MapManager.Instance.SelectedMapAsset.Settings;
             RefreshScene();
             GameEvents.Map.OnMapLoaded.SafeInvoke();
         }

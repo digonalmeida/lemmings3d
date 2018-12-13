@@ -21,13 +21,13 @@ MonoBehaviour:
     startSpawnRate: 50
     levelTime: 120
     skillsCounter:
-      bashers: 99
+      bashers: 0
       blockers: 99
-      builders: 99
-      climbers: 99
-      diggers: 99
+      builders: 0
+      climbers: 0
+      diggers: 0
       exploders: 99
-      floaters: 99
+      floaters: 0
   level:
     serializedLevelBlocks:
     - position: {x: 3, y: 0, z: 3}

@@ -22,12 +22,12 @@ MonoBehaviour:
     levelTime: 120
     skillsCounter:
       bashers: 0
-      blockers: 0
+      blockers: 99
       builders: 0
       climbers: 0
-      diggers: 0
-      exploders: 0
-      floaters: 0
+      diggers: 99
+      exploders: 99
+      floaters: 99
   level:
     serializedLevelBlocks:
     - position: {x: -1, y: 0, z: 3}
@@ -378,10 +378,6 @@ MonoBehaviour:
       type: 1
       direction: 0
       team: 0
-    - position: {x: -1, y: 7, z: -4}
-      type: 1
-      direction: 0
-      team: 0
     - position: {x: -1, y: 6, z: -3}
       type: 1
       direction: 0
@@ -670,3 +666,15 @@ MonoBehaviour:
       type: 1
       direction: 0
       team: 2
+    - position: {x: 8, y: 0, z: -15}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: -1, y: 7, z: -4}
+      type: 1
+      direction: 0
+      team: 0
+    - position: {x: 9, y: 0, z: -14}
+      type: 1
+      direction: 0
+      team: 0
