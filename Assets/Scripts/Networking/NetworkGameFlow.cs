@@ -150,7 +150,7 @@ public class NetworkGameFlow : NetworkBehaviour
 
     void LoadSelectedLevel()
     {
-        int mapId = LevelSelectorNetworkController.Instance.getIndexMapAssetToLoad();
+        int mapId = getIndexMapAssetToLoad();
         if (!MapManager.Instance.TrySelectMapById(mapId))
         {
             Debug.LogErrorFormat("Couldn't select map with Id {0}", mapId);
@@ -165,6 +165,20 @@ public class NetworkGameFlow : NetworkBehaviour
     {
         GameEvents.GameState.OnStartGame.SafeInvoke();
         currentGameState = GameFlowState.inGame;
+    }
+
+    //Define & Return Level to Load
+    public int getIndexMapAssetToLoad()
+    {
+        if (LNetworkPlayer.Player1Instance.selectedLevel == -1 && LNetworkPlayer.Player2Instance.selectedLevel == -1) return Random.Range(0, MapManager.Instance.MapAssets.Count);
+        else if (LNetworkPlayer.Player1Instance.selectedLevel == LNetworkPlayer.Player2Instance.selectedLevel) return LNetworkPlayer.Player1Instance.selectedLevel;
+        else if (LNetworkPlayer.Player1Instance.selectedLevel == -1) return LNetworkPlayer.Player2Instance.selectedLevel;
+        else if (LNetworkPlayer.Player2Instance.selectedLevel == -1) return LNetworkPlayer.Player1Instance.selectedLevel;
+        else
+        {
+            if (Random.value >= 0.5f) return LNetworkPlayer.Player1Instance.selectedLevel;
+            else return LNetworkPlayer.Player2Instance.selectedLevel;
+        }
     }
 
     // Update is called once per frame

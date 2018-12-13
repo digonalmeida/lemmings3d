@@ -11,6 +11,8 @@ public class LNetworkPlayer : NetworkBehaviour
     [SyncVar]
     public bool levelSelectReady = false;
     [SyncVar]
+    public int selectedLevel = -1;
+    [SyncVar]
     public bool levelLoadReady = false;
     [SyncVar]
     public bool rematchReady = false;
@@ -37,6 +39,7 @@ public class LNetworkPlayer : NetworkBehaviour
         levelLoadReady = false;
         rematchReady = false;
         forceLemmingExplode = false;
+        selectedLevel = -1;
     }
 
     //Start
@@ -135,13 +138,7 @@ public class LNetworkPlayer : NetworkBehaviour
     [Command]
     public void CmdSelectLevel(int indexButton)
     {
-        LevelSelectorNetworkController.Instance.selectLevel(indexButton, playerNum);
-    }
-
-    [ClientRpc]
-    public void RpcSelectLevel(int indexSelection, Player playerNum)
-    {
-        LevelSelectorPanelController.Instance.selectLevel(indexSelection, playerNum);
+        this.selectedLevel = indexButton;
     }
 
     public void OnMapLoaded()

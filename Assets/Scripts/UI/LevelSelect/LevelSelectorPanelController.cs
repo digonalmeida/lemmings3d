@@ -80,52 +80,74 @@ public class LevelSelectorPanelController : MonoBehaviour
         }
     }
 
-    //Update Toggle Button
-    public void selectLevel(int indexSelection, Player playerNum)
+    //Update
+    private void Update()
     {
-        if(playerNum == Player.Player1)
+        if(LNetworkPlayer.Player1Instance != null && LNetworkPlayer.Player2Instance != null)
         {
-            //Disable Previously Selected Level Selection
-            if (selectedLevelPlayer1 != -1)
+            //Check for Changes
+            if (LNetworkPlayer.Player1Instance.selectedLevel != selectedLevelPlayer1 && LNetworkPlayer.Player2Instance.selectedLevel != selectedLevelPlayer2)
             {
-                if (selectedLevelPlayer2 == selectedLevelPlayer1) levels[selectedLevelPlayer1].GetComponent<Image>().sprite = player2SelectSprite;
-                else levels[selectedLevelPlayer1].GetComponent<Image>().enabled = false;
+                //Reset Last Selection
+                if (selectedLevelPlayer1 != -1)
+                {
+                    levels[selectedLevelPlayer1].GetComponent<Image>().enabled = false;
+                    levels[selectedLevelPlayer1].transform.GetChild(1).gameObject.SetActive(false);
+                }
+                if (selectedLevelPlayer2 != -1)
+                {
+                    levels[selectedLevelPlayer1].GetComponent<Image>().enabled = false;
+                    levels[selectedLevelPlayer1].transform.GetChild(2).gameObject.SetActive(false);
+                }
 
-                levels[selectedLevelPlayer1].transform.GetChild(1).gameObject.SetActive(false);
+                //Update Control Variables
+                selectedLevelPlayer1 = LNetworkPlayer.Player1Instance.selectedLevel;
+                selectedLevelPlayer2 = LNetworkPlayer.Player2Instance.selectedLevel;
+
+                //Update Sprite & Text
+                levels[LNetworkPlayer.Player1Instance.selectedLevel].GetComponent<Image>().sprite = bothSelectSprite;
+                levels[LNetworkPlayer.Player1Instance.selectedLevel].GetComponent<Image>().enabled = true;
+                levels[LNetworkPlayer.Player1Instance.selectedLevel].transform.GetChild(1).gameObject.SetActive(true);
+                levels[LNetworkPlayer.Player1Instance.selectedLevel].transform.GetChild(2).gameObject.SetActive(true);
             }
-
-            //Select New Level
-            selectedLevelPlayer1 = indexSelection;
-
-            //Update Selection Sprite
-            if (selectedLevelPlayer1 == selectedLevelPlayer2) levels[indexSelection].GetComponent<Image>().sprite = bothSelectSprite;
-            else levels[indexSelection].GetComponent<Image>().sprite = player1SelectSprite;
-
-            //Enable Sprite & Text
-            levels[indexSelection].GetComponent<Image>().enabled = true;
-            levels[indexSelection].transform.GetChild(1).gameObject.SetActive(true);
-        }
-        else if (playerNum == Player.Player2)
-        {
-            //Disable Previously Selected Level Selection
-            if (selectedLevelPlayer2 != -1)
+            else if (LNetworkPlayer.Player1Instance.selectedLevel != selectedLevelPlayer1)
             {
-                if(selectedLevelPlayer2 == selectedLevelPlayer1) levels[selectedLevelPlayer1].GetComponent<Image>().sprite = player1SelectSprite;
-                else levels[selectedLevelPlayer2].GetComponent<Image>().enabled = false;
+                //Reset Last Selection
+                if (selectedLevelPlayer1 != -1)
+                {
+                    if (selectedLevelPlayer2 == selectedLevelPlayer1) levels[selectedLevelPlayer1].GetComponent<Image>().sprite = player2SelectSprite;
+                    else levels[selectedLevelPlayer1].GetComponent<Image>().enabled = false;
+                    levels[selectedLevelPlayer1].transform.GetChild(1).gameObject.SetActive(false);
+                }
 
-                levels[selectedLevelPlayer2].transform.GetChild(2).gameObject.SetActive(false);
+                //Update Control Variables
+                selectedLevelPlayer1 = LNetworkPlayer.Player1Instance.selectedLevel;
+
+                //Update Sprite & Text
+                if(LNetworkPlayer.Player1Instance.selectedLevel == LNetworkPlayer.Player2Instance.selectedLevel) levels[LNetworkPlayer.Player1Instance.selectedLevel].GetComponent<Image>().sprite = bothSelectSprite;
+                else levels[LNetworkPlayer.Player1Instance.selectedLevel].GetComponent<Image>().sprite = player1SelectSprite;
+                levels[LNetworkPlayer.Player1Instance.selectedLevel].GetComponent<Image>().enabled = true;
+                levels[LNetworkPlayer.Player1Instance.selectedLevel].transform.GetChild(1).gameObject.SetActive(true);
             }
+            else if (LNetworkPlayer.Player2Instance.selectedLevel != selectedLevelPlayer2)
+            {
+                //Reset Last Selection
+                if (selectedLevelPlayer2 != -1)
+                {
+                    if (selectedLevelPlayer2 == selectedLevelPlayer1) levels[selectedLevelPlayer2].GetComponent<Image>().sprite = player1SelectSprite;
+                    else levels[selectedLevelPlayer2].GetComponent<Image>().enabled = false;
+                    levels[selectedLevelPlayer2].transform.GetChild(2).gameObject.SetActive(false);
+                }
 
-            //Select New Level
-            selectedLevelPlayer2 = indexSelection;
+                //Update Control Variables
+                selectedLevelPlayer2 = LNetworkPlayer.Player2Instance.selectedLevel;
 
-            //Update Selection Sprite
-            if (selectedLevelPlayer1 == selectedLevelPlayer2) levels[indexSelection].GetComponent<Image>().sprite = bothSelectSprite;
-            else levels[indexSelection].GetComponent<Image>().sprite = player2SelectSprite;
-
-            //Enable Sprite & Text
-            levels[indexSelection].GetComponent<Image>().enabled = true;
-            levels[indexSelection].transform.GetChild(2).gameObject.SetActive(true);
+                //Update Sprite & Text
+                if (LNetworkPlayer.Player1Instance.selectedLevel == LNetworkPlayer.Player2Instance.selectedLevel) levels[LNetworkPlayer.Player2Instance.selectedLevel].GetComponent<Image>().sprite = bothSelectSprite;
+                else levels[LNetworkPlayer.Player2Instance.selectedLevel].GetComponent<Image>().sprite = player2SelectSprite;
+                levels[LNetworkPlayer.Player2Instance.selectedLevel].GetComponent<Image>().enabled = true;
+                levels[LNetworkPlayer.Player2Instance.selectedLevel].transform.GetChild(2).gameObject.SetActive(true);
+            }
         }
     }
 }
