@@ -99,8 +99,8 @@ public class NetworkGameStateManager : NetworkBehaviour
         // check timer
         if (remainingTime < 0)
         {
-            Debug.Log("Call Rpc end level because timer ended");
-            RpcExplodeAllByTimer();
+            LNetworkPlayer.Player1Instance.CmdInformExplodeAllLemmings(true);
+            LNetworkPlayer.Player2Instance.CmdInformExplodeAllLemmings(true);
         }
 
         // check lemings on final
@@ -115,49 +115,9 @@ public class NetworkGameStateManager : NetworkBehaviour
 
         if (teamsFinished >= lemmingsSpawned.Keys.Count)
         {
-            Debug.Log("Call Rpc end level because all lemmings died or entered exit");
             CalculateEndLevel();
         }
     }
-
-    /*
-    private void CheckFinal1()
-    {
-        // check timer
-        if (remainingTime < 0)
-        {
-            Debug.Log("Call Rpc Time Ended");
-            RpcTimeEnded();
-        }
-
-        // check lemings on final
-        foreach (var item in lemmingsEnteredExit)
-        {
-            if (item.Value >= LevelController.Instance.CurrentMapSettings.MinimumVictoryCount)
-            {
-                Debug.Log("Call Rpc Player Win");
-                RpcPlayerWin(item.Key);
-                break;
-            }
-        }
-
-        // check lemmings dead
-        bool lemmingAlive = false;
-        foreach (var item in lemmingsDied)
-        {
-            if (item.Value < LevelController.Instance.CurrentMapSettings.LemmingsCount)
-            {
-                lemmingAlive = true;
-                break;
-            }
-        }
-        if (!lemmingAlive)
-        {
-            Debug.Log("Call Rpc both players lose");
-            RpcBothPlayersLose();
-        }
-    }
-    */
 
     private void CalculateEndLevel()
     {
@@ -250,12 +210,6 @@ public class NetworkGameStateManager : NetworkBehaviour
         lemmingsOnScene[lemming_.Team].Remove(lemming_);
         lemmingsEnteredExit[lemming_.Team]++;
         GameEvents.NetworkLemmings.LemmingReachedExit.SafeInvoke(lemming_);
-    }
-
-    [ClientRpc]
-    private void RpcExplodeAllByTimer()
-    {
-        SkillsController.Instance.explodeAll();
     }
 
     [ClientRpc]

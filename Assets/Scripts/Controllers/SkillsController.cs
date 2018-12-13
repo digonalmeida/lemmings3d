@@ -119,17 +119,22 @@ public class SkillsController : Singleton<SkillsController>
         GameEvents.UI.DeselectedSkill.SafeInvoke();
     }
 
-    public void explodeAll()
+    public void requestExplodeAll()
+    {
+        if(LNetworkPlayer.LocalInstance != null)
+        {
+            LNetworkPlayer.LocalInstance.CmdInformExplodeAllLemmings(true);
+        }
+    }
+
+    public void executeExplodeAll(Player player)
     {
         if(LevelController.Instance.gameStateManager == null) return;
 
         // explode every lemming
-        foreach (var lemming in LevelController.Instance.gameStateManager.lemmingsOnScene[LevelController.Instance.team])
+        foreach (var lemming in LevelController.Instance.gameStateManager.lemmingsOnScene[player])
         {
             lemming.GetComponent<LemmingStateController>().setForceExplode(true);
         }
-
-        LNetworkPlayer.LocalInstance.forceLemmingExplode = true;
     }
-
 }

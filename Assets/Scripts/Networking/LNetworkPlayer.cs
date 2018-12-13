@@ -118,6 +118,7 @@ public class LNetworkPlayer : NetworkBehaviour
     public void CmdInformExplodeAllLemmings(bool value)
     {
         forceLemmingExplode = value;
+        SkillsController.Instance.executeExplodeAll(playerNum);
     }
 
     [Command]

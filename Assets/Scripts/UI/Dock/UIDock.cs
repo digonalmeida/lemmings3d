@@ -26,7 +26,7 @@ public class UIDock : MonoBehaviour
 
     public void ExplodeAllButton()
     {
-        SkillsController.Instance.explodeAll();
+        SkillsController.Instance.requestExplodeAll();
     }
 
     public void DebugText(string text)
