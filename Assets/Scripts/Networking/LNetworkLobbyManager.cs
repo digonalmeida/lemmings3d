@@ -10,6 +10,12 @@ public class LNetworkLobbyManager : NetworkLobbyManager
     public GameObject disconnectedPanel;
     public GameObject opponentLeftPanel;
 
+    //Control Variables
+    private bool startedTimer = false;
+    private bool stoppingMusic = false;
+    private float currentTimer;
+    public float countTimer = 3.5f;
+
     public override void OnStopClient()
     {
         base.OnStopClient();
@@ -35,6 +41,37 @@ public class LNetworkLobbyManager : NetworkLobbyManager
         else if(SceneManager.GetActiveScene().name == "Menu")
         {
             if (client != null) LobbyPanelManager.Instance.resetPlayer2();
+        }
+    }
+
+    public override void OnLobbyServerPlayersReady()
+    {
+        startTimerLoadGame();
+    }
+
+    public void startTimerLoadGame()
+    {
+        startedTimer = true;
+        currentTimer = countTimer;
+    }
+
+    private void Update()
+    {
+        if (startedTimer)
+        {
+            if (!stoppingMusic)
+            {
+                LNetworkLobbyPlayer.LocalInstance.RpcFadeMusic();
+                stoppingMusic = true;
+            }
+
+            currentTimer -= Time.deltaTime;
+            if(currentTimer <= 0)
+            {
+                startedTimer = false;
+                stoppingMusic = false;
+                ServerChangeScene(playScene);
+            }
         }
     }
 }

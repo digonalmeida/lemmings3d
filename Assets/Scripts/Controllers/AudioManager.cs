@@ -6,7 +6,7 @@ using UnityEngine;
 public class AudioManager : Singleton<AudioManager>
 {
     //Control Variables
-    public float audioFadeOutFactor = 0.15f;
+    public float audioFadeOutFactor = 0.5f;
     [SerializeField]
     private AudioSource bgmAudioSource;
     [SerializeField]
@@ -26,7 +26,7 @@ public class AudioManager : Singleton<AudioManager>
     //Play SFX Methods
     private void PlaySFX_SelectSkill() {sfxAudioSource.PlayOneShot(selectSkill);}
     private void PlaySFX_DeselectSkill() {sfxAudioSource.PlayOneShot(deselectSkill);}
-    private void PlaySFX_GiveSkill() {sfxAudioSource.PlayOneShot(giveSkill);}
+    private void PlaySFX_GiveSkill(LemmingStateController lemming) {sfxAudioSource.PlayOneShot(giveSkill);}
     private void PlaySFX_LemmingDie(LemmingStateController lemming) {sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());}
 
     //Play BGM Methods
