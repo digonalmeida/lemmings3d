@@ -20,6 +20,7 @@ public class LemmingStateController : NetworkBehaviour
     //Control Variables
     private GameObject actionObject;
     public GameObject lemmingModel;
+    public Transform foot;
 
     public Direction BlockingDirection
     {

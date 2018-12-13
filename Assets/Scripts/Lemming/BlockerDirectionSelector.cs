@@ -33,7 +33,7 @@ public class BlockerDirectionSelector : MonoBehaviour
 
         if (visible)
         {
-            if (followingLemming != null) transform.position = followingLemming.transform.position;
+            if (followingLemming != null) transform.position = followingLemming.foot.position;
             transform.localScale = Vector3.one * cameraScale * Vector3.Distance(Camera.main.transform.position, transform.position);
         }
 
