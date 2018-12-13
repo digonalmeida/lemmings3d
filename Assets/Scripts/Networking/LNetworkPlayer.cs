@@ -87,49 +87,19 @@ public class LNetworkPlayer : NetworkBehaviour
         CmdInformPlayerNum(playerNum);
     }
 
-    public void GiveSkill(LemmingStateController lemming, Skill skill)
-    {
-        if (!isServer && isLocalPlayer)
-        {
-            var netIdComponent = lemming.GetComponent<NetworkIdentity>();
-            if(netIdComponent == null)
-            {
-                Debug.LogError("Can't give skill. lemming has no network identity");
-                return;
-            }
-
-            var netId = netIdComponent.netId;
-            CmdGiveSkill(netId, skill);
-        }
-
-        if(isServer)
-        {
-            lemming.giveSkill(skill);
-        }
-    }
-
     [Command]
-    public void CmdGiveSkill(NetworkInstanceId lemmingNetId, Skill skill)
+    public void CmdGiveSkill(NetworkIdentity lemming, Skill skill)
     {
-        if (!isServer)
-        {
-            return;
-        }
-
-        var lemmingObject = NetworkServer.FindLocalObject(lemmingNetId);
-        if(lemmingObject == null)
-        {
-            Debug.LogError("Local lemming object not found for id " + lemmingNetId.Value.ToString());
-        }
-
-        var lemming = lemmingObject.GetComponent<LemmingStateController>();
-        if(lemming == null)
+        if (lemming == null)
         {
             Debug.LogError("Trying to give skill on a non lemming object");
             return;
         }
-
-        GiveSkill(lemming, skill);
+        else
+        {
+            LemmingStateController stateController = lemming.GetComponent<LemmingStateController>();
+            stateController.giveSkill(skill);
+        }
     }
 
     [Command]
