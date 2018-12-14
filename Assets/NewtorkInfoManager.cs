@@ -11,13 +11,13 @@ public class NewtorkInfoManager : MonoBehaviour
 	private NetworkInfo info = new NetworkInfo();
 	private Coroutine coroutine = null;
 	
-	
+
 	
 	private void OnEnable()
 	{
 		info.Clear();
 		GameEvents.Networking.NetworkInfoEnabled.SafeInvoke(info);
-		
+
 		if (coroutine != null)
 		{
 			StopCoroutine(coroutine);

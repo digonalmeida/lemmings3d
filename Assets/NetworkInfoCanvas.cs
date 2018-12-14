@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NetworkInfoCanvas : Singleton<NetworkInfoCanvas> 
+public class NetworkInfoCanvas : SingletonDontDestroy<NetworkInfoCanvas> 
 {
     [SerializeField]
     private Text pingInfoText;
@@ -11,7 +11,6 @@ public class NetworkInfoCanvas : Singleton<NetworkInfoCanvas>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(gameObject);
 
         OnHideInfo();
         GameEvents.Networking.NetworkInfoEnabled += OnShowInfo;
