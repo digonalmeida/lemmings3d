@@ -49,11 +49,13 @@ public class PlayerProgressBar : MonoBehaviour
         if (newFill > 0)
         {
             units[units.Count - newFill].TurnOn(newFill / maximum);
+            if (team == LNetworkPlayer.LocalInstance.playerNum) AudioManager.Instance.playSFX(AudioManager.Instance.scoreUp);
         }
 
         if (newFill == minimum)
         {
             target.Trigger();
+            if (team == LNetworkPlayer.LocalInstance.playerNum) AudioManager.Instance.playSFX(AudioManager.Instance.targetLemmingsMet);
         }
     }
 

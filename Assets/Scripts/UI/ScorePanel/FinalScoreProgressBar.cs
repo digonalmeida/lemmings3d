@@ -83,7 +83,15 @@ public class FinalScoreProgressBar : MonoBehaviour
                 {
                     displayMedal.displayMedal();
                     displayVictoryTextScriptRef.displayText(localProgressBar.team == LNetworkPlayer.LocalInstance.playerNum);
+                    if (LNetworkPlayer.LocalInstance.playerNum == localProgressBar.team) AudioManager.Instance.playSFX(AudioManager.Instance.medalFanfare);
+                    else if (LNetworkPlayer.LocalInstance.playerNum != localProgressBar.team) AudioManager.Instance.playSFX(AudioManager.Instance.defeat);
                 }
+                else if(currentFill < minimum)
+                {
+                    AudioManager.Instance.playSFX(AudioManager.Instance.defeat);
+                    displayVictoryTextScriptRef.displayText(false);
+                }
+
                 currentFill++;
             }
         }

@@ -22,6 +22,10 @@ public class AudioManager : Singleton<AudioManager>
     public AudioClip deselectSkill;
     public AudioClip giveSkill;
     public AudioList lemmingDie;
+    public AudioClip targetLemmingsMet;
+    public AudioClip scoreUp;
+    public AudioClip medalFanfare;
+    public AudioClip defeat;
 
     //Play SFX Methods
     private void PlaySFX_SelectSkill() {sfxAudioSource.PlayOneShot(selectSkill);}
@@ -52,6 +56,12 @@ public class AudioManager : Singleton<AudioManager>
         GameEvents.Lemmings.LemmingDied -= PlaySFX_LemmingDie;
         GameEvents.GameState.OnStartGame -= PlayBGM_inGameBGM;
         GameEvents.GameState.OnEndGame -= PlayBGM_ScorePanelBGM;
+    }
+
+    //Play SFX
+    public void playSFX(AudioClip FSXClip)
+    {
+        if(FSXClip != null) sfxAudioSource.PlayOneShot(FSXClip);
     }
 
     //Play Music Main Method
