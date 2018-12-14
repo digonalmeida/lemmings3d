@@ -225,9 +225,7 @@ public class LemmingStateController : NetworkBehaviour
         if (!isServer)
         {
             if (CheckExitPoint()) HighlightPointer.Instance.clearHighlight(this.GetComponent<HighlightableObject>());
-
         }
-
     }
 
     public void SetBlockerIndicatorActive(bool blockerActive)

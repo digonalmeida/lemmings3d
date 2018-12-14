@@ -26,12 +26,16 @@ public class AudioManager : Singleton<AudioManager>
     public AudioClip scoreUp;
     public AudioClip medalFanfare;
     public AudioClip defeat;
+    public AudioClip explode;
+    public AudioClip pickaxeHit;
+    public AudioClip blockDestroy;
 
     //Play SFX Methods
     private void PlaySFX_SelectSkill() {sfxAudioSource.PlayOneShot(selectSkill);}
     private void PlaySFX_DeselectSkill() {sfxAudioSource.PlayOneShot(deselectSkill);}
     private void PlaySFX_GiveSkill(LemmingStateController lemming) {sfxAudioSource.PlayOneShot(giveSkill);}
     private void PlaySFX_LemmingDie(LemmingStateController lemming) {sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());}
+    private void PlaySFX_Explode(LemmingStateController lemming) { sfxAudioSource.PlayOneShot(explode); }
 
     //Play BGM Methods
     private void PlayBGM_inGameBGM() { playMusic(inGameBGM); }
@@ -43,6 +47,7 @@ public class AudioManager : Singleton<AudioManager>
         GameEvents.UI.DeselectedSkill += PlaySFX_DeselectSkill;
         GameEvents.Lemmings.LemmingUsedSkill += PlaySFX_GiveSkill;
         GameEvents.Lemmings.LemmingDied += PlaySFX_LemmingDie;
+        GameEvents.Lemmings.LemmingExploded += PlaySFX_Explode;
         GameEvents.GameState.OnStartGame += PlayBGM_inGameBGM;
         GameEvents.GameState.OnEndGame += PlayBGM_ScorePanelBGM;
         playMusic(levelSelectBGM);
@@ -54,6 +59,7 @@ public class AudioManager : Singleton<AudioManager>
         GameEvents.UI.DeselectedSkill -= PlaySFX_DeselectSkill;
         GameEvents.Lemmings.LemmingUsedSkill -= PlaySFX_GiveSkill;
         GameEvents.Lemmings.LemmingDied -= PlaySFX_LemmingDie;
+        GameEvents.Lemmings.LemmingExploded -= PlaySFX_Explode;
         GameEvents.GameState.OnStartGame -= PlayBGM_inGameBGM;
         GameEvents.GameState.OnEndGame -= PlayBGM_ScorePanelBGM;
     }

@@ -34,6 +34,7 @@ public static class GameEvents
         public static Action<LemmingStateController> LemmingSpawned;
         public static Action<LemmingStateController> LemmingUsedSkill;
         public static Action<LemmingStateController> LemmingDied;
+        public static Action<LemmingStateController> LemmingExploded;
         public static Action<Player> ChangedSpawnRate;
         public static Action<LemmingSpawnInfo> OnSpawnRequest;
     }

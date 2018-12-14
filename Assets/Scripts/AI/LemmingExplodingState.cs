@@ -23,7 +23,7 @@ public class LemmingExplodingState : LemmingState
             LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.right));
             LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.forward));
             LevelMap.MapController.Instance.EraseWall(Vector3Int.RoundToInt(Agent.transform.position + Vector3.back));
-            Agent.LemmingActions.KillLemming();
+            Agent.LemmingActions.KillLemmingByExplosion();
         }
     }
 }

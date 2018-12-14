@@ -315,3 +315,4 @@ MonoBehaviour:
   scoreUp: {fileID: 8300000, guid: 064d26b0417e838498003511f123c6bc, type: 3}
   medalFanfare: {fileID: 8300000, guid: 109652ddbd2e15043bd0939d95457060, type: 3}
   defeat: {fileID: 8300000, guid: 01beb0131f7277a43b388a668657a416, type: 3}
+  explode: {fileID: 8300000, guid: a7ddbb7e5d214bd46b695a2d298e7724, type: 3}

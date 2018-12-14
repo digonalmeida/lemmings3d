@@ -96,6 +96,8 @@ public class NetworkMapController : NetworkBehaviour
         {
             return;
         }
+
+        AudioManager.Instance.playSFX(AudioManager.Instance.blockDestroy);
         MapController.Instance.EraseBlock(new Vector3Int(x, y, z));
     }
 
