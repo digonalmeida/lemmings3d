@@ -58,6 +58,7 @@ public class FinalScoreProgressBar : MonoBehaviour
         if (newFill > 0)
         {
             units[newFill - 1].TurnOn(newFill / maximum);
+            if (LNetworkPlayer.LocalInstance.playerNum == localProgressBar.team) AudioManager.Instance.playSFX(AudioManager.Instance.scoreUp);
         }
 
         if (newFill == minimum)
@@ -79,14 +80,23 @@ public class FinalScoreProgressBar : MonoBehaviour
             }
             else if (currentFill == targetFill + 1)
             {
-                if(currentFill >= minimum && currentFill >= opponentProgressBar.fill)
+                if(currentFill >= minimum)
                 {
-                    displayMedal.displayMedal();
-                    displayVictoryTextScriptRef.displayText(localProgressBar.team == LNetworkPlayer.LocalInstance.playerNum);
-                    if (LNetworkPlayer.LocalInstance.playerNum == localProgressBar.team) AudioManager.Instance.playSFX(AudioManager.Instance.medalFanfare);
-                    else if (LNetworkPlayer.LocalInstance.playerNum != localProgressBar.team) AudioManager.Instance.playSFX(AudioManager.Instance.defeat);
+                    if(localProgressBar.fill > opponentProgressBar.fill)
+                    {
+                        displayMedal.displayMedal();
+                        displayVictoryTextScriptRef.displayText(localProgressBar.team == LNetworkPlayer.LocalInstance.playerNum);
+                        if (LNetworkPlayer.LocalInstance.playerNum == localProgressBar.team) AudioManager.Instance.playSFX(AudioManager.Instance.medalFanfare);
+                        else if (LNetworkPlayer.LocalInstance.playerNum != localProgressBar.team) AudioManager.Instance.playSFX(AudioManager.Instance.defeat);
+                    }
+                    else if(localProgressBar.fill == opponentProgressBar.fill)
+                    {
+                        displayMedal.displayMedal();
+                        displayVictoryTextScriptRef.displayText(true);
+                        AudioManager.Instance.playSFX(AudioManager.Instance.medalFanfare);
+                    }
                 }
-                else if(currentFill < minimum)
+                else if(localProgressBar.fill < minimum && localProgressBar.team == LNetworkPlayer.LocalInstance.playerNum)
                 {
                     AudioManager.Instance.playSFX(AudioManager.Instance.defeat);
                     displayVictoryTextScriptRef.displayText(false);
