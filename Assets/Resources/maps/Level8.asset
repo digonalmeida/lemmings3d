@@ -851,7 +851,3 @@ MonoBehaviour:
       type: 1
       direction: 3
       team: 2
-    - position: {x: 23, y: 0, z: -1}
-      type: 1
-      direction: 3
-      team: 2

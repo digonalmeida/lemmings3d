@@ -623,11 +623,3 @@ MonoBehaviour:
       type: 4
       direction: 0
       team: 0
-    - position: {x: 39, y: 0, z: 0}
-      type: 1
-      direction: 0
-      team: 0
-    - position: {x: 24, y: 0, z: 0}
-      type: 1
-      direction: 0
-      team: 0

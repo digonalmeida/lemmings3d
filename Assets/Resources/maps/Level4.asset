@@ -475,23 +475,3 @@ MonoBehaviour:
       type: 3
       direction: 1
       team: 2
-    - position: {x: 14, y: 0, z: 2}
-      type: 1
-      direction: 1
-      team: 2
-    - position: {x: 30, y: 0, z: 3}
-      type: 1
-      direction: 1
-      team: 2
-    - position: {x: 21, y: 0, z: 14}
-      type: 1
-      direction: 1
-      team: 2
-    - position: {x: 14, y: 1, z: 2}
-      type: 1
-      direction: 1
-      team: 2
-    - position: {x: 13, y: 1, z: 2}
-      type: 1
-      direction: 1
-      team: 2

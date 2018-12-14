@@ -1227,7 +1227,3 @@ MonoBehaviour:
       type: 1
       direction: 3
       team: 2
-    - position: {x: -10, y: 0, z: -31}
-      type: 1
-      direction: 3
-      team: 2
