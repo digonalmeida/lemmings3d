@@ -12,6 +12,8 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
         GameEvents.GameState.OnLoadGame += OnLoadGame;
         GameEvents.GameState.OnStartGame += OnStartGame;
         GameEvents.Lemmings.ChangedSpawnRate += ChangedSpawnRate;
+        GameEvents.Map.OnAddBlock += OnAddBlock;
+        GameEvents.Map.OnRemoveBlock += OnRemoveBlock;
     }
 
     private void OnDestroy()
@@ -19,6 +21,8 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
         GameEvents.GameState.OnLoadGame -= OnLoadGame;
         GameEvents.GameState.OnStartGame -= OnStartGame;
         GameEvents.Lemmings.ChangedSpawnRate -= ChangedSpawnRate;
+        GameEvents.Map.OnAddBlock -= OnAddBlock;
+        GameEvents.Map.OnRemoveBlock -= OnRemoveBlock;
     }
 
     private void OnLoadGame()
@@ -59,6 +63,27 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
         RpcChangedSpawnRate(player);
     }
 
+    public void OnAddBlock(Vector3Int position, MapBlock b)
+    {
+        if (!isServer)
+        {
+            return;
+        }
+        b.Position = position;
+        Debug.Log("sending add block");
+        RpcAddBlock(position.x, position.y, position.z, b.Type, b.Direction);
+    }
+
+    public void OnRemoveBlock(Vector3Int position)
+    {
+        if(!isServer)
+        {
+            return;
+        }
+        Debug.Log("sending remove block");
+        RpcRemoveBlock(position.x, position.y, position.z);
+    }
+    
     [ClientRpc]
     private void RpcLoadGame(int mapIndex)
     {
@@ -96,5 +121,32 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
         }
 
         GameEvents.Lemmings.ChangedSpawnRate.SafeInvoke(player);
+    }
+    
+
+
+    [ClientRpc]
+    public void RpcAddBlock(int x, int y, int z, MapBlock.BlockType type, Direction direction)
+    {
+        if(isServer)
+        {
+            return;
+        }
+
+        var pos = new Vector3Int(x, y, z);
+        var block = new MapBlock();
+        block.Type = type;
+        block.Direction = direction;
+        MapController.Instance.AddBlock(pos, block);
+    }
+
+    [ClientRpc]
+    public void RpcRemoveBlock(int x, int y, int z)
+    {
+        if (isServer)
+        {
+            return;
+        }
+        MapController.Instance.EraseBlock(new Vector3Int(x, y, z));
     }
 }
