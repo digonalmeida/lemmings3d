@@ -51,4 +51,11 @@ public static class GameEvents
         public static Action<Vector3Int, MapBlock> OnAddBlock;
         public static Action<Vector3Int> OnRemoveBlock;
     }
+
+    public static class Networking
+    {
+        public static Action<NetworkInfo> NetworkInfoEnabled;
+        public static Action NetworkInfoDisabled;
+        public static Action<NetworkInfo> NetworkInfoUpdated;
+    }
 }
