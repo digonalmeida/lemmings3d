@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: Level7
   m_EditorClassIdentifier: 
   mapName: Level 7
-  mapScrenshot: {fileID: 0}
+  mapScrenshot: {fileID: 21300000, guid: 27585958d3b571941a7370aa2c22f950, type: 3}
   settings:
     lemmingsCount: 10
     minimumVictoryCount: 3
-    minimumSpawnRate: 30
-    maximumSpawnRate: 70
-    startSpawnRate: 50
     levelTime: 120
     skillsCounter:
       bashers: 0

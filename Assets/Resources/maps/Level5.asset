@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: Level5
   m_EditorClassIdentifier: 
   mapName: The Wall
-  mapScrenshot: {fileID: 0}
+  mapScrenshot: {fileID: 21300000, guid: 095195a70bc6391479a2a6b1c27357cf, type: 3}
   settings:
     lemmingsCount: 10
     minimumVictoryCount: 3
-    minimumSpawnRate: 30
-    maximumSpawnRate: 70
-    startSpawnRate: 50
     levelTime: 120
     skillsCounter:
       bashers: 99

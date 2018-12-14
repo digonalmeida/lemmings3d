@@ -7,19 +7,15 @@ using UnityEngine.UI;
 public class LevelSelectButton : MonoBehaviour
 {
     //Variables
-    private Image imageReference;
     private int indexMapAsset;
-
-    //Start
-    private void Start()
-    {
-        imageReference = GetComponentInChildren<Image>();
-    }
 
     //Update Image with level screenshot
     public void setMapAsset(Sprite levelScreenshot, int index)
     {
-        if(levelScreenshot != null) imageReference.sprite = levelScreenshot;
+        if (levelScreenshot != null)
+        {
+            this.transform.GetChild(0).GetComponent<Image>().sprite = levelScreenshot;
+        }
         indexMapAsset = index;
     }
 
