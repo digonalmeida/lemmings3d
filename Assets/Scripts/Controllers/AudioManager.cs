@@ -29,13 +29,18 @@ public class AudioManager : Singleton<AudioManager>
     public AudioClip explode;
     public AudioClip pickaxeHit;
     public AudioClip blockDestroy;
+    public AudioClip umbrellaOpen;
+    public AudioClip speedUp;
+    public AudioClip slowDown;
 
     //Play SFX Methods
-    private void PlaySFX_SelectSkill() {sfxAudioSource.PlayOneShot(selectSkill);}
-    private void PlaySFX_DeselectSkill() {sfxAudioSource.PlayOneShot(deselectSkill);}
-    private void PlaySFX_GiveSkill(LemmingStateController lemming) {sfxAudioSource.PlayOneShot(giveSkill);}
-    private void PlaySFX_LemmingDie(LemmingStateController lemming) {sfxAudioSource.PlayOneShot(lemmingDie.GetUniqueRandom());}
-    private void PlaySFX_Explode(LemmingStateController lemming) { sfxAudioSource.PlayOneShot(explode); }
+    private void PlaySFX_SelectSkill() { playSFX(selectSkill);}
+    private void PlaySFX_DeselectSkill() { playSFX(deselectSkill);}
+    private void PlaySFX_GiveSkill(LemmingStateController lemming) { playSFX(giveSkill);}
+    private void PlaySFX_LemmingDie(LemmingStateController lemming) { playSFX(lemmingDie.GetUniqueRandom());}
+    private void PlaySFX_Explode(LemmingStateController lemming) { playSFX(explode); }
+    public void PlaySFX_SpeedUp() { playSFX(speedUp); }
+    public void PlaySFX_SlowDown() { playSFX(slowDown); }
 
     //Play BGM Methods
     private void PlayBGM_inGameBGM() { playMusic(inGameBGM); }

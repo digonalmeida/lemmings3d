@@ -10,5 +10,6 @@ public class FloaterStartAnimationTrigger : StateMachineBehaviour
         LemmingAnimationController lemmingAnimationController = animator.gameObject.GetComponent<LemmingAnimationController>();
         lemmingAnimationController.setActiveUmbrella(true);
         lemmingAnimationController.setUmbrellaAnimation(true);
+        AudioManager.Instance.playSFX(AudioManager.Instance.umbrellaOpen);
     }
 }
