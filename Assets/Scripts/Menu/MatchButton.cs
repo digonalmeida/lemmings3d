@@ -27,6 +27,7 @@ public class MatchButton : MonoBehaviour
     //Connect
     public void connect()
     {
+        if (MenuAudioManager.Instance != null) MenuAudioManager.Instance.playMenuSelectSFX();
         networkManager.matchMaker.JoinMatch(networkDataMatch.networkId, "", "", "", 0, 0, networkManager.OnMatchJoined);
         FindObjectOfType<PanelFlow>().loadLobby();
     }

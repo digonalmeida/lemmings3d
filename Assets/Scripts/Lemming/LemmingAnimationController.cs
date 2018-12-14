@@ -78,7 +78,6 @@ public class LemmingAnimationController : MonoBehaviour
     //Set Pickaxe Animation (Dig Down)
     public void setDigDownPickaxeAnimation()
     {
-        Debug.LogError("TEST");
         pickaxeObject.GetComponent<Animator>().SetTrigger("DigDown");
     }
 }

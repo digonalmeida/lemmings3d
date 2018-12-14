@@ -9,9 +9,15 @@ public class MenuAudioManager : Singleton<MenuAudioManager>
     public float audioFadeOutFactor = 0.25f;
     [SerializeField]
     private AudioSource bgmAudioSource;
+    [SerializeField]
+    private AudioSource sfxAudioSource;
 
     [Header("BGM")]
     public AudioClip menuBGM;
+
+    [Header("SFX")]
+    public AudioClip menuSelect;
+    public AudioClip menuBack;
 
     //Start
     private void Start()
@@ -19,6 +25,16 @@ public class MenuAudioManager : Singleton<MenuAudioManager>
         bgmAudioSource.clip = menuBGM;
         bgmAudioSource.loop = true;
         bgmAudioSource.Play();
+    }
+
+    public void playMenuSelectSFX()
+    {
+        sfxAudioSource.PlayOneShot(menuSelect);
+    }
+
+    public void playMenuBackSFX()
+    {
+        sfxAudioSource.PlayOneShot(menuBack);
     }
 
     //Stop Music with Fade
