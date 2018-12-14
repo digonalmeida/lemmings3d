@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class LNetworkPlayer : NetworkBehaviour 
+public class LNetworkPlayer : NetworkBehaviour
 {
     //Variables
     [SyncVar]
@@ -18,10 +19,13 @@ public class LNetworkPlayer : NetworkBehaviour
     public bool rematchReady = false;
     [SyncVar]
     public bool forceLemmingExplode = false;
+    [SyncVar]
+    public int spawnRateIndex = 1;
 
     public static LNetworkPlayer LocalInstance { get; private set; }
     public static LNetworkPlayer Player1Instance { get; private set; }
     public static LNetworkPlayer Player2Instance { get; private set; }
+
 
     private void Awake()
     {
@@ -90,6 +94,19 @@ public class LNetworkPlayer : NetworkBehaviour
         CmdInformPlayerNum(playerNum);
     }
 
+    public static LNetworkPlayer GetInstanceByTeam(Player team){
+        switch (team)
+        {
+            case Player.Player1:
+            return Player1Instance;
+            case Player.Player2:
+            return Player2Instance;
+            default:
+            return null;
+        }
+    }
+
+
     [Command]
     public void CmdGiveSkill(NetworkIdentity lemming, Skill skill, Vector3 originPosition)
     {
@@ -102,6 +119,18 @@ public class LNetworkPlayer : NetworkBehaviour
         {
             lemming.GetComponent<LemmingStateController>().giveSkill(skill, originPosition);
         }
+    }
+
+    internal void SetSpawnRate(int currentSpawnRate)
+    {
+        CmdSetSpawnRate(currentSpawnRate);
+    }
+
+    [Command]
+    private void CmdSetSpawnRate(int currentSpawnRate)
+    {
+        spawnRateIndex = currentSpawnRate;
+        GameEvents.Lemmings.ChangedSpawnRate.SafeInvoke(playerNum);
     }
 
     [Command]

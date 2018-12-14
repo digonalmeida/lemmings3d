@@ -51,3 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1b10228d5db594e893c9f26bba6143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  team: 1
+  spawnLemmingsPerSecondRates:
+  - 0.2
+  - 0.5
+  - 0.8

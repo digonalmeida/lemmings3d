@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine;
 using LevelMap;
+using System;
 
 public class NetworkGameStateEventsDispatcher : NetworkBehaviour
 {
@@ -10,23 +11,25 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
     {
         GameEvents.GameState.OnLoadGame += OnLoadGame;
         GameEvents.GameState.OnStartGame += OnStartGame;
+        GameEvents.Lemmings.ChangedSpawnRate += ChangedSpawnRate;
     }
 
     private void OnDestroy()
     {
         GameEvents.GameState.OnLoadGame -= OnLoadGame;
         GameEvents.GameState.OnStartGame -= OnStartGame;
+        GameEvents.Lemmings.ChangedSpawnRate -= ChangedSpawnRate;
     }
 
     private void OnLoadGame()
     {
-        if(!isServer)
+        if (!isServer)
         {
             return;
         }
 
         var mapIndex = MapManager.Instance.SelectedMapIndex;
-        if(mapIndex < 0)
+        if (mapIndex < 0)
         {
             Debug.LogError("Invalid map selected. Check if map asset is in the right directory");
             return;
@@ -37,12 +40,23 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
 
     private void OnStartGame()
     {
-        if(!isServer)
+        if (!isServer)
         {
             return;
         }
 
         RpcStartGame();
+    }
+
+
+    private void ChangedSpawnRate(Player player)
+    {
+        if (!isServer)
+        {
+            return;
+        }
+
+        RpcChangedSpawnRate(player);
     }
 
     [ClientRpc]
@@ -54,9 +68,9 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
         }
 
         bool ok = MapManager.Instance.TrySelectMapById(mapIndex);
-        if(!ok)
+        if (!ok)
         {
-            Debug.LogError("Couldn't select map with index " + mapIndex.ToString() + 
+            Debug.LogError("Couldn't select map with index " + mapIndex.ToString() +
                 ". Make sure asset is in the right directory");
         }
         GameEvents.GameState.OnLoadGame.SafeInvoke();
@@ -71,5 +85,16 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
         }
 
         GameEvents.GameState.OnStartGame.SafeInvoke();
+    }
+
+    [ClientRpc]
+    private void RpcChangedSpawnRate(Player player)
+    {
+        if (isServer)
+        {
+            return;
+        }
+
+        GameEvents.Lemmings.ChangedSpawnRate.SafeInvoke(player);
     }
 }
