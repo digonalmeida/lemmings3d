@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Dock
+  m_Controller: {fileID: 9100000, guid: 29ddcf7f1450ce64b81701702567d459, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: a0da1ea5476b9ab41995e6df94d4db00, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 82fb2eaf885be6d4b8cfc47f05029d9a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 679b6a0f659c55c4699b7a55f0a02ada, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7edc4396dff96c84fb77624ab69cb5a6, type: 2}

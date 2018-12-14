@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1137703278629866}
+  m_IsPrefabParent: 1
+--- !u!1 &1137703278629866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4576111757880714}
+  - component: {fileID: 114118406883297192}
+  - component: {fileID: 114647239852354454}
+  - component: {fileID: 114833548631852848}
+  - component: {fileID: 114642493944220878}
+  m_Layer: 0
+  m_Name: NetworkLobbyPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4576111757880714
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137703278629866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1211.4783, y: 295.3254, z: 1011.8164}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114118406883297192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137703278629866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 33
+    i1: 50
+    i2: 197
+    i3: 82
+    i4: 115
+    i5: 183
+    i6: 23
+    i7: 68
+    i8: 73
+    i9: 57
+    i10: 71
+    i11: 54
+    i12: 142
+    i13: 2
+    i14: 66
+    i15: 84
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
+--- !u!114 &114642493944220878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137703278629866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89bdb1171777994bb05f6149d834447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateInterval: 0.4
+--- !u!114 &114647239852354454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137703278629866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126ca8a07dc76ea4fa85473c59de9360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLobbyGUI: 0
+  playerNum: 0
+  playerName: 
+  playerClothColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  playerHairColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  playerReady: 0
+--- !u!114 &114833548631852848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137703278629866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7656e6e984124745822754b31b47807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

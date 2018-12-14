@@ -13,13 +13,13 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PostProcessing
+  - Wall
+  - Lemming
+  - Blocks
+  - LemmingAction
+  - Exit
+  - Highlightable
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Blocks
+    uniqueID: 3447916093
+    locked: 0
+  - name: UI
+    uniqueID: 3343617905
     locked: 0
