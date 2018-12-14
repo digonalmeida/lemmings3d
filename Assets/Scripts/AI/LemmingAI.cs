@@ -123,6 +123,7 @@ public class LemmingAI : MonoBehaviour
 
         floatingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => this.transform.position.y <= movementController.borderFallKillThreshold, deathState);
         floatingState.AddTransition((int)Trigger.ArrivedAtWaypoint, () => movementController.CheckFloor(), landingState);
+        floatingState.AddCondition(() => stateController.checkForceExplode(), explodingState);
 
         landingState.AddTransition((int)Trigger.FinishedTask, () => true, walkingState);
 
