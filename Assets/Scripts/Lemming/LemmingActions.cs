@@ -31,13 +31,6 @@ public class LemmingActions : MonoBehaviour {
         GameEvents.Lemmings.LemmingDied.SafeInvoke(lemmingAIScript);
     }
 
-    //Boom!
-    public void KillLemmingByExplosion()
-    {
-        GameEvents.Lemmings.LemmingExploded.SafeInvoke(lemmingAIScript);
-        KillLemming();
-    }
-
     public void EliminateLemming()
     {
         Destroy(gameObject);
