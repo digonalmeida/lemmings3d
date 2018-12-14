@@ -9,15 +9,15 @@ public class PickaxeAnimationTriggers : StateMachineBehaviour
     {
         LemmingAnimationController lemmingAnimationController = animator.gameObject.GetComponent<LemmingAnimationController>();
         lemmingAnimationController.setActivePickaxe(true);
+        AudioManager.Instance.playSFX(AudioManager.Instance.pickaxeHit);
 
-        if(stateInfo.IsName("DigForward")) lemmingAnimationController.setDigForwardPickaxeAnimation();
+        if (stateInfo.IsName("DigForward")) lemmingAnimationController.setDigForwardPickaxeAnimation();
         else if (stateInfo.IsName("DigDown")) lemmingAnimationController.setDigDownPickaxeAnimation();
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        AudioManager.Instance.playSFX(AudioManager.Instance.pickaxeHit);
         animator.gameObject.GetComponent<LemmingAnimationController>().setActivePickaxe(false);
     }
 }

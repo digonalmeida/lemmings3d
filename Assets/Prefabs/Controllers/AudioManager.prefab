@@ -316,3 +316,5 @@ MonoBehaviour:
   medalFanfare: {fileID: 8300000, guid: 109652ddbd2e15043bd0939d95457060, type: 3}
   defeat: {fileID: 8300000, guid: 01beb0131f7277a43b388a668657a416, type: 3}
   explode: {fileID: 8300000, guid: a7ddbb7e5d214bd46b695a2d298e7724, type: 3}
+  pickaxeHit: {fileID: 8300000, guid: 1aca801b3f9792143aa2a7555dda6c3d, type: 3}
+  blockDestroy: {fileID: 8300000, guid: 8e9ca3d6578f45849a2ee61700ab14c1, type: 3}
