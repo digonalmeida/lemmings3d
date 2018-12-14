@@ -6,6 +6,7 @@ public class UIExitButton : MonoBehaviour
 {
 
     private Animator animator;
+    public GameObject exitPanel;
 
     void OnEnable()
     {
@@ -18,7 +19,7 @@ public class UIExitButton : MonoBehaviour
         GameEvents.UI.OpenInGameUI -= Open;
         GameEvents.UI.CloseInGameUI -= Close;
     }
-	
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -32,5 +33,26 @@ public class UIExitButton : MonoBehaviour
     void Close()
     {
         animator.SetBool("opened", false);
+    }
+
+    public void OpenConfirmPanel()
+    {
+        exitPanel.SetActive(true);
+    }
+
+    private void CloseConfirmPanel()
+    {
+        exitPanel.SetActive(false);
+    }
+
+    public void ConfirmQuit()
+    {
+		LNetworkLobbyManager.singleton.StopClient();
+        CloseConfirmPanel();
+    }
+
+    public void CancelQuit()
+    {
+        CloseConfirmPanel();
     }
 }
