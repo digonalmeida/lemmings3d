@@ -7,6 +7,7 @@ public class NetworkInfoCanvas : Singleton<NetworkInfoCanvas>
 {
     [SerializeField]
     private Text pingInfoText;
+
     protected override void Awake()
     {
         base.Awake();

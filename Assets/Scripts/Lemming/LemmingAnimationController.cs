@@ -1,13 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class LemmingAnimationController : MonoBehaviour
 {
     //Variables
-    public Animator lemmingAnimator;
+    private Animator lemmingAnimator;
+    private NetworkAnimator lemmingNetworkAnimator;
     public GameObject pickaxeObject;
     public GameObject umbrellaObject;
+
+    private void Awake()
+    {
+        lemmingAnimator = this.GetComponent<Animator>();
+        lemmingNetworkAnimator = this.GetComponent<NetworkAnimator>();
+    }
 
     //Play Animation
     public void PlayAnimation(string animationName)
@@ -38,10 +46,9 @@ public class LemmingAnimationController : MonoBehaviour
     }
 
     //Set Trigger
-    public void setTrigger(string variable, bool active = true)
+    public void setTrigger(string variable)
     {
-        if (active) lemmingAnimator.SetTrigger(variable);
-        else lemmingAnimator.ResetTrigger(variable);
+        lemmingNetworkAnimator.SetTrigger(variable);
     }
 
     //Enable/Disable Pickaxe
@@ -71,6 +78,7 @@ public class LemmingAnimationController : MonoBehaviour
     //Set Pickaxe Animation (Dig Down)
     public void setDigDownPickaxeAnimation()
     {
+        Debug.LogError("TEST");
         pickaxeObject.GetComponent<Animator>().SetTrigger("DigDown");
     }
 }

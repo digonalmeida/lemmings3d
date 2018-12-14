@@ -84,33 +84,8 @@ public class LemmingMovementController : MonoBehaviour
     public void forceNewPosition(Vector3 originPosition)
     {
         targetPositionAddress = Vector3Int.RoundToInt(originPosition);
-        switch (movementDirection)
-        {
-            case Direction.Down:
-                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.Center);
-                currentCorner = Corner.Center;
-                break;
-            case Direction.Up:
-                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.Center);
-                currentCorner = Corner.Center;
-                break;
-            case Direction.East:
-                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.SouthEast);
-                currentCorner = Corner.SouthEast;
-                break;
-            case Direction.West:
-                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.NorthWest);
-                currentCorner = Corner.NorthWest;
-                break;
-            case Direction.North:
-                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.NorthEast);
-                currentCorner = Corner.NorthEast;
-                break;
-            case Direction.South:
-                forcedPositionVector = GetTargetPosition(targetPositionAddress, Corner.SouthWest);
-                currentCorner = Corner.SouthWest;
-                break;
-        }
+        currentCorner = Corner.Center;
+        forcedPositionVector = GetTargetPosition(targetPositionAddress, currentCorner);
     }
 
     public Vector3 GetTargetPosition(Vector3Int centerPos, Corner corner)
