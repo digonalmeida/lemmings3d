@@ -143,6 +143,8 @@ public class NetworkGameStateEventsDispatcher : NetworkBehaviour
     [ClientRpc]
     public void RpcRemoveBlock(int x, int y, int z)
     {
+        AudioManager.Instance.playSFX(AudioManager.Instance.blockDestroy);
+
         if (isServer)
         {
             return;
