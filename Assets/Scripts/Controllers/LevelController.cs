@@ -8,8 +8,9 @@ public class LevelController : Singleton<LevelController>
 {
     // lemmings control
 
-    public int currentSpawnRate { get; private set; }
+    public int currentSpawnRateIndex { get; private set; }
     public Player team = Player.Player1;
+    public List<float> spawnLemmingsPerSecondRates = new List<float>() { 0.2f, 0.5f, 0.8f };
 
     // timer
     public float remainingTime { get { return gameStateManager.RemainingTime; } }
@@ -22,7 +23,7 @@ public class LevelController : Singleton<LevelController>
     private MapSettings currentMapSettings = new MapSettings();
     public MapSettings CurrentMapSettings { get { return currentMapSettings; } }
 
-    public NetworkGameStateManager gameStateManager {get; private set;}
+    public NetworkGameStateManager gameStateManager { get; private set; }
 
 
     private void OnEnable()
@@ -61,7 +62,7 @@ public class LevelController : Singleton<LevelController>
         }
 
         currentMapSettings = new MapSettings(settings);
-        currentSpawnRate = currentMapSettings.StartSpawnRate;
+        currentSpawnRateIndex = 1;
 
         Debug.Log("Level settings loaded");
     }
@@ -69,14 +70,14 @@ public class LevelController : Singleton<LevelController>
 
     public void ChangeSpawnRate(int increment)
     {
-        if ((currentSpawnRate + increment) >= currentMapSettings.MinimumSpawnRate && (currentSpawnRate + increment) <= currentMapSettings.MaximumSpawnRate)
+        if ((currentSpawnRateIndex + increment) >= 0 && (currentSpawnRateIndex + increment) <= spawnLemmingsPerSecondRates.Count - 1)
         {
-            currentSpawnRate += increment;
-            GameEvents.Lemmings.ChangedSpawnRate.SafeInvoke();
+            currentSpawnRateIndex += increment;
+            LNetworkPlayer.LocalInstance.SetSpawnRate(currentSpawnRateIndex);
         }
     }
 
-  
+
 
     public void LoadGame()
     {

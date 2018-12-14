@@ -42,8 +42,7 @@ public class RandomPropSpawner : MonoBehaviour
     {
         if (enabled)
         {
-            RandomizeProp();
-            SpawnProp();
+            TrySpawnProp(.2f);
         }
         else
         {

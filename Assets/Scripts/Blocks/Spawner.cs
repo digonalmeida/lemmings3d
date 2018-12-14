@@ -18,7 +18,8 @@ public class Spawner : MonoBehaviour
 
     private LemmingSpawnInfo lemmingSpawnInfo = new LemmingSpawnInfo();
 
-    private void Start(){
+    private void Start()
+    {
         Setup();
     }
 
@@ -40,7 +41,7 @@ public class Spawner : MonoBehaviour
         {
             return;
         }
-        
+
         switch (team)
         {
             case Player.None:
@@ -62,7 +63,7 @@ public class Spawner : MonoBehaviour
 
     public void Init()
     {
-        ChangeInterval();
+        ChangeInterval(team);
         StartCoroutine(SpawnRoutine());
     }
 
@@ -120,9 +121,13 @@ public class Spawner : MonoBehaviour
         GameEvents.Lemmings.OnSpawnRequest.SafeInvoke(lemmingSpawnInfo);
     }
 
-    private void ChangeInterval()
+    private void ChangeInterval(Player player)
     {
-        interval = 1f + ((float)(60 - LevelController.Instance.currentSpawnRate)) / 20f;
+        if (player == team)
+        {
+            interval = 1f / LevelController.Instance.spawnLemmingsPerSecondRates[LNetworkPlayer.GetInstanceByTeam(player).spawnRateIndex];
+            Debug.Log("interval on " + player.ToString() + " changed to " + interval.ToString());
+        }
     }
 
 }
