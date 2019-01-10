@@ -123,7 +123,7 @@ public class SkillsController : Singleton<SkillsController>
     {
         if(LNetworkPlayer.LocalInstance != null)
         {
-            LNetworkPlayer.LocalInstance.CmdInformExplodeAllLemmings(true);
+            LNetworkPlayer.LocalInstance.CmdInformExplodeAllLemmings();
         }
     }
 

@@ -15,4 +15,10 @@ public class FloaterEndAnimationTrigger : StateMachineBehaviour
     {
         animator.gameObject.GetComponent<LemmingAnimationController>().setActiveUmbrella(false);
     }
+
+    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (stateInfo.normalizedTime >= 1f) animator.GetComponent<LemmingAnimationController>().finishedAnimationAction.SafeInvoke();
+    }
 }

@@ -1627,7 +1627,7 @@ MonoBehaviour:
   movementSpeed: 0.5
   gravitySpeedGain: 3
   fallingKillThreshold: 3
-  borderFallKillThreshold: -20
+  borderFallKillThreshold: -5
   turningRate: 7
   cornerDistance: 0.25
   targetPositionAddress: {x: 0, y: 0, z: 0}

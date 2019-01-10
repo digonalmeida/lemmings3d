@@ -19,5 +19,6 @@ public class PickaxeAnimationTriggers : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.gameObject.GetComponent<LemmingAnimationController>().setActivePickaxe(false);
+        animator.GetComponent<LemmingAnimationController>().finishedAnimationAction.SafeInvoke();
     }
 }

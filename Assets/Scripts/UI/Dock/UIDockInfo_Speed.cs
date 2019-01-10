@@ -39,7 +39,9 @@ public class UIDockInfo_Speed : UIDockInfo
     {
         int newSpawnRateIndex = LevelController.Instance.currentSpawnRateIndex;
 
-        rateText.text = newSpawnRateIndex.ToString();
+        if(newSpawnRateIndex == 0) rateText.text = "Slow";
+        else if (newSpawnRateIndex == 1) rateText.text = "Normal";
+        else if (newSpawnRateIndex == 2) rateText.text = "Fast";
 
         minusSign.interactable = LevelController.Instance.currentSpawnRateIndex > 0;
         plusSign.interactable = LevelController.Instance.currentSpawnRateIndex < LevelController.Instance.spawnLemmingsPerSecondRates.Count - 1;

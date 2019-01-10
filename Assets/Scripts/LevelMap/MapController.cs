@@ -171,6 +171,7 @@
             var blocks = map.Blocks;
             foreach (var pair in blocks)
             {
+
                 SpawnSceneBlock(pair.Key, pair.Value);
             }
         }

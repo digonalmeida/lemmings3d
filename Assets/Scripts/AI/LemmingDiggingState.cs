@@ -9,22 +9,20 @@ public class LemmingDiggingState : LemmingState
         base.Enter();
         Agent.AnimationController.setTrigger("DigDown");
         Agent.MovementController.SetDirection(Direction.None);
+        Agent.AnimationController.finishedAnimationAction += finishedAnimation;
     }
 
     public override void Exit()
     {
         base.Exit();
         Agent.MovementController.SetDirectionForward();
+        Agent.AnimationController.finishedAnimationAction -= finishedAnimation;
     }
 
-    public override void Update()
+    public void finishedAnimation()
     {
-        base.Update();
-        if(Agent.AnimationController.isEndOfAnimation("DigDown"))
-        {
-            LevelMap.MapController.Instance.EraseWall(Vector3Int.FloorToInt(Agent.transform.position + Vector3.down));
-            Agent.StateController.dequeueSkill();
-            this.StateMachine.TriggerEvent((int)LemmingAI.Trigger.FinishedTask);
-        }
+        LevelMap.MapController.Instance.EraseWall(Vector3Int.FloorToInt(Agent.transform.position + Vector3.down));
+        Agent.StateController.dequeueSkill();
+        this.StateMachine.TriggerEvent((int)LemmingAI.Trigger.FinishedTask);
     }
 }

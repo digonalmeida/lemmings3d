@@ -155,13 +155,11 @@ public class LemmingStateController : NetworkBehaviour
         {
             lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = LNetworkLobbyPlayer.Player1Instance.playerClothColor;
             lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = LNetworkLobbyPlayer.Player1Instance.playerHairColor;
-            setForceExplode(LNetworkPlayer.Player1Instance.forceLemmingExplode);
         }
         else if (team == Player.Player2 && LNetworkLobbyPlayer.Player2Instance != null)
         {
             lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[1].color = LNetworkLobbyPlayer.Player2Instance.playerClothColor;
             lemmingModel.GetComponentInChildren<SkinnedMeshRenderer>().materials[2].color = LNetworkLobbyPlayer.Player2Instance.playerHairColor;
-            setForceExplode(LNetworkPlayer.Player2Instance.forceLemmingExplode);
         }
     }
 

@@ -8,24 +8,22 @@ public class LemmingBuildingState : LemmingState
     {
         base.Enter();
         Agent.MovementController.SetDirection(Direction.None);
+        Agent.AnimationController.finishedAnimationAction += finishedAnimation;
     }
 
     public override void Exit()
     {
         base.Exit();
         Agent.MovementController.SetDirectionForward();
+        Agent.AnimationController.finishedAnimationAction -= finishedAnimation;
     }
 
-    public override void Update()
+    public void finishedAnimation()
     {
-        base.Update();
-        if (Agent.AnimationController.isEndOfAnimation("building"))
-        {
-            //Spawn Stairs
-            //TODO
-            //ControllerManager.Instance.mapController.AddBlock(Vector3Int.FloorToInt(Agent.transform.position + Directions.GetWorldDirection(Agent.MovementController.getForwardDirection())), ????);
-            Agent.StateController.dequeueSkill();
-            this.StateMachine.TriggerEvent((int)LemmingAI.Trigger.FinishedTask);
-        }
+        //Spawn Stairs
+        //TODO
+        //ControllerManager.Instance.mapController.AddBlock(Vector3Int.FloorToInt(Agent.transform.position + Directions.GetWorldDirection(Agent.MovementController.getForwardDirection())), ????);
+        Agent.StateController.dequeueSkill();
+        this.StateMachine.TriggerEvent((int)LemmingAI.Trigger.FinishedTask);
     }
 }

@@ -23,8 +23,6 @@ public class NetworkGameStateManager : NetworkBehaviour
     public Dictionary<Player, List<LemmingStateController>> lemmingsOnScene;
     private LNetworkLobbyPlayer lobbyPlayer;
 
-
-
     private void OnEnable()
     {
         GameEvents.Lemmings.LemmingReachedExit += LemmingExit;
@@ -33,6 +31,7 @@ public class NetworkGameStateManager : NetworkBehaviour
         GameEvents.GameState.OnStartGame += OnStartGame;
         GameEvents.GameState.OnEndGame += OnEndGame;
         GameEvents.GameState.OnLoadGame += OnLoadGame;
+        GameEvents.Lemmings.nukedLemmings += OnTeamNuke;
     }
 
     private void OnDisable()
@@ -43,8 +42,8 @@ public class NetworkGameStateManager : NetworkBehaviour
         GameEvents.GameState.OnStartGame -= OnStartGame;
         GameEvents.GameState.OnEndGame -= OnEndGame;
         GameEvents.GameState.OnLoadGame -= OnLoadGame;
+        GameEvents.Lemmings.nukedLemmings -= OnTeamNuke;
     }
-
 
     // getters
     public float RemainingTime
@@ -99,8 +98,8 @@ public class NetworkGameStateManager : NetworkBehaviour
         // check timer
         if (remainingTime < 0)
         {
-            LNetworkPlayer.Player1Instance.CmdInformExplodeAllLemmings(true);
-            LNetworkPlayer.Player2Instance.CmdInformExplodeAllLemmings(true);
+            LNetworkPlayer.Player1Instance.CmdInformExplodeAllLemmings();
+            LNetworkPlayer.Player2Instance.CmdInformExplodeAllLemmings();
         }
 
         // check lemings on final
@@ -197,6 +196,14 @@ public class NetworkGameStateManager : NetworkBehaviour
         if (isServer)
         {
             RpcLemmingDie(lemming.GetComponent<NetworkIdentity>());
+        }
+    }
+
+    private void OnTeamNuke(Player player)
+    {
+        if(isServer)
+        {
+            lemmingsDied[player] = LevelController.Instance.CurrentMapSettings.LemmingsCount - lemmingsEnteredExit[player] - lemmingsOnScene[player].Count;
         }
     }
 

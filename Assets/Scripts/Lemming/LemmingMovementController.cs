@@ -16,7 +16,7 @@ public class LemmingMovementController : MonoBehaviour
     [SerializeField]
     private int fallingKillThreshold = 3;
     private int fallingBlocksCount;
-    public int borderFallKillThreshold = -20;
+    public int borderFallKillThreshold = -5;
 
     [SerializeField]
     private float turningRate = 7;

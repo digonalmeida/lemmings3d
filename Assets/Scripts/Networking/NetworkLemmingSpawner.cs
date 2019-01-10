@@ -9,6 +9,7 @@ public class LemmingSpawnInfo
     public Direction startingMovementDirection;
     public Player team;
 }
+
 public class NetworkLemmingSpawner : NetworkBehaviour
 {
     [SerializeField]
@@ -30,6 +31,7 @@ public class NetworkLemmingSpawner : NetworkBehaviour
         {
             return;
         }
+
         var lemming = createLemming(info);
         NetworkServer.Spawn(lemming);
         var stateController = lemming.GetComponent<LemmingStateController>();

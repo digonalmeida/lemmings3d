@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class LemmingDeathState : LemmingState
 {
-    private bool performedAction;
-
     public override void Enter()
     {
         base.Enter();
         Agent.MovementController.SetDirection(Direction.None);
         Agent.AnimationController.setBool("Death", true);
         Agent.GetComponent<HighlightableObject>().canBeHighlighted = false;
-        performedAction = false;
+        Agent.AnimationController.finishedAnimationAction += finishedAnimation;
     }
 
-    public override void Update()
+    public void finishedAnimation()
     {
-        base.Update();
-        if (!performedAction && Agent.AnimationController.isEndOfAnimation("Fall_Death"))
+        //Safeguard Animation Skip
+        if (!Agent.AnimationController.checkCurrentAnimation("Floater_End"))
         {
-            performedAction = true;
+            Agent.AnimationController.finishedAnimationAction -= finishedAnimation;
             Agent.LemmingActions.KillLemming();
         }
     }

@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -924,7 +924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1564477760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -936,7 +936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850ba62ad21d50b48bf2a257ce37d5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pingInfoText: {fileID: 213704067}
 --- !u!114 &1564477762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,7 +1076,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89bdb1171777994bb05f6149d834447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateInterval: 0.4
 --- !u!114 &1984010619 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114518159891958046, guid: ac9b32df515e06c4fb91d138b5e5a3f2,

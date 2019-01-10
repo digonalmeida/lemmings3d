@@ -6,9 +6,8 @@ public class Spawner : MonoBehaviour
 {
     //Control Variables
     [SerializeField]
-    private GameObject spawnable = null;
+    private float interval;
     public int count = 1;
-    public float interval = 1f;
     public Direction startingMovementDirection;
     public Player team;
 
@@ -17,6 +16,9 @@ public class Spawner : MonoBehaviour
     private float currentTimer;
 
     private LemmingSpawnInfo lemmingSpawnInfo = new LemmingSpawnInfo();
+
+    public static Spawner Player1Instance { get; private set; }
+    public static Spawner Player2Instance { get; private set; }
 
     private void Start()
     {
@@ -31,6 +33,9 @@ public class Spawner : MonoBehaviour
             startingMovementDirection = block.Block.Direction;
             team = block.Block.Team;
             UpdateTeamColor();
+
+            if (team == Player.Player1) Player1Instance = this;
+            else if (team == Player.Player2) Player2Instance = this;
         }
     }
 
@@ -75,6 +80,8 @@ public class Spawner : MonoBehaviour
     private void OnDestroy()
     {
         Stop();
+        if (team == Player.Player1) Player1Instance = null;
+        else if (team == Player.Player2) Player2Instance = null;
     }
 
     private void OnEnable()
@@ -125,7 +132,7 @@ public class Spawner : MonoBehaviour
     {
         if (player == team)
         {
-            interval = 1f / LevelController.Instance.spawnLemmingsPerSecondRates[LNetworkPlayer.GetInstanceByTeam(player).spawnRateIndex];
+            interval = LevelController.Instance.spawnLemmingsPerSecondRates[LNetworkPlayer.GetInstanceByTeam(player).spawnRateIndex];
             Debug.Log("interval on " + player.ToString() + " changed to " + interval.ToString());
         }
     }

@@ -18,8 +18,6 @@ public class LNetworkPlayer : NetworkBehaviour
     [SyncVar]
     public bool rematchReady = false;
     [SyncVar]
-    public bool forceLemmingExplode = false;
-    [SyncVar]
     public int spawnRateIndex = 1;
 
     public static LNetworkPlayer LocalInstance { get; private set; }
@@ -42,7 +40,6 @@ public class LNetworkPlayer : NetworkBehaviour
         levelSelectReady = false;
         levelLoadReady = false;
         rematchReady = false;
-        forceLemmingExplode = false;
         selectedLevel = -1;
     }
 
@@ -94,7 +91,8 @@ public class LNetworkPlayer : NetworkBehaviour
         CmdInformPlayerNum(playerNum);
     }
 
-    public static LNetworkPlayer GetInstanceByTeam(Player team){
+    public static LNetworkPlayer GetInstanceByTeam(Player team)
+    {
         switch (team)
         {
             case Player.Player1:
@@ -146,9 +144,12 @@ public class LNetworkPlayer : NetworkBehaviour
     }
 
     [Command]
-    public void CmdInformExplodeAllLemmings(bool value)
+    public void CmdInformExplodeAllLemmings()
     {
-        forceLemmingExplode = value;
+        if (playerNum == Player.Player1) Spawner.Player1Instance.StopAllCoroutines();
+        else if (playerNum == Player.Player2) Spawner.Player2Instance.StopAllCoroutines();
+
+        GameEvents.Lemmings.nukedLemmings.SafeInvoke(playerNum);
         SkillsController.Instance.executeExplodeAll(playerNum);
     }
 

@@ -10,7 +10,7 @@ public class LevelController : Singleton<LevelController>
 
     public int currentSpawnRateIndex { get; private set; }
     public Player team = Player.Player1;
-    public List<float> spawnLemmingsPerSecondRates = new List<float>() { 0.2f, 0.5f, 0.8f };
+    public List<float> spawnLemmingsPerSecondRates = new List<float>() { 1f, 1f, 1f }; //Change on Level Manager Prefab
 
     // timer
     public float remainingTime { get { return gameStateManager.RemainingTime; } }
